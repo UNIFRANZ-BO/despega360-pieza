@@ -25,8 +25,20 @@ suben las emprendedoras va a una carpeta de Drive, con una subcarpeta por negoci
 - **Script propio** (no el de la guía IA): otra carpeta («Despega 360 · Piezas publicitarias de las emprendedoras») y otra
   URL, en la misma cuenta dedicada. IDs `D360P-…` (el script rechaza los `D360-` de la otra app).
 - PDF: datos + **boceto** con la paleta del primer estilo y el formato del canal + siguiente paso + anexo con la instrucción.
-- **`#restoPrompt` y `buildPrompt()` (con precioTxt, difTxt, punto, FALTA) no se tocan.** `build.py` verifica que sigan
-  idénticos al original cuando existe `docs/original_Pieza.html`.
+- **v2.1 (09-oct-2026): instrucción reescrita a pedido de Rafael** (ya NO es la del HTML original; `build.py` dejó de
+  compararla). Con la original, Gemini y ChatGPT daban resultados distintos y entregaban textos y guías de Canva. Ahora es
+  un procedimiento cerrado para que la IA **entregue 2 imágenes terminadas** hechas sobre la foto real:
+  - **Solo ChatGPT y Gemini** (Claude no genera imágenes; Meta AI escribe mal los textos en imagen). Datos guardados con
+    otra IA se limpian al cargar.
+  - **Foto obligatoria**, adjunta con la instrucción en el mismo mensaje; si falta, la IA la pide con una frase fija y nada más.
+  - **2 piezas** (`formatos()`): la del canal elegido + una 9:16 para estados; si el canal ya es 9:16 (estado, TikTok),
+    la 2.ª es 4:5 para Facebook o Instagram. Una imagen por mensaje: Pieza 1 → la IA cierra con «Escribe 2 y te entrego tu
+    segunda pieza» → Pieza 2 + entrega final (texto para publicar de 40–70 palabras + 5–8 hashtags).
+  - Textos dentro de la imagen fijados en JS: titular ≤ 6 palabras, precio exacto, promoción, llamado a la acción ≤ 4 palabras,
+    nombre del negocio, ícono del contacto sin números. Revisión ortográfica antes de mostrar.
+  - Producto intacto (editar fondo, luz y encuadre, no redibujar). Se conservan las reglas del original (no inventar,
+    palabras prohibidas, salud en alimentos). Datos vacíos: «(no lo indiqué)» → la IA no pregunta, no los usa.
+  - Pendiente: Rafael prueba con los mismos datos y foto en ChatGPT y Gemini y manda capturas para afinar.
 - La nota de bienvenida dice que lo único que llega al equipo es la pieza que ella suba al final.
 - **Interfaz «gran estreno» (v1.0):** pedido de Rafael: «muy llamativa». Tema oscuro tipo escenario: reflectores que barren,
   piso de neón en perspectiva, manchas de color, canvas con destellos, rombos de aguayo y reacciones (❤️👍⭐) flotando;
@@ -54,7 +66,7 @@ suben las emprendedoras va a una carpeta de Drive, con una subcarpeta por negoci
   (el script v2 sigue aceptando `pdf` de la app v1)
   → `{ok,id}` · `{ok,id,repetido:true}` · `{ok:false, codigo:'cerrada'|'invalido'|'limite'|'error'}`.
 - Clave local: borrador `despega360-pieza-v1` (la misma del original). Los `PRUEBA-…` quedan sueltos en la carpeta principal.
-- Panel técnico: `?admin=1` o tres toques en «v2.0». `?api=<url>` prueba otra URL; `?api=sin-url` fuerza modo de prueba.
+- Panel técnico: `?admin=1` o tres toques en «v2.1». `?api=<url>` prueba otra URL; `?api=sin-url` fuerza modo de prueba.
 
 ## Estado (09-oct-2026)
 - [x] App, script y pruebas locales en verde.
@@ -62,7 +74,8 @@ suben las emprendedoras va a una carpeta de Drive, con una subcarpeta por negoci
 - [x] Script «Despega 360 · Piezas» implementado en la cuenta dedicada (09-oct-2026): `AKfycbwNm7JM…0whICJXGWRv/exec`.
       Ping anónimo OK; URL incrustada en `API_URL_DEFECTO`.
 - [x] v2.0 publicada (09-oct-2026): script «Nueva versión» (`ping` → `version_app: "2.0"`), app en línea, PDF `PRUEBA-` subido OK.
-      **Enlace vigente: https://unifranz-bo.github.io/despega360-pieza/?v=3**
+- [x] v2.1 publicada (09-oct-2026): instrucción nueva (2 piezas terminadas). Script sin cambios (sigue v2.0).
+      **Enlace vigente: https://unifranz-bo.github.io/despega360-pieza/?v=4**
 - [ ] Prueba real desde el celular; luego `borrarPruebas` y borrar a mano subcarpetas de prueba.
 
 ## Comandos

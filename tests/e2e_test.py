@@ -89,12 +89,12 @@ async def recorrido(pg, ancho):
         assert await pg.is_visible('.vitrina .screen') and await pg.is_hidden('#btnVer')
     await sig(pg)
     for t in ['luz', 'fondo']: await pg.click(f'.opt[data-v="{t}"]')
-    await pg.fill('#foto', 'Frasco sobre mantel blanco junto a duraznos'); await pg.click('.opt[data-f="subir"][data-v="si"]')
+    await pg.fill('#foto', 'Frasco sobre mantel blanco junto a duraznos')
     assert await pg.inner_text('#sig') == 'Armar mi instrucción'
     await sig(pg, 2200)
     assert await paso_actual(pg) == 'listo'
     assert await pg.is_visible('#btnCopiar'), 'copiar debe estar disponible sin enviar nada'
-    assert await pg.inner_text('#sig') == 'Ya terminé: subir mi pieza'
+    assert await pg.inner_text('#sig') == 'Ya terminé: subir mis piezas'
     await sin_desborde(pg)
     await pg.screenshot(path=str(SHOTS / f'{ancho}_07_final.png'), full_page=True)
 
@@ -113,11 +113,15 @@ async def main():
             await pg.goto(url); await pg.wait_for_timeout(1200)
             await recorrido(pg, ancho)
 
-            # Copiar: la instrucción es la del original
+            # Copiar: la instrucción pide 2 piezas terminadas, sin guías
             await pg.click('#btnCopiar'); await pg.wait_for_timeout(300)
             clip = await pg.evaluate('navigator.clipboard.readText()')
-            assert clip.startswith('Actúa como especialista en marketing') and 'Delicias del Valle' in clip and 'Quillacollo' in clip
-            assert '- Precio en Bs: 25' in clip and 'Instagram (tamaño 1080 × 1350 px)' in clip and 'REGLAS' in clip
+            assert clip.startswith('Actúa como diseñadora gráfica publicitaria') and 'ENTREGARME 2 IMÁGENES' in clip, clip[:400]
+            assert 'Delicias del Valle' in clip and 'Quillacollo' in clip and '- Precio: Bs 25' in clip and '«Bs 25»' in clip
+            assert 'Pieza 1, para una publicación de Instagram: formato vertical 4:5 (1080 × 1350 px)' in clip, clip
+            assert 'Pieza 2, para estados de WhatsApp e historias: formato vertical alto 9:16 (1080 × 1920 px)' in clip
+            assert '- Promoción: «2x1».' in clip and 'Escribe 2 y te entrego tu segunda pieza' in clip and 'Estoy usando Gemini' in clip
+            assert 'Mensaje comercial: (no lo indiqué)' in clip and 'pregúntamelo' not in clip
 
             # Constancia local: se descarga y NO se envía
             async with pg.expect_download() as dl:
@@ -131,16 +135,16 @@ async def main():
             await sig(pg, 900)
             assert await paso_actual(pg) == 'subir'
             assert await pg.input_value('#nombre3') == 'Delicias del Valle'
-            assert 'Canva' in await pg.text_content('#tips')
+            assert 'ChatGPT' in await pg.text_content('#tips') and 'Gemini' in await pg.text_content('#tips')
             await pg.click('#btnSubir'); await pg.wait_for_timeout(300)
             assert 'Primero elige' in await pg.inner_text('#errArch')
             await pg.set_input_files('#archivos', [str(TMP / n) for n in ['06_Pieza_comercial.png', 'foto_producto.jpg', '06_Pieza_comercial.pptx', 'programa.exe']])
-            await pg.wait_for_timeout(1500)
+            await pg.wait_for_function("document.querySelector('#errArch').textContent.includes('programa.exe')", timeout=20000)
             assert 'programa.exe' in await pg.inner_text('#errArch')
             assert await pg.locator('#lista li').count() == 3
             await pg.click('#lista li:nth-child(3) .quitar'); await pg.wait_for_timeout(200)
             assert await pg.locator('#lista li').count() == 2
-            assert await pg.inner_text('#txtSubir') == 'Enviar mis 2 archivos'
+            assert await pg.inner_text('#txtSubir') == 'Enviar mis 2 piezas'
             # la pieza real aparece en el celular, con su proporción
             assert await pg.evaluate("!!document.querySelector('.screen .m-real')"), 'la pieza real no aparece en el celular'
             assert (await pg.evaluate("document.querySelector('.screen').style.aspectRatio")).replace(' ', '') == '1080/1350'
@@ -162,7 +166,7 @@ async def main():
             orig = (TMP / 'foto_producto.jpg').stat().st_size
             assert env[1]['bytes'] < orig, f'la foto debía achicarse ({env[1]["bytes"]} ≥ {orig})'
             print(f'   foto: {orig // 1024} KB → {env[1]["bytes"] // 1024} KB')
-            assert '¡Tu pieza llegó!' in await pg.inner_text('#exito')
+            assert '¡Tus piezas llegaron!' in await pg.inner_text('#exito')
             await pg.screenshot(path=str(SHOTS / f'{ancho}_09_subido.png'))
 
             # Sin internet: falla, se reintenta y no se duplica
@@ -215,6 +219,18 @@ async def main():
         await pg.wait_for_selector('#exito:not([hidden])', timeout=8000)
         assert 'Modo de prueba' in await pg.inner_text('#exito')
         print('OK modo de prueba')
+
+        # Datos guardados de la v2.0 con Claude y canal vertical alto: se limpia la IA y la 2.ª pieza pasa a Facebook/Instagram
+        await pg.evaluate('''localStorage.setItem('despega360-pieza-v1', JSON.stringify({step:7, ia:'Claude', nombre:'Tejidos Sur', rubro:'Textiles',
+          prod:'Chompa de alpaca', canal:'Estado de WhatsApp', contacto:'WhatsApp', estilo:['artesanal'], subir:'no'}))''')
+        await pg.reload(); await pg.wait_for_timeout(1200)
+        txt = await pg.input_value('#preview')
+        assert 'Estoy usando' not in txt, 'la IA vieja (Claude) debía limpiarse'
+        assert 'Pieza 1, para un estado de WhatsApp: formato vertical alto 9:16 (1080 × 1920 px)' in txt, txt
+        assert 'Pieza 2, para una publicación de Facebook o Instagram: formato vertical 4:5' in txt
+        assert '- Precio: no lo indiqué, así que no pongas precio.' in txt and 'Promoción: «' not in txt
+        assert 'Abrir Gemini' in await pg.inner_text('#abrir')
+        print('OK datos antiguos y canal vertical')
 
         # Movimiento reducido: sin errores
         ctx = await b.new_context(reduced_motion='reduce'); pg = await ctx.new_page(); errs = []

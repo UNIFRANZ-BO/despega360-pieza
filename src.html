@@ -533,22 +533,22 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
 <!-- 0 · Bienvenida -->
 <section class="step" data-id="inicio">
   <h2 tabindex="-1">Hagamos tu publicidad <span class="chispa" aria-hidden="true">✨</span></h2>
-  <p class="lead">Vas a preparar el mensaje para que la inteligencia artificial te ayude a crear una publicación atractiva para tus redes, con la foto real de tu producto.</p>
+  <p class="lead">Vas a preparar el mensaje para que la inteligencia artificial cree tus piezas publicitarias para redes, listas para publicar, con la foto real de tu producto.</p>
   <ol class="ruta">
     <li><div><b>Responde aquí con tu cuadernillo del Taller 2</b><span>Casi todo ya lo tienes escrito. Unos 10 minutos.</span></div></li>
     <li><div><b>Copia tu instrucción con un botón</b><span>Se arma sola con tus datos.</span></div></li>
-    <li><div><b>Pégala en tu IA y recibe tus textos</b><span>Luego armas tu pieza en tu plantilla o en Canva.</span></div></li>
-    <li><div><b>Vuelve aquí y sube tu pieza terminada</b><span>En PNG, JPG o PDF. Así llega al equipo de Despega 360.</span></div></li>
+    <li><div><b>Pégala en ChatGPT o Gemini con la foto de tu producto</b><span>La IA te entrega 2 piezas terminadas.</span></div></li>
+    <li><div><b>Vuelve aquí y sube tus 2 piezas</b><span>Las imágenes que te dio la IA. Así llegan al equipo de Despega 360.</span></div></li>
   </ol>
-  <button class="atajo" type="button" data-ir="subir"><span class="ic" aria-hidden="true">📤</span><span>¿Ya terminaste tu pieza? <b>Súbela aquí</b></span></button>
+  <button class="atajo" type="button" data-ir="subir"><span class="ic" aria-hidden="true">📤</span><span>¿Ya tienes tus piezas? <b>Súbelas aquí</b></span></button>
   <h3>Lo que te va a entregar la IA</h3>
   <div class="entrega">
-    <span>📰 Un titular corto</span><span>🖼️ Texto para la imagen</span><span>✍️ El texto de la publicación</span>
-    <span>👉 3 llamados a la acción</span><span>🎨 Cómo debe verse</span><span>#️⃣ Hashtags</span><span>🧩 Pasos para armarla</span>
+    <span>🖼️ Una pieza para tu red principal</span><span>📱 Una pieza para estados de WhatsApp</span>
+    <span>✍️ El texto para publicar</span><span>#️⃣ Hashtags</span>
   </div>
   <details class="duda">
-    <summary>¿La IA va a crear la foto de mi producto?</summary>
-    <p>No. Tu pieza debe mostrar tu producto real. La IA solo te ayuda con los textos, los colores y cómo ordenar todo.</p>
+    <summary>¿La IA va a inventar mi producto?</summary>
+    <p>No. Usa la foto real que tú le subes: solo cambia el fondo, la luz y agrega los textos. Tu producto debe verse igual que en tu foto.</p>
   </details>
   <div class="nota"><span class="ic" aria-hidden="true">🔒</span><div>Lo que escribas se guarda solo en este celular o computadora mientras avanzas. Lo único que llega al equipo de Despega 360 es la pieza terminada que tú subas al final. No te pedimos tu nombre, teléfono ni carnet.</div></div>
 </section>
@@ -559,11 +559,10 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
   <p class="lead">Empecemos por lo básico.</p>
   <span class="lbl2">¿Con qué IA vas a trabajar?</span>
   <div class="opts">
-    <button class="opt" data-f="ia" data-v="ChatGPT"><span class="em">💬</span><span class="tx"><b>ChatGPT</b><small>Puedes subirle tu foto.</small></span></button>
-    <button class="opt" data-f="ia" data-v="Gemini"><span class="em">✨</span><span class="tx"><b>Gemini</b><small>Puedes subirle tu foto.</small></span></button>
-    <button class="opt" data-f="ia" data-v="Claude"><span class="em">🌀</span><span class="tx"><b>Claude</b><small>Puedes subirle tu foto.</small></span></button>
-    <button class="opt" data-f="ia" data-v="Meta AI"><span class="em">🟢</span><span class="tx"><b>Meta AI</b><small>Dentro de WhatsApp.</small></span></button>
+    <button class="opt" data-f="ia" data-v="ChatGPT"><span class="em">💬</span><span class="tx"><b>ChatGPT</b><small>Edita tu foto y arma tus piezas.</small></span></button>
+    <button class="opt" data-f="ia" data-v="Gemini"><span class="em">✨</span><span class="tx"><b>Gemini</b><small>Edita tu foto y arma tus piezas.</small></span></button>
   </div>
+  <p class="hint" style="margin-top:10px">Usamos estas dos porque pueden crear imágenes a partir de tu foto. Las dos tienen versión gratuita.</p>
   <p class="err" id="errIa" role="alert"></p>
 
   <div class="campo">
@@ -676,7 +675,7 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
 <!-- 5 · Dónde y cómo -->
 <section class="step" data-id="canal">
   <h2 tabindex="-1">Dónde vas a publicar</h2>
-  <p class="lead">Cada red usa un tamaño distinto. Lo calculamos por ti.</p>
+  <p class="lead">Cada red usa un tamaño distinto. Lo calculamos por ti. Además recibirás una segunda pieza para estados de WhatsApp.</p>
 
   <span class="lbl2"><span class="donde">📗 Taller 2, Paso 4</span> Tu canal principal</span>
   <div class="opts una">
@@ -733,16 +732,12 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
     <button class="opt" data-f="tips" data-multi data-v="real"><span class="em">✅</span><span class="tx"><b>Es mi producto de verdad</b><small>Sin filtros que cambien sus colores.</small></span></button>
   </div>
 
-  <div class="campo">
-    <label for="foto">Describe la foto que usarás</label>
-    <p class="hint">Qué se ve, el fondo y los colores.</p>
-    <textarea id="foto" data-f="foto" class="corto" maxlength="300"></textarea>
-  </div>
+  <div class="nota"><span class="ic" aria-hidden="true">📎</span><div><b>Tu foto es obligatoria.</b> Cuando pegues la instrucción en tu IA, adjunta la foto de tu producto en el mismo mensaje. La IA arma tus piezas con ella.</div></div>
 
-  <span class="lbl2">¿Vas a subir la foto al chat de la IA?</span>
-  <div class="opts">
-    <button class="opt" data-f="subir" data-v="si"><span class="em">📤</span><span class="tx"><b>Sí, la subiré</b><small>Así la IA la ve y te aconseja mejor.</small></span></button>
-    <button class="opt" data-f="subir" data-v="no"><span class="em">📝</span><span class="tx"><b>No, solo la describo</b></span></button>
+  <div class="campo">
+    <label for="foto">Describe tu foto <small class="opc">opcional</small></label>
+    <p class="hint">Ayuda a que la IA reconozca bien tu producto: qué se ve, cuántas unidades y sus colores.</p>
+    <textarea id="foto" data-f="foto" class="corto" maxlength="300"></textarea>
   </div>
 </section>
 
@@ -753,10 +748,10 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
     <div class="hilera h5c on"></div><div class="hilera h6c on"></div><div class="hilera h7c on"></div>
   </div>
   <h2 tabindex="-1">¡Tu instrucción está lista!</h2>
-  <p class="lead">Así podría ordenarse tu pieza. Es solo un boceto: la IA te dará los textos y tú pondrás tu foto real.</p>
+  <p class="lead">Así podría ordenarse tu pieza. Es solo un boceto: la IA creará tus 2 piezas con tu foto real.</p>
 
   <figure class="mockwrap">
-    <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Tu pieza llegó a Despega 360</span></div></div>
+    <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Tus piezas llegaron a Despega 360</span></div></div>
     <figcaption class="tam"></figcaption>
   </figure>
 
@@ -770,13 +765,13 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
   <ol class="pasos" id="pasos"></ol>
   <a class="abrir" id="abrir" href="#" target="_blank" rel="noopener">Abrir</a>
 
-  <div class="nota"><span class="ic" aria-hidden="true">💾</span><div>Cuando tengas tu pieza, guarda la versión editable y descárgala en PNG con el nombre <b>06_Pieza_comercial.png</b> en tu carpeta <b>Pieza_digital</b>.</div></div>
-  <div class="nota"><span class="ic" aria-hidden="true">🗣️</span><div>Si la IA escribe algo que no es cierto, como un descuento que no das o «hecho a mano» cuando no lo dijiste, respóndele: «eso no lo dije, quítalo».</div></div>
+  <div class="nota"><span class="ic" aria-hidden="true">💾</span><div>Para descargar cada pieza: toca la imagen y luego el botón de descarga (⤓). En computadora, pasa el mouse sobre la imagen y toca «Descargar».</div></div>
+  <div class="nota"><span class="ic" aria-hidden="true">🗣️</span><div>Si una pieza sale con una palabra mal escrita, un precio equivocado o tu producto cambiado, escríbele por ejemplo: «corrige el precio: es Bs 25» y espera la imagen nueva.</div></div>
 
   <div class="enviar">
-    <h3>Cuando tengas tu pieza lista…</h3>
-    <p>Vuelve a esta página y súbela: así llega al equipo de Despega 360. Esta página recuerda dónde te quedaste.</p>
-    <button class="pdfbtn" type="button" data-ir="subir"><span aria-hidden="true">📤</span><span>Ya terminé: subir mi pieza</span></button>
+    <h3>Cuando tengas tus 2 piezas…</h3>
+    <p>Vuelve a esta página y súbelas: así llegan al equipo de Despega 360. Esta página recuerda dónde te quedaste.</p>
+    <button class="pdfbtn" type="button" data-ir="subir"><span aria-hidden="true">📤</span><span>Ya terminé: subir mis piezas</span></button>
   </div>
 
   <div class="pdfbox">
@@ -796,8 +791,8 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
 
 <!-- 8 · Subir la pieza terminada -->
 <section class="step" data-id="subir">
-  <h2 tabindex="-1">Sube tu pieza terminada <span class="chispa" aria-hidden="true">🎬</span></h2>
-  <p class="lead">Cuando tengas tu pieza lista, súbela aquí. Llegará al equipo de Despega 360.</p>
+  <h2 tabindex="-1">Sube tus piezas <span class="chispa" aria-hidden="true">🎬</span></h2>
+  <p class="lead">Sube aquí las 2 piezas que te entregó la IA. Llegarán al equipo de Despega 360.</p>
 
   <div class="campo">
     <label for="nombre3">Nombre de tu negocio</label>
@@ -807,7 +802,7 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
   </div>
 
   <details class="duda" id="comoSacar">
-    <summary>¿Cómo guardo mi pieza para subirla?</summary>
+    <summary>¿Cómo descargo mis piezas de la IA?</summary>
     <ul class="tips" id="tips"></ul>
   </details>
 
@@ -815,30 +810,30 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
     <input type="file" id="archivos" multiple
       accept=".png,.jpg,.jpeg,.webp,.gif,.heic,.heif,.pdf,.ppt,.pptx,.odp,.doc,.docx,.odt,image/*,application/pdf">
     <span class="zic" aria-hidden="true">📤</span>
-    <b id="soltarTxt">Toca aquí para elegir tu pieza</b>
-    <small>Tu imagen en PNG o JPG (también PDF o PowerPoint). Hasta 5 archivos de 15 MB cada uno.</small>
+    <b id="soltarTxt">Toca aquí para elegir tus piezas</b>
+    <small>Las imágenes que te dio la IA (PNG o JPG). Puedes elegir las 2 a la vez. Hasta 5 archivos de 15 MB cada uno.</small>
   </label>
   <ul class="archivos" id="lista" aria-live="polite"></ul>
   <p class="err" id="errArch" role="alert"></p>
 
-  <button class="pdfbtn" id="btnSubir" type="button"><span aria-hidden="true">🚀</span><span id="txtSubir">Enviar mi pieza</span></button>
+  <button class="pdfbtn" id="btnSubir" type="button"><span aria-hidden="true">🚀</span><span id="txtSubir">Enviar mis piezas</span></button>
   <p class="estado" id="estadoSubir" aria-live="polite"></p>
 
   <div class="exito" id="exito" hidden>
     <div class="okic" aria-hidden="true">✅</div>
-    <h3>¡Tu pieza llegó!</h3>
-    <p>Ya la recibió el equipo de Despega 360. ¡Felicidades por tu publicidad!</p>
+    <h3 id="exitoTit">¡Tus piezas llegaron!</h3>
+    <p>Ya las recibió el equipo de Despega 360. ¡Felicidades por tu publicidad!</p>
     <ul id="exitoLista"></ul>
     <button class="cambiar" id="otraVez" type="button">Subir otro archivo</button>
   </div>
 </section>
 
-<p class="pie"><span class="ver-app" id="verApp">v2.0</span>Programa Despega 360, IFFI – UNIFRANZ/IPEE. Material elaborado con el apoyo financiero de la Unión Europea. Su contenido es responsabilidad exclusiva del IFFI y no refleja necesariamente los puntos de vista de la Unión Europea.</p>
+<p class="pie"><span class="ver-app" id="verApp">v2.1</span>Programa Despega 360, IFFI – UNIFRANZ/IPEE. Material elaborado con el apoyo financiero de la Unión Europea. Su contenido es responsabilidad exclusiva del IFFI y no refleja necesariamente los puntos de vista de la Unión Europea.</p>
 </main>
 
 <aside class="vitrina" aria-label="Vista previa de tu pieza">
   <div class="vit-top"><span class="anillo"><span class="pct">0%</span></span><div><b>Tu pieza en vivo</b><small id="vitSub">Se arma mientras respondes</small></div></div>
-  <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Tu pieza llegó a Despega 360</span></div></div>
+  <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Tus piezas llegaron a Despega 360</span></div></div>
   <p class="tam"></p>
 </aside>
 </div>
@@ -878,46 +873,35 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
 </div>
 
 <script type="text/plain" id="restoPrompt">
-Con esta información crea una propuesta de pieza publicitaria para mi emprendimiento.
+CÓMO TRABAJAR (sigue estos pasos en orden)
+1. Si en este mensaje NO recibiste la foto de mi producto, respóndeme solo esto: «Para crear tus piezas necesito la foto de tu producto. Adjúntala aquí, por favor.» y espera. No preguntes nada más.
+2. Cuando tengas la foto, no me hagas preguntas ni me pidas confirmación. Crea de inmediato la Pieza 1 y muéstramela. Termina ese mensaje solo con esta línea: «Escribe 2 y te entrego tu segunda pieza.»
+3. Cuando yo escriba 2, crea la Pieza 2 y, debajo, escribe la ENTREGA FINAL.
+4. Si un dato dice «(no lo indiqué)», no me lo preguntes: simplemente no lo uses.
 
-Antes de empezar, revisa mis datos. Si falta algo importante (producto, beneficio, precio o canal), pregúntame lo que falta, una pregunta a la vez, y espera mi respuesta antes de generar la publicación.
-
-EL RESULTADO DEBE INCLUIR
-- Titular principal: una frase corta (máximo 8 palabras) que llame inmediatamente la atención y se apoye en mi diferencia.
-- Texto para la imagen: máximo 20 palabras, sin contar el titular. Debe incluir el beneficio, el precio o la promoción y el llamado a la acción. No sobrecargar la pieza con demasiado texto.
-- Caption para acompañar la publicación: entre 40 y 80 palabras, con lenguaje sencillo, cercano y persuasivo. Debe mencionar el beneficio, mi diferencia, el precio o la promoción y cómo hacer el pedido. Menciona la práctica sostenible solo si yo la indiqué.
-- Llamados a la acción: crea 3 opciones cortas, de máximo 12 palabras cada una, en estilos distintos, orientadas a motivar una compra, consulta o pedido. Puedes elegir entre estos estilos:
-    · emocional;
-    · divertido;
-    · elegante o premium;
-    · urgencia;
-    · deseo o antojo;
-    · invitación directa a comprar.
-- Propuesta visual para la pieza: describe brevemente cómo debería verse, indicando:
-    · foto real principal y cómo tomarla (luz natural, fondo limpio, ángulo que muestre el producto);
-    · ubicación del nombre del producto;
-    · dónde destacar el precio;
-    · dónde colocar el llamado a la acción;
-    · dónde poner mi logo o nombre del negocio y el contacto;
-    · colores o estilo visual sugerido, de acuerdo con mi rubro y mi estilo.
-- Hashtags: sugiere entre 5 y 8 hashtags relacionados con el producto, el público y la ciudad.
-- Versión recomendada lista para copiar: elige la mejor opción de cada parte y júntalas en un solo bloque: titular, texto para la imagen, llamado a la acción, caption y hashtags.
-- Cómo armar la pieza: explícame en pasos cortos cómo llevar este texto a la plantilla de mi rubro (o a Canva, si no tengo la plantilla), con el tamaño según mi canal:
-    · 1080 × 1350 px para publicaciones de Facebook o Instagram;
-    · 1080 × 1920 px para estados de WhatsApp, historias o TikTok;
-    · 1080 × 1080 px para el catálogo de WhatsApp Business;
-    · al final, recuérdame guardar la versión editable y descargar la pieza en PNG con el nombre 06_Pieza_comercial.png, en mi carpeta Pieza_digital.
-- Solo si mi canal es TikTok: agrega un guion de video de 15 a 30 segundos en 3 escenas: un inicio que llame la atención, el producto en uso y el llamado a la acción.
+CÓMO DEBE SER CADA PIEZA
+- Usa mi foto real como base y edítala: puedes limpiar o cambiar el fondo, mejorar la luz y el encuadre, y agregar formas, colores y los textos indicados.
+- Mi producto debe quedar exactamente igual que en la foto: misma forma, colores, etiqueta y cantidad. No lo redibujes, no lo reemplaces por otro y no agregues productos que no vendo.
+- El producto es lo primero que se ve y ocupa al menos la mitad de la imagen.
+- Los textos van grandes, con buen contraste y fáciles de leer en un celular. No agregues otros textos: ni párrafos, ni hashtags, ni direcciones, ni números de teléfono.
+- Colores y estilo de acuerdo con mi estilo y mi rubro, con un fondo que haga resaltar el producto.
+- Deja libre un margen de 5 % en los bordes, sin textos ni partes importantes.
+- Si no puedes hacer la proporción exacta, usa la más cercana con la misma orientación.
+- Antes de mostrar cada imagen, revisa letra por letra que los textos estén bien escritos (con tildes y ñ) y que el precio sea exactamente el que te di. Si hay un error, corrige la imagen antes de mostrármela.
 
 REGLAS
-- Usa un lenguaje natural y fácil de entender. Evita palabras demasiado técnicas.
-- No inventes características, descuentos, precios, beneficios ni condiciones que no estén en la información proporcionada.
-- No uses palabras como "ecológico", "sostenible", "100% natural", "orgánico" o "hecho a mano" si no están en mi información.
+- No inventes características, descuentos, precios, beneficios ni condiciones que no estén en mis datos.
+- No uses palabras como "ecológico", "sostenible", "100% natural", "orgánico" o "hecho a mano" si no están en mis datos.
 - Si mi rubro es alimentos, no hagas afirmaciones de salud (por ejemplo: "cura", "adelgaza", "saludable", "sin químicos") ni menciones registros sanitarios que yo no indiqué.
-- No generes imágenes de mi producto con inteligencia artificial: la pieza debe mostrar mi producto real. Puedes sugerir fondos, colores o íconos.
-- Escribe los precios en bolivianos (Bs).
-- Donde vaya mi número de contacto, escribe [mi WhatsApp]; yo lo agregaré directamente en el diseño.
-- Si falta información importante, indícalo antes de generar la publicación.
+- No me expliques cómo diseñar ni me des pasos para Canva u otras herramientas. No me ofrezcas opciones ni alternativas: entrégame las piezas.
+- Usa un lenguaje sencillo y cercano.
+
+ENTREGA FINAL (después de la Pieza 2, solo esto)
+- La línea: «✅ Tus 2 piezas están listas. Descárgalas y súbelas en el Constructor Despega 360.»
+- Texto para publicar: de 40 a 70 palabras, sencillo y cercano, con el beneficio, mi diferencia, el precio o la promoción y cómo hacer el pedido. Menciona la práctica sostenible solo si la indiqué. Donde vaya mi número o mi usuario, escribe [mi contacto].
+- Hashtags: de 5 a 8, relacionados con el producto, el público y la ciudad.
+
+Si después te pido cambios, haz solo esos cambios y entrégame la imagen corregida.
 </script>
 
 <script>
@@ -925,7 +909,7 @@ REGLAS
   /* ---------- Envío a Drive ----------
      URL de la aplicación web de Apps Script (termina en /exec). Sin URL la app funciona en
      modo de prueba: no envía nada. ?api=<url> prueba otra URL sin guardarla. */
-  var VERSION = '2.0';
+  var VERSION = '2.1';
   var API_URL_DEFECTO = 'https://script.google.com/macros/s/AKfycbwNm7JM49fuQlkEdzz9uhjLU1TGo-jmRDw285m4YQCuklWA78M_7zZRQ0whICJXGWRv/exec';
   var QS = new URLSearchParams(location.search);
   var API_URL = (QS.get('api') || API_URL_DEFECTO).trim();
@@ -971,17 +955,24 @@ REGLAS
     benef:{'Artesanías':'Ej.: un regalo único que no encuentran en otro lado', 'Alimentos':'Ej.: un refrigerio rico y listo para llevar', 'Textiles':'Ej.: abrigo que no pica y dura varias temporadas', '':'Ej.: qué gana tu cliente al comprarte'}
   };
   var IA = {
-    'ChatGPT': {url:'https://chatgpt.com/', abrir:'Abrir ChatGPT', app:'la app de ChatGPT', nota:''},
-    'Gemini': {url:'https://gemini.google.com/app', abrir:'Abrir Gemini', app:'la app de Gemini', nota:''},
-    'Claude': {url:'https://claude.ai/new', abrir:'Abrir Claude', app:'la app de Claude', nota:''},
-    'Meta AI': {url:'https://www.meta.ai/', abrir:'Abrir Meta AI', app:'WhatsApp, en el chat de Meta AI (el círculo de colores)',
-      nota:'Estoy usando Meta AI dentro de WhatsApp: responde con mensajes cortos y sin tablas.'}
+    'ChatGPT': {url:'https://chatgpt.com/', abrir:'Abrir ChatGPT', app:'la app de ChatGPT',
+      nota:'Estoy usando ChatGPT: crea las imágenes con tu herramienta de imágenes, editando la foto que te adjunto.'},
+    'Gemini': {url:'https://gemini.google.com/app', abrir:'Abrir Gemini', app:'la app de Gemini',
+      nota:'Estoy usando Gemini: crea las imágenes con tu función para crear y editar imágenes, a partir de la foto que te adjunto.'}
   };
 
-  var DEF = {step:0, ia:'', nombre:'', rubro:'', prod:'', cliente:'', benef:'', pos:'', evid:'', msg:'', precio:'', consultar:false, promo:'', sost:'', canal:'', contacto:'', zona:'', estilo:[], tips:[], foto:'', subir:'', atajo:false};
+  var DEF = {step:0, ia:'', nombre:'', rubro:'', prod:'', cliente:'', benef:'', pos:'', evid:'', msg:'', precio:'', consultar:false, promo:'', sost:'', canal:'', contacto:'', zona:'', estilo:[], tips:[], foto:'', subir:'si', atajo:false};
   var S = load();
   function load(){
-    try { var raw = localStorage.getItem(KEY); if (raw) return Object.assign({}, DEF, JSON.parse(raw)); } catch(e){}
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw){
+        var o = Object.assign({}, DEF, JSON.parse(raw));
+        if (o.ia !== 'ChatGPT' && o.ia !== 'Gemini') o.ia = '';   // v2.1: solo estas dos crean las piezas
+        o.subir = 'si';                                           // la foto es obligatoria
+        return o;
+      }
+    } catch(e){}
     return JSON.parse(JSON.stringify(DEF));
   }
   function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
@@ -1061,34 +1052,59 @@ REGLAS
     if (!p && !e) return '';
     return (p ? punto(p) : '[sin frase de posicionamiento].') + (e ? ' Evidencia: ' + punto(e) : '');
   }
-  var FALTA = '[No lo escribí: pregúntamelo]';
+  var NO = '(no lo indiqué)';
   function punto(t){ t = String(t).trim(); return /[.!?…]$/.test(t) ? t : t + '.'; }
 
+  // Las 2 piezas: la del canal elegido y una para estados de WhatsApp
+  // (si su canal ya es vertical alto, la segunda es para Facebook o Instagram).
+  var PARA = {'Estado de WhatsApp':'un estado de WhatsApp', 'Catálogo de WhatsApp Business':'el catálogo de WhatsApp Business',
+    'Facebook':'una publicación de Facebook', 'Instagram':'una publicación de Instagram', 'TikTok':'una publicación de fotos en TikTok'};
+  var FEED = {para:'una publicación de Facebook o Instagram', ar:'4:5', px:'1080 × 1350 px', forma:'vertical'};
+  var ESTADO = {para:'estados de WhatsApp e historias', ar:'9:16', px:'1080 × 1920 px', forma:'vertical alto'};
+  function formatos(){
+    var t = TAM[S.canal];
+    if (!t) return [FEED, ESTADO];
+    var p1 = {para:PARA[S.canal], ar:t.ar.replace(' / ', ':'), px:t.px, forma:t.forma};
+    return [p1, p1.ar === '9:16' ? FEED : ESTADO];
+  }
+
   function buildPrompt(){
-    var fotoDesc = val(S.foto, '');
-    var foto = fotoDesc ? fotoDesc : (S.subir === 'si' ? 'La subiré a este chat.' : FALTA);
-    if (fotoDesc && S.subir === 'si') foto = punto(foto) + ' La subiré a este chat junto con este mensaje.';
-    var L = [];
-    L.push('Actúa como especialista en marketing, publicidad y creación de contenido para redes sociales, especialmente para pequeños emprendimientos de artesanías, alimentos y textiles en Bolivia.');
+    var pr = precioTxt(), promo = val(S.promo, ''), cont = val(S.contacto, 'WhatsApp'), desc = val(S.foto, '');
+    if (promo && /^ningun[ao]$/i.test(promo)) promo = '';
+    var P = formatos(), L = [];
+    L.push('Actúa como diseñadora gráfica publicitaria para pequeños emprendimientos de artesanías, alimentos y textiles en Bolivia.');
     L.push('');
-    L.push('Quiero crear una pieza publicitaria atractiva, clara y fácil de entender para promocionar mi producto o servicio, usando una foto real de mi producto.');
+    L.push('Tu trabajo en este chat es ENTREGARME 2 IMÁGENES PUBLICITARIAS TERMINADAS, listas para publicar, hechas con la foto real de mi producto que te adjunto en este mismo mensaje. No quiero consejos ni instrucciones: quiero las imágenes.');
     L.push('');
-    L.push('INFORMACIÓN DE MI EMPRENDIMIENTO');
-    L.push('- Nombre del negocio: ' + val(S.nombre, FALTA));
-    L.push('- Rubro: ' + val(S.rubro, FALTA));
-    L.push('- Producto o servicio que quiero promocionar: ' + val(S.prod, FALTA));
-    L.push('- Cliente al que quiero llegar: ' + val(S.cliente, FALTA));
-    L.push('- Principal beneficio para el cliente: ' + val(S.benef, FALTA));
-    L.push('- Por qué me eligen (mi diferencia comprobable): ' + val(difTxt(), FALTA));
-    L.push('- Mensaje comercial que elegí: ' + val(S.msg, 'ninguno'));
-    L.push('- Precio en Bs: ' + (S.consultar ? 'consultar' : val(String(S.precio).replace('.', ','), FALTA)));
-    L.push('- Promoción u oferta especial: ' + val(S.promo, 'ninguna'));
-    L.push('- Práctica sostenible real de mi emprendimiento: ' + val(S.sost, 'ninguna'));
-    L.push('- Ciudad o zona donde vendo: ' + val(S.zona, FALTA));
-    L.push('- Medio de contacto: ' + val(S.contacto, FALTA));
-    L.push('- Canal donde publicaré: ' + val(S.canal, FALTA) + (TAM[S.canal] ? ' (tamaño ' + TAM[S.canal].px + ')' : ''));
-    L.push('- Estilo que quiero transmitir: ' + (S.estilo.length ? S.estilo.join(', ') : FALTA));
-    L.push('- Foto real que usaré: ' + foto);
+    L.push('MIS DATOS');
+    L.push('- Nombre del negocio: ' + val(S.nombre, NO));
+    L.push('- Rubro: ' + val(S.rubro, NO));
+    L.push('- Producto que promociono: ' + val(S.prod, NO));
+    L.push('- Cliente al que quiero llegar: ' + val(S.cliente, NO));
+    L.push('- Beneficio principal para mi cliente: ' + val(S.benef, NO));
+    L.push('- Por qué me eligen (mi diferencia comprobable): ' + val(difTxt(), NO));
+    L.push('- Mensaje comercial: ' + (val(S.msg, '') && !/^ningun[oa]$/i.test(S.msg.trim()) ? S.msg.trim() : NO));
+    L.push('- Precio: ' + (pr === 'consultar' ? 'a consultar' : val(pr, NO)));
+    L.push('- Promoción u oferta: ' + (promo || 'ninguna'));
+    L.push('- Práctica sostenible real: ' + (val(S.sost, '') && !/^ningun[ao]$/i.test(S.sost.trim()) ? S.sost.trim() : 'ninguna'));
+    L.push('- Ciudad o zona donde vendo: ' + val(S.zona, NO));
+    L.push('- Medio de contacto: ' + cont);
+    L.push('- Estilo que quiero transmitir: ' + (S.estilo.length ? S.estilo.join(', ') : NO));
+    L.push('- Foto de mi producto: adjunta en este mensaje.' + (desc ? ' Lo que se ve: ' + punto(desc) : ''));
+    L.push('');
+    L.push('LAS 2 PIEZAS');
+    P.forEach(function(p, i){ L.push('- Pieza ' + (i + 1) + ', para ' + p.para + ': formato ' + p.forma + ' ' + p.ar + ' (' + p.px + ').'); });
+    L.push('- Las dos con el mismo diseño, adaptado a cada formato.');
+    L.push('');
+    L.push('TEXTOS QUE VAN DENTRO DE CADA PIEZA (solo estos, en español)');
+    L.push('- Titular: créalo tú, de máximo 6 palabras, a partir de mi diferencia o de mi beneficio.');
+    if (pr === 'consultar') L.push('- Precio: «Consulta el precio», dentro de una etiqueta llamativa.');
+    else if (pr) L.push('- Precio: «' + pr + '», dentro de un círculo o una etiqueta llamativa.');
+    else L.push('- Precio: no lo indiqué, así que no pongas precio.');
+    if (promo) L.push('- Promoción: «' + promo + '».');
+    L.push('- Llamado a la acción: créalo tú, de máximo 4 palabras, invitando a pedir por ' + cont + '.');
+    L.push('- Nombre del negocio: «' + val(S.nombre, '') + '».');
+    L.push('- Contacto: el ícono de ' + cont + ' y la palabra «' + cont + '». No escribas números de teléfono.');
     L.push('');
     L.push(document.getElementById('restoPrompt').textContent.trim());
     if (IA[S.ia] && IA[S.ia].nota){ L.push(''); L.push(IA[S.ia].nota); }
@@ -1122,7 +1138,7 @@ REGLAS
   // Cuánto de la pieza ya tiene datos (anillo de avance)
   function avance(){
     var k = [S.ia, S.nombre, S.rubro, S.prod, S.cliente, S.benef, S.pos, S.evid, S.consultar || val(S.precio, ''),
-      S.canal, S.contacto, S.zona, S.estilo.length, val(S.foto, '') || S.subir];
+      S.canal, S.contacto, S.zona, S.estilo.length, val(S.foto, '') || S.tips.length];
     var n = k.filter(function(x){ return typeof x === 'string' ? !!x.trim() : !!x; }).length;
     return Math.round(n / k.length * 100);
   }
@@ -1168,7 +1184,7 @@ REGLAS
     h += fila('Tu diferencia', esc(val(S.pos,'')) || pend, 3);
     h += fila('Precio', esc(val(precioTxt(),'')) || pend, 4);
     h += fila('Canal y estilo', esc([val(S.canal,''), S.estilo.join(', ')].filter(Boolean).join(', ')) || pend, 5);
-    h += fila('Foto', S.subir === 'si' ? 'La subirás al chat' : (val(S.foto,'') ? 'Descrita' : pend), 6);
+    h += fila('Foto', 'La adjuntarás en el chat de tu IA', 6);
     $('#resumen').innerHTML = h;
 
     var ia = IA[S.ia] || IA['Gemini'];
@@ -1176,9 +1192,10 @@ REGLAS
     $('#pasos').innerHTML =
       '<li>Toca «Copiar mi instrucción» aquí arriba.</li>' +
       '<li>Abre ' + ia.app + ' y empieza un chat nuevo.</li>' +
-      (S.subir === 'si' ? '<li>Toca el clip o el botón «+» y elige la foto de tu producto.</li>' : '') +
-      '<li>Mantén el dedo sobre el cuadro de escribir y toca «Pegar». En computadora: Ctrl + V.</li>' +
-      '<li>Envía. Si la IA te pregunta algo que falta, respóndele con calma.</li>';
+      '<li>Toca el clip o el botón «+» y elige la foto de tu producto.</li>' +
+      '<li>Mantén el dedo sobre el cuadro de escribir, toca «Pegar» y envía la foto con la instrucción en el mismo mensaje. En computadora: Ctrl + V.</li>' +
+      '<li><span>Recibirás tu primera pieza. Escribe <b>2</b> y recibirás la segunda, con el texto para publicar.</span></li>' +
+      '<li>Descarga las dos imágenes y vuelve aquí a subirlas.</li>';
     $('#preview').value = buildPrompt();
     $('#txtCopiar').textContent = 'Copiar mi instrucción';
     $('#btnCopiar').classList.remove('ok');
@@ -1262,7 +1279,7 @@ REGLAS
     row('Canal', val(S.canal, P) + (TAM[S.canal] ? ' (' + TAM[S.canal].px + ')' : ''));
     row('Contacto', val(S.contacto, P)); row('Zona', val(S.zona, P));
     row('Estilo', S.estilo.length ? S.estilo.join(', ') : P);
-    row('Foto', val(S.foto, S.subir === 'si' ? 'La sube al chat' : P) + (val(S.foto,'') && S.subir === 'si' ? ' (también la sube al chat)' : ''));
+    row('Foto', 'La adjunta en el chat de su IA' + (val(S.foto,'') ? '. Descripción: ' + S.foto.trim() : ''));
     var TIPS = {luz:'luz natural', fondo:'fondo limpio', angulo:'producto bien visible', real:'producto real, sin filtros'};
     row('Revisó en su foto', S.tips.length ? S.tips.map(function(t){ return TIPS[t]; }).join(', ') : 'Nada marcado');
     row('Herramienta de IA', val(S.ia, P));
@@ -1294,13 +1311,13 @@ REGLAS
     doc.setFont('helvetica','normal'); doc.text(latin('[mi ' + val(S.contacto, 'WhatsApp') + ']'), bx + bw - 3, by + bh - 4, {align:'right'});
     doc.setFont('helvetica','normal'); doc.setFontSize(10);
     var nota = doc.splitTextToSize(latin('Formato: ' + (S.canal ? S.canal + ', ' + tm.px + ' (' + tm.forma + ')' : 'sin canal elegido') +
-      '. Colores del estilo ' + (S.estilo[0] || 'sin elegir') + '. Es solo un boceto: la IA da los textos y la pieza lleva la foto real del producto.'), W - 2*M - bw - 16);
+      '. Colores del estilo ' + (S.estilo[0] || 'sin elegir') + '. Es solo un boceto: la IA crea las 2 piezas con la foto real del producto.'), W - 2*M - bw - 16);
     doc.setTextColor('#2A1338'); doc.text(nota, bx + bw + 10, by + 6);
     y = by + Math.max(bh, nota.length * 4.6) + 6;
 
     sec('6. Siguiente paso');
     doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
-    var sig = doc.splitTextToSize(latin('Pegar la instrucción en ' + (S.ia || 'su IA') + ', revisar los textos que proponga, armar la pieza con la foto real del producto y guardarla en PNG como 06_Pieza_comercial.png en su carpeta Pieza_digital. Después, subirla en el Constructor Despega 360 para enviarla al equipo del programa.'), W - 2*M);
+    var sig = doc.splitTextToSize(latin('Pegar la instrucción en ' + (S.ia || 'su IA') + ', adjuntar la foto real de su producto, recibir las 2 piezas terminadas, descargarlas y subirlas en el Constructor Despega 360 para enviarlas al equipo del programa.'), W - 2*M);
     salto(sig.length * 5 + 2); doc.setFont('helvetica','normal'); doc.setFontSize(10.5); doc.setTextColor('#2A1338');
     doc.text(sig, M, y); y += sig.length * 5;
 
@@ -1312,7 +1329,7 @@ REGLAS
     var LH = 3.9;
     buildPrompt().split('\n').forEach(function(ln){
       if (ln.trim() === ''){ y += 1.8; return; }
-      var tit = /^[A-ZÁÉÍÓÚÑ ]{8,}$/.test(ln.trim()) || /^El resultado debe incluir/.test(ln) || /^Reglas$/.test(ln.trim());
+      var tit = /^[A-ZÁÉÍÓÚÑ0-9 ]{8,}( \(.*\))?$/.test(ln.trim()) || /^El resultado debe incluir/.test(ln) || /^Reglas$/.test(ln.trim());
       if (tit){ y += 1.5; doc.setFont('helvetica','bold'); doc.setFontSize(9.5); doc.setTextColor('#5B2A86'); }
       else { doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor('#2A1338'); }
       var sang = /^\s+/.test(ln) ? 5 : 0;
@@ -1396,14 +1413,13 @@ REGLAS
   var ARCH = [], subiendo = false;   // {f, orig, nombre, tam, estado:''|'sube'|'ok'|'error', id, ts, parte, total, mini}
   var REAL = {f:null, url:'', ar:''};   // la imagen que sube, mostrada en el celular
   var COMO = [
-    ['Canva', 'toca «Compartir» → «Descargar» → elige <b>PNG</b> → «Descargar». Sube ese archivo.'],
-    ['Plantilla en PowerPoint', 'Archivo → Exportar → cambia el tipo a <b>PNG</b> → «Solo esta diapositiva». También puedes subir el archivo editable (.pptx).'],
-    ['Google Presentaciones', 'Archivo → Descargar → <b>Imagen PNG</b>.'],
-    ['En el celular', 'guarda la imagen en tu galería y elígela aquí.']
+    ['ChatGPT', 'toca la imagen y luego el botón de descarga (⤓). En computadora: pasa el mouse sobre la imagen → «Descargar».'],
+    ['Gemini', 'toca la imagen y luego «Descargar» (⤓). En computadora: el botón de descarga aparece sobre la imagen.'],
+    ['En el celular', 'las imágenes quedan en tu galería o en Descargas: elígelas aquí.']
   ];
   function pintarTips(){
     $('#tips').innerHTML = COMO.map(function(c){ return '<li><b>' + c[0] + '</b>: ' + c[1] + '</li>'; }).join('') +
-      '<li>¿No logras descargarla? Toma una captura de pantalla de tu pieza y súbela.</li>';
+      '<li>¿No logras descargarlas? Toma una captura de pantalla de cada pieza y súbelas.</li>';
   }
   function extDe(n){ var m = /\.([a-z0-9]{2,5})$/i.exec(n || ''); return m ? m[1].toLowerCase() : ''; }
   function icono(n){
@@ -1455,9 +1471,9 @@ REGLAS
     $('#btnSubir').disabled = subiendo;
     $('#btnSubir').hidden = ARCH.length > 0 && pend === 0;
     $('#txtSubir').textContent = subiendo ? 'Enviando… no cierres esta página' :
-      ARCH.some(function(a){ return a.estado === 'error'; }) ? 'Reintentar el envío' : (pend > 1 ? 'Enviar mis ' + pend + ' archivos' : 'Enviar mi pieza');
+      ARCH.some(function(a){ return a.estado === 'error'; }) ? 'Reintentar el envío' : (pend > 1 ? 'Enviar mis ' + pend + ' piezas' : pend === 1 ? 'Enviar mi pieza' : 'Enviar mis piezas');
     $('#soltar').classList.toggle('con', ARCH.length > 0);
-    $('#soltarTxt').textContent = ARCH.length ? 'Agregar otro archivo' : 'Toca aquí para elegir tu pieza';
+    $('#soltarTxt').textContent = ARCH.length ? 'Agregar otro archivo' : 'Toca aquí para elegir tus piezas';
     piezaReal();
   }
   // La primera imagen que elige se muestra en el celular, en lugar del boceto.
@@ -1493,7 +1509,7 @@ REGLAS
     var est = $('#estadoSubir'); est.textContent = '';
     if (!val(S.nombre, '')){ $('#errNombre3').textContent = 'Escribe el nombre de tu negocio.'; $('#nombre3').focus(); return; }
     var pend = ARCH.filter(function(a){ return a.estado !== 'ok'; });
-    if (!pend.length){ $('#errArch').textContent = 'Primero elige el archivo de tu pieza.'; return; }
+    if (!pend.length){ $('#errArch').textContent = 'Primero elige las imágenes de tus piezas.'; return; }
     subiendo = true;
     // Los archivos de un mismo envío comparten hora y numeración «(1 de 3)»; al reintentar se conservan.
     var nuevos = pend.filter(function(a){ return !a.id; });
@@ -1517,13 +1533,14 @@ REGLAS
     if (!fallos.length){
       $('#exitoLista').innerHTML = ARCH.map(function(a){ return '<li>' + icono(a.nombre) + ' ' + esc(a.orig) + '</li>'; }).join('') +
         (API_OK ? '' : '<li><small>(Modo de prueba: no se envió a Drive.)</small></li>');
+      $('#exitoTit').textContent = ARCH.length > 1 ? '¡Tus piezas llegaron!' : '¡Tu pieza llegó!';
       $('#exito').hidden = false; $('#exito').scrollIntoView({behavior: REDUCE ? 'auto' : 'smooth', block:'center'});
       celebrar();
       S.subidos = (S.subidos || 0) + pend.length; save();
     } else if (codigo === 'cerrada'){
       est.textContent = 'La recepción de piezas está cerrada en este momento. Consulta con el equipo de Despega 360.';
     } else if (codigo === 'invalido'){
-      est.textContent = 'No se aceptó: ' + fallos.join(', ') + '. Quítalo y sube tu pieza en PNG, JPG o PDF.';
+      est.textContent = 'No se aceptó: ' + fallos.join(', ') + '. Quítalo y sube tus piezas en PNG o JPG.';
     } else {
       est.textContent = 'No se pudo subir ' + (fallos.length === 1 ? 'un archivo' : fallos.length + ' archivos') + ', quizá por la conexión. Revisa tu internet y toca «Reintentar el envío».';
     }
@@ -1780,13 +1797,13 @@ REGLAS
     $$('#weave .hilera').forEach(function(r, i){ r.classList.toggle('on', i < n); });
     $('#weaveLbl').innerHTML = S.step === 0 ? 'Cada paso que completes teje una hilera de tu aguayo.'
       : S.step === LISTO ? '<b>Aguayo completo.</b> Tu instrucción está lista.'
-      : S.step === SUBIR ? '<b>Último paso:</b> sube tu pieza terminada.'
+      : S.step === SUBIR ? '<b>Último paso:</b> sube tus 2 piezas.'
       : '<b>Paso ' + S.step + ' de ' + ROWS + ':</b> ' + STEPS[S.step].t;
     $('#vitSub').textContent = S.step === 0 ? 'Se arma mientras respondes' : S.step === LISTO ? 'Así podría verse tu publicación'
       : S.step === SUBIR ? 'Aquí aparece la pieza que subas' : 'Paso ' + S.step + ' de ' + ROWS + ' · ' + STEPS[S.step].t;
     $('#atras').hidden = S.step === 0;
     $('#sig').hidden = S.step === SUBIR;
-    $('#sig').textContent = S.step === 0 ? 'Empezar' : S.step === LISTO ? 'Ya terminé: subir mi pieza' : (S.step === LISTO - 1 ? 'Armar mi instrucción' : 'Siguiente');
+    $('#sig').textContent = S.step === 0 ? 'Empezar' : S.step === LISTO ? 'Ya terminé: subir mis piezas' : (S.step === LISTO - 1 ? 'Armar mi instrucción' : 'Siguiente');
     $('#btnVer').hidden = S.step === 0 || S.step === LISTO;
     $('.precio').classList.toggle('lleno', !S.consultar && !!val(S.precio, ''));
     vivo();
@@ -1795,7 +1812,7 @@ REGLAS
     checkPrivacy();
   }
 
-  /* ---------- Panel técnico (?admin=1 o tres toques en «v2.0») ---------- */
+  /* ---------- Panel técnico (?admin=1 o tres toques en «v2.1») ---------- */
   function admLog(m){ var l = $('#admLog'); l.textContent = (l.textContent === 'Listo.' ? '' : l.textContent + '\n') + m; l.scrollTop = 1e9; }
   function abrirAdmin(){
     $('#admUrl').textContent = API_OK ? API_URL + (QS.get('api') ? '  (de ?api=)' : '  (del archivo)') : 'SIN CONFIGURAR (modo de prueba): falta la URL /exec en API_URL_DEFECTO';

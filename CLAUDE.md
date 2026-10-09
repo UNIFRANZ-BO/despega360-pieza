@@ -48,7 +48,8 @@ suben las emprendedoras va a una carpeta de Drive, con una subcarpeta por negoci
     entrega final (cómo descargar en una línea, caption 40–80 palabras con el WhatsApp, 5–8 hashtags, recordatorio).
   - **Edición de la foto como camino principal**; el armado con código (Python) solo si tras 2 intentos el texto sigue mal
     o el producto cambió (si fuera el principal, ChatGPT y Gemini volverían a dar resultados distintos).
-  - **Se mantienen las 2 piezas** (decisión anterior de Rafael), no una sola.
+  - ~~Se mantienen las 2 piezas~~ → **v2.3: UNA sola pieza**, en el tamaño del canal elegido (`formato()`; sin canal, 4:5).
+    Rafael probó y la IA le entregó solo una: se quitó la Pieza 2 de la instrucción y de todos los textos de la app.
   - **Todos los datos son obligatorios en la app** (`REQ` y `validar()`, aviso «Para seguir, completa: …» al final de cada
     paso): así la IA no tiene que pedir nada, salvo la foto. Sin «consultar» en el precio. Nuevos campos: **número de
     WhatsApp** (`wa`, 8 dígitos 6/7, va impreso en la pieza; el aviso de números de teléfono no se aplica a ese campo),
@@ -81,7 +82,7 @@ suben las emprendedoras va a una carpeta de Drive, con una subcarpeta por negoci
   (el script v2 sigue aceptando `pdf` de la app v1)
   → `{ok,id}` · `{ok,id,repetido:true}` · `{ok:false, codigo:'cerrada'|'invalido'|'limite'|'error'}`.
 - Clave local: borrador `despega360-pieza-v1` (la misma del original). Los `PRUEBA-…` quedan sueltos en la carpeta principal.
-- Panel técnico: `?admin=1` o tres toques en «v2.2». `?api=<url>` prueba otra URL; `?api=sin-url` fuerza modo de prueba.
+- Panel técnico: `?admin=1` o tres toques en «v2.3». `?api=<url>` prueba otra URL; `?api=sin-url` fuerza modo de prueba.
 
 ## Estado (09-oct-2026)
 - [x] App, script y pruebas locales en verde.
@@ -91,7 +92,8 @@ suben las emprendedoras va a una carpeta de Drive, con una subcarpeta por negoci
 - [x] v2.0 publicada (09-oct-2026): script «Nueva versión» (`ping` → `version_app: "2.0"`), app en línea, PDF `PRUEBA-` subido OK.
 - [x] v2.1 publicada (09-oct-2026): instrucción nueva (2 piezas terminadas). Script sin cambios (sigue v2.0).
 - [x] v2.2 publicada (09-oct-2026): instrucción de Rafael mejorada (ortografía, aprobación, datos obligatorios, WhatsApp, logo).
-      **Enlace vigente: https://unifranz-bo.github.io/despega360-pieza/?v=5**
+- [x] v2.3 publicada (09-oct-2026): una sola pieza.
+      **Enlace vigente: https://unifranz-bo.github.io/despega360-pieza/?v=6**
 - [ ] Prueba real desde el celular; luego `borrarPruebas` y borrar a mano subcarpetas de prueba.
 
 ## Comandos

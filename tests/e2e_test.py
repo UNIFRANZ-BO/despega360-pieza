@@ -104,7 +104,7 @@ async def recorrido(pg, ancho):
     await sig(pg, 2200)
     assert await paso_actual(pg) == 'listo'
     assert await pg.is_visible('#btnCopiar'), 'copiar debe estar disponible sin enviar nada'
-    assert await pg.inner_text('#sig') == 'Ya terminé: subir mis piezas'
+    assert await pg.inner_text('#sig') == 'Ya terminé: subir mi pieza'
     await sin_desborde(pg)
     await pg.screenshot(path=str(SHOTS / f'{ancho}_07_final.png'), full_page=True)
 
@@ -123,14 +123,15 @@ async def main():
             await pg.goto(url); await pg.wait_for_timeout(1200)
             await recorrido(pg, ancho)
 
-            # Copiar: la instrucción pide 2 piezas terminadas, sin guías
+            # Copiar: la instrucción pide UNA pieza terminada, sin guías
             await pg.click('#btnCopiar'); await pg.wait_for_timeout(300)
             clip = await pg.evaluate('navigator.clipboard.readText()')
             assert clip.startswith('Actúa como especialista en marketing, publicidad y diseño de contenido'), clip[:300]
             assert 'Delicias del Valle' in clip and 'Quillacollo' in clip and '- Precio: Bs 25' in clip and '- Promoción u oferta especial: 2x1' in clip
             assert '- Número de WhatsApp para pedidos: 71234567 (irá impreso en la pieza)' in clip and '- Logo: no tengo' in clip
-            assert 'Pieza 1, para una publicación de Instagram: 1080 × 1350 px (formato vertical 4:5)' in clip, clip
-            assert 'Pieza 2, para estados de WhatsApp e historias: 1080 × 1920 px (formato vertical alto 9:16)' in clip
+            assert '- Para una publicación de Instagram: 1080 × 1350 px (formato vertical 4:5).' in clip, clip
+            assert 'Pieza 2' not in clip and '2 piezas' not in clip and 'mi pieza publicitaria como una imagen terminada' in clip
+            assert 'Sube tu pieza en el Constructor Despega 360' in clip
             assert 'Revisa la ortografía de mis datos' in clip and '4. Correcciones' in clip and '¿Los uso así o quieres cambiar algo?' in clip
             assert 'Estoy usando Gemini' in clip and 'Mensaje comercial' not in clip and '(no lo indiqué)' not in clip
 
@@ -155,7 +156,7 @@ async def main():
             assert await pg.locator('#lista li').count() == 3
             await pg.click('#lista li:nth-child(3) .quitar'); await pg.wait_for_timeout(200)
             assert await pg.locator('#lista li').count() == 2
-            assert await pg.inner_text('#txtSubir') == 'Enviar mis 2 piezas'
+            assert await pg.inner_text('#txtSubir') == 'Enviar mis 2 archivos'
             # la pieza real aparece en el celular, con su proporción
             assert await pg.evaluate("!!document.querySelector('.screen .m-real')"), 'la pieza real no aparece en el celular'
             assert (await pg.evaluate("document.querySelector('.screen').style.aspectRatio")).replace(' ', '') == '1080/1350'
@@ -177,7 +178,7 @@ async def main():
             orig = (TMP / 'foto_producto.jpg').stat().st_size
             assert env[1]['bytes'] < orig, f'la foto debía achicarse ({env[1]["bytes"]} ≥ {orig})'
             print(f'   foto: {orig // 1024} KB → {env[1]["bytes"] // 1024} KB')
-            assert '¡Tus piezas llegaron!' in await pg.inner_text('#exito')
+            assert '¡Tus archivos llegaron!' in await pg.inner_text('#exito')
             await pg.screenshot(path=str(SHOTS / f'{ancho}_09_subido.png'))
 
             # Sin internet: falla, se reintenta y no se duplica
@@ -237,8 +238,8 @@ async def main():
         await pg.reload(); await pg.wait_for_timeout(1200)
         txt = await pg.input_value('#preview')
         assert 'Estoy usando' not in txt, 'la IA vieja (Claude) debía limpiarse'
-        assert 'Pieza 1, para un estado de WhatsApp: 1080 × 1920 px (formato vertical alto 9:16)' in txt, txt
-        assert 'Pieza 2, para una publicación de Facebook o Instagram: 1080 × 1350 px' in txt
+        assert '- Para un estado de WhatsApp: 1080 × 1920 px (formato vertical alto 9:16).' in txt, txt
+        assert 'Pieza 2' not in txt
         assert '- Precio: (no lo indiqué)' in txt
         assert 'Abrir Gemini' in await pg.inner_text('#abrir')
         print('OK datos antiguos y canal vertical')

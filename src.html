@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0C0216">
+<title>Despega 360 – Arma tu pieza publicitaria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* ═══════════ Despega 360 · Pieza publicitaria · «gran estreno» (v1.0) ═══════════ */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@property --p{syntax:"<number>";inherits:true;initial-value:0}
+:root{
+  color-scheme:dark;
+  --bg0:#0C0216; --bg1:#1C0633; --bg2:#3E0B55;
+  --card:rgba(255,255,255,.055); --card2:rgba(255,255,255,.09); --solid:#1E0A31;
+  --ink:#FFF4FB; --ink2:#D6BEE4; --line:rgba(255,255,255,.15);
+  --accent:#FFC94D; --soft:rgba(255,201,77,.10);
+  --naranja:#FF7A2E; --fucsia:#FF3D8B; --maiz:#FFC21A; --verde:#1FBF8A; --turq:#22C3DD; --rojo:#FF5A4F; --morado:#9B5BE0;
+  --aguayo:conic-gradient(from var(--ang),#FF3D8B,#FF7A2E,#FFC21A,#1FBF8A,#22C3DD,#9B5BE0,#FF3D8B);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg0)}
+body{margin:0;min-height:100%;color:var(--ink);background:transparent;
+  font:400 18px/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;line-height:1.12;margin:0}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--maiz);outline-offset:3px}
+::selection{background:rgba(255,61,139,.45)}
+
+/* ---------- Fondo: escenario de estreno ---------- */
+.fondo{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background:radial-gradient(130% 85% at 50% -15%,var(--bg2) 0%,var(--bg1) 42%,var(--bg0) 100%)}
+.blob{position:absolute;border-radius:50%;opacity:.6;will-change:transform}
+.blob.b1{width:70vmax;height:60vmax;left:-28vmax;top:-22vmax;background:radial-gradient(closest-side,rgba(255,61,139,.55),transparent);animation:d1 22s ease-in-out infinite alternate}
+.blob.b2{width:60vmax;height:55vmax;right:-26vmax;top:12vh;background:radial-gradient(closest-side,rgba(34,195,221,.38),transparent);animation:d2 28s ease-in-out infinite alternate}
+.blob.b3{width:65vmax;height:45vmax;left:5vw;bottom:-26vmax;background:radial-gradient(closest-side,rgba(255,122,46,.42),transparent);animation:d3 34s ease-in-out infinite alternate}
+@keyframes d1{to{transform:translate(16vmax,14vmax) scale(1.15)}}
+@keyframes d2{to{transform:translate(-18vmax,8vmax) scale(.9)}}
+@keyframes d3{to{transform:translate(12vmax,-10vmax) scale(1.12)}}
+/* Reflectores que barren el escenario */
+.reflector{position:absolute;top:-12vh;width:46vmax;height:135vh;transform-origin:50% 0;mix-blend-mode:screen;opacity:.55;
+  -webkit-mask:linear-gradient(#000 8%,transparent 88%);mask:linear-gradient(#000 8%,transparent 88%)}
+.reflector::before{content:"";position:absolute;inset:0;clip-path:polygon(47% 0,53% 0,100% 100%,0 100%);
+  background:linear-gradient(var(--c),transparent 92%)}
+.reflector.r1{left:-14vmax;--c:rgba(255,61,139,.55);animation:barre1 13s ease-in-out infinite alternate}
+.reflector.r2{right:-14vmax;--c:rgba(255,194,26,.42);animation:barre2 16s ease-in-out infinite alternate}
+.reflector.r3{left:calc(50% - 23vmax);--c:rgba(34,195,221,.28);animation:barre3 19s ease-in-out infinite alternate}
+@keyframes barre1{from{transform:rotate(-38deg)}to{transform:rotate(4deg)}}
+@keyframes barre2{from{transform:rotate(36deg)}to{transform:rotate(-6deg)}}
+@keyframes barre3{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+/* Piso de neón */
+.piso{position:absolute;left:-60%;right:-60%;bottom:-2px;height:36vh;min-height:200px;transform:perspective(340px) rotateX(64deg);transform-origin:50% 100%;opacity:.55;
+  background:
+    linear-gradient(rgba(255,61,139,.75) 2px,transparent 2px) 0 0/100% 44px,
+    linear-gradient(90deg,rgba(34,195,221,.55) 2px,transparent 2px) 0 0/44px 100%;
+  -webkit-mask:linear-gradient(transparent,#000 75%);mask:linear-gradient(transparent,#000 75%);
+  animation:avanza 2.4s linear infinite}
+@keyframes avanza{to{background-position:0 44px,0 0}}
+.horizonte{position:absolute;left:0;right:0;bottom:calc(max(36vh,200px) * .44);height:2px;
+  background:linear-gradient(90deg,transparent,#FF3D8B 20%,#FFC21A 50%,#22C3DD 80%,transparent);box-shadow:0 0 18px 3px rgba(255,61,139,.6);opacity:.7}
+#escena{position:absolute;inset:0;width:100%;height:100%}
+.spot{position:absolute;inset:0;opacity:0;transition:opacity .4s;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,30%),rgba(255,201,77,.11),transparent 60%)}
+@media (hover:hover){body:hover .spot{opacity:1}}
+.grano{position:absolute;inset:-50%;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- Cabecera ---------- */
+header{position:relative;padding:22px 20px 6px;overflow-x:clip}
+.hwrap{max-width:660px;margin:0 auto;position:relative}
+.marca{font:800 17px/1 "Baloo 2",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#FFC94D;display:flex;align-items:center;gap:12px}
+.marca::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(255,201,77,.6),transparent)}
+.mega{position:relative;display:inline-block;font-size:24px;line-height:1;transform-origin:30% 70%;animation:grita 2.6s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(255,201,77,.7))}
+.mega i{position:absolute;left:92%;top:50%;width:10px;height:22px;margin-top:-11px;border:2px solid #FFC94D;border-left:0;border-radius:0 22px 22px 0;opacity:0;animation:onda 2.6s ease-out infinite}
+.mega i+i{animation-delay:.35s}
+@keyframes onda{0%,8%{opacity:0;transform:translateX(0) scale(.5)}15%{opacity:1}60%,100%{opacity:0;transform:translateX(18px) scale(1.5)}}
+@keyframes grita{0%,100%{transform:rotate(-6deg)}8%{transform:rotate(-16deg) scale(1.18)}18%{transform:rotate(-4deg)}}
+header h1{font-size:clamp(33px,8.4vw,54px);font-weight:800;margin:10px 0 4px;letter-spacing:-.01em;color:#FFF6E8;text-shadow:0 4px 30px rgba(255,61,139,.35)}
+header h1 .neon{background:linear-gradient(100deg,#FF3D8B 0%,#FF7A2E 30%,#FFC21A 50%,#FF7A2E 70%,#FF3D8B 100%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;animation:oro 7s ease-in-out infinite alternate;
+  filter:drop-shadow(0 0 16px rgba(255,61,139,.55))}
+@keyframes oro{to{background-position:100% 0}}
+header p.sub{margin:0 0 18px;font-size:16px;color:var(--ink2)}
+.weave{display:grid;gap:3px;padding:7px;background:rgba(10,2,20,.55);border-radius:12px;position:relative;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 10px 40px -12px rgba(255,61,139,.5)}
+.hilera{--t:13px;height:var(--t);border-radius:2px;position:relative;overflow:hidden;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 1px,transparent 1px 7px)}
+.hilera::after{content:"";position:absolute;inset:0;clip-path:inset(0 100% 0 0);
+  transition:clip-path .9s cubic-bezier(.65,0,.25,1);
+  background:
+    linear-gradient(135deg,var(--b) 25%,transparent 25%) calc(var(--t) / -2) 0/var(--t) var(--t),
+    linear-gradient(225deg,var(--b) 25%,transparent 25%) calc(var(--t) / -2) 0/var(--t) var(--t),
+    linear-gradient(315deg,var(--b) 25%,transparent 25%) 0 0/var(--t) var(--t),
+    linear-gradient(45deg,var(--b) 25%,transparent 25%) 0 0/var(--t) var(--t),
+    var(--a)}
+.hilera.on::after{clip-path:inset(0 0 0 0)}
+.h1c{--a:#C81E63;--b:#F2B000}.h2c{--a:#E2581A;--b:#5B2A86}.h3c{--a:#138A63;--b:#F2B000}
+.h4c{--a:#0E7F96;--b:#F7D7E6}.h5c{--a:#F2B000;--b:#C81E63}.h6c{--a:#5B2A86;--b:#E2581A}.h7c{--a:#C81E63;--b:#0E7F96}
+.hilera::before{content:"";position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.5) 50%,transparent 65%);transform:translateX(-100%)}
+.hilera.on::before{opacity:1;animation:brillo 5s ease-in-out infinite}
+.hilera:nth-child(2)::before{animation-delay:.2s}.hilera:nth-child(3)::before{animation-delay:.4s}.hilera:nth-child(4)::before{animation-delay:.6s}
+.hilera:nth-child(5)::before{animation-delay:.8s}.hilera:nth-child(6)::before{animation-delay:1s}.hilera:nth-child(7)::before{animation-delay:1.2s}
+@keyframes brillo{0%,55%{transform:translateX(-100%)}85%,100%{transform:translateX(100%)}}
+.weaveLbl{margin:10px 0 0;font-size:15px;color:var(--ink2);min-height:1.4em}
+.weaveLbl b{color:#FFC94D;font-weight:700}
+
+/* Cintas publicitarias cruzadas */
+.cinta{position:relative;height:78px;overflow:hidden;margin:2px 0 0;pointer-events:none}
+.banda{position:absolute;left:-10%;width:120%;top:50%;overflow:hidden;border-block:3px solid #12031F}
+.banda.f{transform:translateY(-50%) rotate(-2.4deg);z-index:2;background:linear-gradient(90deg,#FF3D8B,#FF7A2E 50%,#FFC21A);box-shadow:0 12px 30px -10px rgba(255,61,139,.75)}
+.banda.t{transform:translateY(-50%) rotate(2deg);background:linear-gradient(90deg,#5B2A86,#22C3DD);opacity:.85}
+.banda .in{display:flex;width:max-content;animation:marquesina 38s linear infinite}
+.banda.t .in{animation-duration:50s;animation-direction:reverse}
+.banda span{font:800 17px/1 "Baloo 2",sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding:9px 0 7px}
+.banda.f span{color:#2A0A1C}.banda.t span{color:#EFFBFF;font-size:15px}
+.banda span::after{content:"◆";margin:0 16px;font-size:.8em;vertical-align:1px}
+.banda.f span::after{color:#5B2A86}.banda.t span::after{color:#FFC21A}
+@keyframes marquesina{to{transform:translateX(-50%)}}
+
+/* ---------- Distribución: contenido + vitrina con la pieza en vivo ---------- */
+.layout{max-width:660px;margin:0 auto}
+main{max-width:660px;margin:0 auto;padding:12px 20px 170px;position:relative;overflow-x:clip}
+.vitrina{display:none}
+@media (min-width:1100px){
+  .hwrap{max-width:1060px}
+  .layout{max-width:1100px;padding:0 20px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:56px;align-items:start}
+  .layout main{max-width:none;padding-left:0;padding-right:0}
+  .vitrina{display:block;position:sticky;top:18px;margin-top:20px}
+  .mockwrap{display:none}
+  .verPieza{display:none !important}
+  .nwrap{max-width:1060px !important;padding-right:386px}
+}
+
+/* ---------- Contenido ---------- */
+.step{display:none}
+.step.active{display:block;animation:entra .6s cubic-bezier(.2,.7,.2,1)}
+@keyframes entra{from{opacity:0;transform:translateY(22px) scale(.985);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.step h2{font-size:clamp(30px,7.4vw,42px);font-weight:800;margin-bottom:8px;outline:none;text-shadow:0 2px 30px rgba(255,61,139,.4)}
+.step h3{font-size:22px;font-weight:700;margin:30px 0 8px;color:#FFE29A}
+.lead{color:var(--ink2);margin:0 0 22px;font-size:18.5px}
+.hint{color:var(--ink2);font-size:16px;margin:2px 0 10px}
+.chispa{display:inline-block;animation:chispa 2.2s ease-in-out infinite}
+@keyframes chispa{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.3) rotate(18deg);filter:drop-shadow(0 0 10px #FFC21A)}}
+
+/* El desenfoque de vidrio solo en computadoras: en celulares sencillos cuesta batería y fluidez */
+@media (hover:hover) and (min-width:760px){
+  .ruta,details.duda,.opt,.est,.resumen,.campo input[type=text],.campo input[type=number],textarea,.candado,.chip{
+    -webkit-backdrop-filter:blur(12px) saturate(140%);backdrop-filter:blur(12px) saturate(140%)}
+  nav.barra{background:linear-gradient(180deg,rgba(14,4,24,.35),rgba(14,4,24,.82));-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%)}
+}
+
+.ruta{list-style:none;margin:22px 0;padding:6px 18px;counter-reset:r;background:var(--card);border:1px solid var(--line);border-radius:20px}
+.ruta li{counter-increment:r;display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:center;padding:14px 0;border-bottom:1px dashed var(--line)}
+.ruta li:last-child{border-bottom:0}
+.ruta li::before{content:counter(r);width:50px;height:50px;border-radius:50%;display:grid;place-items:center;
+  font:800 24px/1 "Baloo 2",sans-serif;color:#fff;background:radial-gradient(circle at 30% 30%,#FF7AB0,#C81E63);
+  box-shadow:0 0 0 4px rgba(255,61,139,.18),0 0 26px rgba(255,61,139,.55);animation:late 3s ease-in-out infinite}
+.ruta li:nth-child(2)::before{background:radial-gradient(circle at 30% 30%,#FFB27A,#E2581A);box-shadow:0 0 0 4px rgba(255,122,46,.18),0 0 26px rgba(255,122,46,.55);animation-delay:.5s}
+.ruta li:nth-child(3)::before{background:radial-gradient(circle at 30% 30%,#6BE3B8,#138A63);box-shadow:0 0 0 4px rgba(31,191,138,.18),0 0 26px rgba(31,191,138,.55);animation-delay:1s}
+@keyframes late{50%{transform:scale(1.07)}}
+.ruta b{display:block;font-size:19px}
+.ruta span{color:var(--ink2);font-size:16px}
+
+/* Lo que entrega la IA: stickers */
+.entrega{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 20px}
+.entrega span{--r:-2deg;background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.04));border:1px solid var(--line);border-radius:999px;
+  padding:9px 15px;font-size:16px;transform:rotate(var(--r));animation:flota2 4s ease-in-out infinite;animation-delay:calc(var(--j,0) * -.6s);
+  box-shadow:0 8px 20px -12px rgba(255,61,139,.7)}
+.entrega span:nth-child(2n){--r:2deg}.entrega span:nth-child(3n){--r:-1deg}
+@keyframes flota2{50%{transform:rotate(var(--r)) translateY(-4px)}}
+
+details.duda{border:1px solid var(--line);border-radius:16px;background:var(--card);margin:10px 0;padding:0 18px;transition:background .2s,border-color .2s}
+details.duda[open]{background:var(--card2);border-color:rgba(255,201,77,.35)}
+details.duda summary{cursor:pointer;padding:15px 0;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details.duda summary::-webkit-details-marker{display:none}
+details.duda summary::after{content:"+";font:800 24px/1 "Baloo 2",sans-serif;color:var(--accent);transition:transform .25s}
+details.duda[open] summary::after{transform:rotate(45deg)}
+details.duda p{margin:0 0 14px;color:var(--ink2)}
+
+.nota{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(100deg,rgba(255,201,77,.12),rgba(255,255,255,.04));
+  border:1px solid rgba(255,201,77,.25);border-radius:16px;padding:14px 16px;margin:18px 0;font-size:16px}
+.nota .ic{font-size:24px;line-height:1}
+
+/* Opciones */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.opts.una{grid-template-columns:1fr}
+.lbl2{display:block;font:700 21px/1.2 "Baloo 2",sans-serif;margin:22px 0 10px}
+.opt{--rx:0deg;--ry:0deg;position:relative;display:flex;gap:12px;align-items:center;text-align:left;width:100%;
+  background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;cursor:pointer;min-height:66px;
+  transform:perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition:border-color .2s,background .2s,transform .2s,box-shadow .25s}
+.opt .em{font-size:30px;line-height:1;flex:none;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+.opt .tx b{display:block;font-size:18px}
+.opt .tx small{display:block;color:var(--ink2);font-size:15px;line-height:1.35;margin-top:2px}
+.opt .ratio{flex:none;margin-left:auto;height:34px;border:2px solid currentColor;border-radius:5px;opacity:.45;transition:opacity .2s,color .2s,box-shadow .2s}
+.opt[aria-pressed="true"] .ratio{opacity:1;color:var(--maiz);box-shadow:0 0 14px rgba(255,194,26,.6),inset 0 0 10px rgba(255,194,26,.35)}
+@media (hover:hover){.opt:hover,.est:hover{background:var(--card2);border-color:rgba(255,255,255,.3);box-shadow:0 14px 30px -16px rgba(255,61,139,.75)}}
+.opt[aria-pressed="true"],.est[aria-pressed="true"]{border-color:transparent;
+  background:linear-gradient(135deg,rgba(70,20,96,.94),rgba(40,8,60,.94)) padding-box,var(--aguayo) border-box;
+  box-shadow:0 0 0 1px rgba(255,255,255,.06),0 12px 36px -12px rgba(255,61,139,.8),0 0 24px -6px rgba(255,194,26,.45);
+  animation:giraBorde 4s linear infinite}
+@keyframes giraBorde{to{--ang:360deg}}
+.opt[aria-pressed="true"]::after{content:"✓";position:absolute;top:-10px;right:-10px;width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,#FFC21A,#FF7A2E);color:#2A1000;display:grid;place-items:center;font-weight:800;font-size:15px;
+  box-shadow:0 0 16px rgba(255,194,26,.8)}
+.opt.pop,.est.pop{animation:pop .42s cubic-bezier(.3,1.6,.5,1),giraBorde 4s linear infinite}
+.opt.pop .em{animation:salta .55s ease-out}
+.opt.pop[aria-pressed="true"]::after,.est.pop[aria-pressed="true"]::after{animation:check .35s cubic-bezier(.3,1.8,.5,1)}
+@keyframes pop{0%{scale:1}35%{scale:.95}70%{scale:1.03}100%{scale:1}}
+@keyframes salta{30%{transform:translateY(-8px) rotate(-10deg) scale(1.25)}65%{transform:translateY(0) rotate(5deg)}}
+@keyframes check{from{transform:scale(0) rotate(-90deg)}to{transform:scale(1)}}
+
+/* Estilos con su paleta */
+.estilos{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.est{position:relative;display:flex;flex-direction:column;gap:9px;border:1.5px solid var(--line);background:var(--card);border-radius:16px;
+  padding:11px 12px 12px;cursor:pointer;text-align:left;font-size:17px;transition:border-color .2s,background .2s,box-shadow .25s}
+.est .sw{display:flex;height:24px;border-radius:8px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);transition:height .25s}
+.est .sw i{flex:1}
+.est .sw i:nth-child(3){flex:.6}
+.est[aria-pressed="true"]{font-weight:700}
+.est[aria-pressed="true"] .sw{height:30px}
+.est[aria-pressed="true"]::after{content:attr(data-n);position:absolute;top:-10px;right:-10px;width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,#FFC21A,#FF7A2E);color:#2A1000;display:grid;place-items:center;font:800 15px/1 "Baloo 2",sans-serif;
+  box-shadow:0 0 16px rgba(255,194,26,.8)}
+
+/* Campos */
+.campo{margin:24px 0}
+.campo label,.campo .lbl{display:block;font:700 21px/1.2 "Baloo 2",sans-serif;margin-bottom:4px}
+.campo input[type=text],.campo input[type=number],textarea{width:100%;background:rgba(255,255,255,.06);border:1.5px solid var(--line);
+  border-radius:14px;padding:15px 16px;font-size:18px;transition:border-color .2s,box-shadow .2s,background .2s}
+.campo input::placeholder,textarea::placeholder{color:rgba(214,190,228,.5)}
+.campo input:focus,textarea:focus{border-color:var(--maiz);background:rgba(255,255,255,.09);outline:none;box-shadow:0 0 0 4px rgba(255,194,26,.15),0 0 30px -6px rgba(255,194,26,.45)}
+textarea{min-height:150px;resize:vertical;line-height:1.45}
+textarea.corto{min-height:100px}
+.err{color:#FF8A80;font-weight:700;font-size:16px;margin:8px 0 0;min-height:0}
+.err:not(:empty){animation:tiembla .4s}
+@keyframes tiembla{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.donde{display:inline-block;background:rgba(34,195,221,.14);border:1px solid rgba(34,195,221,.4);color:#9BEFFF;font:700 13px/1 "Atkinson Hyperlegible",sans-serif;
+  padding:5px 9px;border-radius:999px;margin-right:6px;vertical-align:2px}
+.opc{font:400 14px/1 "Atkinson Hyperlegible",sans-serif;color:var(--ink2);margin-left:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.chip{border:1.5px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:9px 15px;cursor:pointer;font-size:16px;
+  transition:border-color .2s,background .2s,box-shadow .2s,transform .12s}
+.chip:active{transform:scale(.95)}
+@media (hover:hover){.chip:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.09)}}
+.chip[aria-pressed="true"]{border-color:var(--fucsia);background:linear-gradient(100deg,rgba(255,61,139,.32),rgba(255,122,46,.22));font-weight:700;
+  box-shadow:0 0 18px -4px rgba(255,61,139,.8)}
+/* Precio en etiqueta */
+.precio{display:flex;align-items:stretch;max-width:270px;margin:4px 0 12px;transform:rotate(-1.5deg);filter:drop-shadow(0 12px 22px rgba(255,61,139,.35));transition:opacity .2s}
+.precio .bs{display:grid;place-items:center;padding:0 18px 0 22px;color:#fff;font:800 22px/1 "Baloo 2",sans-serif;
+  background:linear-gradient(135deg,#FF3D8B,#FF7A2E);clip-path:polygon(16px 0,100% 0,100% 100%,16px 100%,0 50%);border-radius:0}
+.precio .bs::before{content:"";width:8px;height:8px;border-radius:50%;background:#12031F;position:absolute;margin-left:-28px}
+.campo .precio input{border-radius:0 14px 14px 0;border-left:0;font:800 28px/1 "Baloo 2",sans-serif;color:#FFE29A;padding:12px 14px}
+.precio.off{opacity:.38}
+.precio.lleno{animation:etiqueta 3.5s ease-in-out infinite}
+@keyframes etiqueta{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg) translateY(-2px)}}
+.pend{color:var(--naranja);font-weight:700}
+
+/* ---------- El celular con la pieza ---------- */
+.vit-top{display:flex;gap:12px;align-items:center;margin:0 0 16px}
+.vit-top b{display:block;font:800 20px/1.1 "Baloo 2",sans-serif;color:#FFE29A}
+.vit-top small{display:block;color:var(--ink2);font-size:14px}
+.anillo{position:relative;flex:none;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(#FFC21A,#FF7A2E calc(var(--p) * .5%),#FF3D8B calc(var(--p) * 1%),rgba(255,255,255,.12) 0);
+  transition:--p .8s cubic-bezier(.3,1.3,.5,1);box-shadow:0 0 22px -4px rgba(255,61,139,.7)}
+.anillo::before{content:"";position:absolute;inset:5px;border-radius:50%;background:#1E0832}
+.anillo .pct{position:relative;font:800 15px/1 "Baloo 2",sans-serif;color:#fff}
+.mock{position:relative;width:min(270px,80%);margin:0 auto;padding:12px;border-radius:38px;
+  background:linear-gradient(160deg,#2E1046,#12041F);
+  box-shadow:0 30px 60px -22px rgba(0,0,0,.85),0 0 70px -12px rgba(255,61,139,.6)}
+.mock::before{content:"";position:absolute;inset:-2px;border-radius:40px;padding:2px;background:var(--aguayo);animation:giraBorde 6s linear infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.vitrina .mock,.hoja .mock{animation:levita 6s ease-in-out infinite}
+.vitrina .mock{width:270px}
+@keyframes levita{50%{transform:translateY(-8px)}}
+.notch{width:74px;height:6px;border-radius:9px;background:rgba(255,255,255,.2);margin:0 auto 10px}
+.screen{--bg:#F1E6FA;--fg:#2A1338;--ac:#5B2A86;position:relative;border-radius:24px;overflow:hidden;background:var(--bg);color:var(--fg);
+  display:flex;flex-direction:column;gap:8px;padding:14px;text-align:left;aspect-ratio:4 / 5;
+  transition:aspect-ratio .5s cubic-bezier(.3,1.2,.5,1),background .4s,color .4s}
+.glare{position:absolute;left:12px;right:12px;bottom:12px;top:28px;border-radius:24px;pointer-events:none;
+  background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.28) 47%,transparent 58%) no-repeat;background-size:250% 100%;animation:reflejo 7s ease-in-out infinite}
+@keyframes reflejo{0%,65%{background-position:130% 0}100%{background-position:-70% 0}}
+.m-tit{font:800 21px/1.05 "Baloo 2",sans-serif;padding-right:64px}
+.m-foto{flex:1;min-height:70px;border:2px dashed currentColor;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;font-size:12px;line-height:1.25;opacity:.85;padding:6px}
+.m-foto span{font-size:34px;margin-bottom:4px;animation:flota2 3s ease-in-out infinite}
+.m-precio{position:absolute;top:10px;right:10px;width:62px;height:62px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;
+  text-align:center;font:800 15px/1 "Baloo 2",sans-serif;transform:rotate(-8deg);animation:sello 3s ease-in-out infinite;transition:background .4s}
+@keyframes sello{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(4deg) scale(1.06)}}
+.m-promo{align-self:flex-start;background:var(--fg);color:var(--bg);font:700 12px/1 "Atkinson Hyperlegible",sans-serif;padding:5px 9px;border-radius:6px}
+.m-cta{background:var(--ac);color:#fff;border-radius:999px;text-align:center;font:800 15px/1 "Baloo 2",sans-serif;padding:10px;animation:llama 2.4s ease-in-out infinite;transition:background .4s}
+@keyframes llama{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 5px rgba(255,255,255,.35)}}
+.m-pie{display:flex;justify-content:space-between;gap:6px;font-size:11px;opacity:.9}
+.tam{margin:14px 0 0;font-size:15px;color:var(--ink2);text-align:center}
+.tam b{color:var(--ink)}
+.mockwrap{margin:8px 0 18px;text-align:center}
+.notif{position:absolute;left:20px;right:20px;top:30px;z-index:3;display:flex;gap:9px;align-items:center;text-align:left;
+  background:rgba(255,255,255,.96);color:#1A0529;border-radius:14px;padding:9px 11px;font:700 13px/1.25 "Atkinson Hyperlegible",sans-serif;
+  box-shadow:0 12px 26px -10px rgba(0,0,0,.6);transform:translateY(-30px) scale(.9);opacity:0;pointer-events:none;
+  transition:transform .55s cubic-bezier(.3,1.5,.5,1),opacity .3s}
+.notif.ve{transform:none;opacity:1}
+.notif i{font-style:normal;font-size:20px}
+.reac{position:absolute;left:50%;bottom:45%;font-size:26px;line-height:1;pointer-events:none;z-index:5;animation:reac 1.7s ease-out forwards}
+@keyframes reac{0%{transform:translate(-50%,0) scale(.3);opacity:0}15%{opacity:1;transform:translate(calc(-50% + var(--dx) * .2),-24px) scale(1.2)}
+  100%{transform:translate(calc(-50% + var(--dx)),-190px) scale(.9) rotate(var(--rot,0deg));opacity:0}}
+
+/* Botón de la barra que abre la pieza (celulares y tabletas) */
+.verPieza{position:relative;flex:none;width:54px;height:54px;padding:0;border-radius:50%;border:0;cursor:pointer;background:none;color:#fff;display:grid;place-items:center}
+.verPieza .anillo{width:54px;height:54px}
+.verPieza .anillo::before{inset:5px}
+.verPieza .anillo .pct{font-size:13px}
+.verPieza .ojo{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px;
+  background:linear-gradient(135deg,#FFC21A,#FF7A2E);box-shadow:0 0 12px rgba(255,194,26,.8)}
+.verPieza[hidden]{display:none}
+.verPieza.late{animation:pulso .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pulso{40%{transform:scale(1.12)}}
+.hoja{position:fixed;inset:0;z-index:45;background:rgba(6,1,12,.78);display:flex;align-items:flex-end;justify-content:center}
+.hoja[hidden]{display:none}
+.hoja .caja2{position:relative;width:100%;max-width:520px;max-height:94vh;overflow:auto;border-radius:26px 26px 0 0;padding:18px 18px calc(22px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(170deg,#2A0B40,#12041F);box-shadow:0 -20px 60px -20px rgba(255,61,139,.6);animation:subeHoja .4s cubic-bezier(.2,.9,.3,1)}
+.hoja .mock{width:min(250px,68%)}
+.hoja .cerrar{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.08);font-size:20px;cursor:pointer}
+@keyframes subeHoja{from{transform:translateY(100%)}}
+
+/* ---------- Final ---------- */
+.weave.big .hilera{--t:26px}
+.weave.big{padding:10px;gap:4px;margin:4px 0 24px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 20px 60px -15px rgba(255,194,26,.45),0 0 80px -20px rgba(255,61,139,.6)}
+.resumen{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 18px;margin:18px 0}
+.resumen .fila{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.resumen .fila:last-child{border-bottom:0}
+.resumen .k{font-size:14px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
+.resumen .v{font-weight:700;overflow-wrap:anywhere}
+.cambiar{background:none;border:0;color:var(--maiz);font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:8px}
+.copiar{width:100%;border:0;border-radius:999px;color:#fff;cursor:pointer;position:relative;overflow:hidden;
+  background:linear-gradient(100deg,#FF7A2E,#FF3D8B);
+  font:800 22px/1 "Baloo 2",sans-serif;padding:20px 24px;display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 6px 0 #9E1E4E,0 16px 40px -10px rgba(255,61,139,.7);transition:transform .08s,box-shadow .08s}
+.copiar:active{transform:translateY(4px);box-shadow:0 2px 0 #9E1E4E}
+.copiar.ok{background:linear-gradient(100deg,#1FBF8A,#139C70);box-shadow:0 6px 0 #0A5A40,0 16px 40px -10px rgba(31,191,138,.7)}
+.estado{font-weight:700;text-align:center;margin:12px 0 0;min-height:1.5em;overflow-wrap:anywhere}
+.abrir{display:flex;justify-content:center;align-items:center;gap:8px;margin:14px 0 0;padding:16px;border-radius:999px;
+  border:1.5px solid var(--maiz);color:var(--maiz);font-weight:700;text-decoration:none;font-size:18px;transition:background .2s,box-shadow .2s}
+@media (hover:hover){.abrir:hover{background:rgba(255,194,26,.1);box-shadow:0 0 26px -4px rgba(255,194,26,.5)}}
+.pasos{margin:10px 0 0;padding-left:0;list-style:none;counter-reset:p}
+.pasos li{counter-increment:p;display:grid;grid-template-columns:36px 1fr;gap:10px;padding:8px 0}
+.pasos li::before{content:counter(p);width:30px;height:30px;border-radius:50%;background:rgba(255,194,26,.14);color:var(--maiz);
+  border:1px solid rgba(255,194,26,.35);display:grid;place-items:center;font:800 17px/1 "Baloo 2",sans-serif}
+.ver textarea{min-height:260px;font-size:14px;margin-bottom:14px}
+.pdfbtn{width:100%;border:0;border-radius:999px;color:#fff;cursor:pointer;position:relative;overflow:hidden;
+  background:linear-gradient(100deg,#9B5BE0,#C81E63 55%,#FF7A2E);
+  font:800 21px/1.1 "Baloo 2",sans-serif;padding:19px 22px;display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 6px 0 #4A1670,0 18px 44px -12px rgba(200,30,99,.85);transition:transform .08s,box-shadow .08s}
+.pdfbtn:active{transform:translateY(4px);box-shadow:0 2px 0 #4A1670}
+.pdfbtn::after,.copiar::after,.nb.sig::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 40%,rgba(255,255,255,.32) 50%,transparent 60%);transform:translateX(-100%);animation:brillo 3.4s ease-in-out infinite}
+.pdfbtn[disabled]{cursor:wait;opacity:.9}
+.pdfbtn.ok{background:linear-gradient(100deg,#1FBF8A,#139C70);box-shadow:0 6px 0 #0A5A40,0 16px 40px -12px rgba(31,191,138,.7)}
+.reiniciar{display:block;margin:34px auto 0;background:none;border:0;color:var(--ink2);text-decoration:underline;cursor:pointer;font-size:16px}
+.pie{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--ink2);line-height:1.45;opacity:.85}
+
+/* Envío */
+.enviar{margin:26px 0 10px;padding:22px 18px 20px;border-radius:24px;position:relative;isolation:isolate;
+  background:linear-gradient(160deg,rgba(70,20,96,.88),rgba(28,8,44,.88))}
+.enviar::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;z-index:-1;
+  background:var(--aguayo);animation:giraBorde 5s linear infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.enviar::after{content:"";position:absolute;inset:4px;z-index:-2;border-radius:30px;background:var(--aguayo);filter:blur(30px);opacity:.28;animation:giraBorde 5s linear infinite}
+.enviar h3{margin:0 0 4px;color:#FFE29A}
+.enviar p{margin:0 0 18px;color:var(--ink2);font-size:16px}
+.sello{position:absolute;top:-16px;right:10px;z-index:2;padding:6px 12px;border:3px solid #1FBF8A;border-radius:10px;color:#6BF0BE;background:rgba(10,40,30,.85);
+  font:800 17px/1 "Baloo 2",sans-serif;letter-spacing:.08em;text-transform:uppercase;transform:rotate(8deg);box-shadow:0 0 22px -4px rgba(31,191,138,.8)}
+.sello[hidden]{display:none}
+.sello.golpe{animation:golpe .5s cubic-bezier(.5,0,.4,1.4)}
+@keyframes golpe{0%{transform:rotate(-20deg) scale(3);opacity:0}70%{transform:rotate(10deg) scale(.92);opacity:1}100%{transform:rotate(8deg) scale(1)}}
+.progreso{list-style:none;margin:16px 0 0;padding:0}
+.progreso li{display:flex;align-items:center;gap:12px;padding:7px 0;font-size:16px;color:var(--ink2);transition:color .2s}
+.progreso li::before{content:"";flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);
+  display:grid;place-items:center;font:700 13px/1 system-ui;color:#fff}
+.progreso li.on{color:var(--ink);font-weight:700}
+.progreso li.on::before{border-color:var(--maiz);border-top-color:transparent;animation:gira .8s linear infinite}
+.progreso li.ok::before{content:"✓";background:var(--verde);border-color:var(--verde);box-shadow:0 0 12px rgba(31,191,138,.7)}
+.progreso li.av::before{content:"!";background:var(--maiz);border-color:var(--maiz);color:#3A2600}
+.progreso li.ok,.progreso li.av{color:var(--ink)}
+@keyframes gira{to{transform:rotate(360deg)}}
+.candado{display:flex;gap:14px;align-items:center;margin:18px 0;padding:18px;border:1.5px dashed rgba(255,255,255,.22);border-radius:18px;color:var(--ink2);font-size:16px;background:rgba(255,255,255,.03)}
+.candado[hidden]{display:none}
+.candado .ic{font-size:30px;animation:flota2 2.6s ease-in-out infinite}
+#trasEnvio.abre{animation:entra .7s cubic-bezier(.2,.7,.2,1) both}
+.flash{position:fixed;inset:0;z-index:24;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.95),rgba(255,226,154,.4) 35%,transparent 70%)}
+.flash.va{animation:flash .8s ease-out}
+@keyframes flash{0%{opacity:.9}100%{opacity:0}}
+#confeti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:25}
+
+/* Entrada escalonada de cada paso */
+.step.entra > *, .step.entra .opt, .step.entra .est{animation:sube .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 70ms)}
+.step.entra .opt,.step.entra .est{animation-delay:calc(var(--i,0) * 70ms + var(--j,0) * 50ms + 60ms)}
+.step.entra .opt[aria-pressed="true"],.step.entra .est[aria-pressed="true"]{animation:sube .55s cubic-bezier(.2,.7,.2,1) both,giraBorde 4s linear infinite;animation-delay:calc(var(--i,0) * 70ms + var(--j,0) * 50ms + 60ms),0s}
+@keyframes sube{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* Navegación inferior */
+nav.barra{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(14,4,24,.93);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5px;
+  background:
+    linear-gradient(135deg,#FFC21A 25%,transparent 25%) -4px 0/8px 8px,
+    linear-gradient(225deg,#FFC21A 25%,transparent 25%) -4px 0/8px 8px,
+    linear-gradient(315deg,#FFC21A 25%,transparent 25%) 0 0/8px 8px,
+    linear-gradient(45deg,#FFC21A 25%,transparent 25%) 0 0/8px 8px,
+    linear-gradient(90deg,#FF3D8B,#FF7A2E,#1FBF8A,#22C3DD,#9B5BE0,#FF3D8B);
+  animation:teje 18s linear infinite}
+@keyframes teje{to{background-position:156px 0,156px 0,160px 0,160px 0,0 0}}
+.nwrap{max-width:660px;margin:0 auto;display:flex;gap:10px}
+.nb{border-radius:999px;padding:16px 22px;font:700 19px/1 "Baloo 2",sans-serif;cursor:pointer;border:1.5px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink)}
+.nb.sig{flex:1;position:relative;overflow:hidden;border:0;color:#fff;background:linear-gradient(100deg,#C81E63,#FF3D8B 50%,#FF7A2E);
+  box-shadow:0 10px 30px -10px rgba(255,61,139,.85)}
+.nb[hidden]{display:none}
+
+/* Aviso flotante y panel técnico */
+.toast{position:fixed;left:50%;bottom:100px;transform:translate(-50%,20px);opacity:0;z-index:40;max-width:min(92vw,520px);
+  background:var(--solid);border:1px solid rgba(255,201,77,.35);color:var(--ink);padding:12px 18px;border-radius:14px;font-size:16px;
+  box-shadow:0 12px 30px -10px rgba(0,0,0,.6);transition:opacity .25s,transform .25s;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.ver-app{float:right;opacity:.6;cursor:default;user-select:none;padding:4px 0 4px 10px}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(6,1,12,.7);display:grid;place-items:center;padding:16px}
+.modal[hidden]{display:none}
+.modal .caja{background:var(--solid);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:20px;width:min(560px,100%);max-height:90vh;overflow:auto}
+.modal h3{margin:0 0 10px}
+.modal .fila2{font-size:14px;color:var(--ink2);word-break:break-all;margin:6px 0}
+.modal .bts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.modal .bts button{border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.08);padding:10px 14px;font-weight:700;cursor:pointer}
+.modal pre{background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:12px;white-space:pre-wrap;max-height:220px;overflow:auto;margin:0}
+
+@media (max-width:420px){
+  .nb{padding:16px 18px}
+  header{padding:18px 16px 4px} main{padding-left:16px;padding-right:16px}
+  .opts{gap:10px} .opt{padding:13px 13px;gap:10px} .opt .em{font-size:27px}
+  .banda.f span{font-size:15px} .banda.t span{font-size:13px}
+}
+@media (max-width:760px){
+  .cinta{height:84px}
+  .banda.f{transform:translateY(-62%) rotate(-4.5deg)}
+  .banda.t{transform:translateY(-38%) rotate(4deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .hilera.on::before{opacity:0}
+  .opt{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="fondo" id="fondo" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="reflector r1"></div><div class="reflector r2"></div><div class="reflector r3"></div>
+  <div class="piso"></div><div class="horizonte"></div>
+  <canvas id="escena"></canvas>
+  <div class="spot"></div>
+  <div class="grano"></div>
+</div>
+
+<header>
+  <div class="hwrap">
+    <div class="marca"><span class="mega" aria-hidden="true">📣<i></i><i></i></span>Despega 360</div>
+    <h1>Arma tu <span class="neon">pieza publicitaria</span> con IA</h1>
+    <p class="sub">Constructor de instrucciones para tu publicación en redes</p>
+    <div class="weave" id="weave" aria-hidden="true">
+      <div class="hilera h1c"></div><div class="hilera h2c"></div><div class="hilera h3c"></div>
+      <div class="hilera h4c"></div><div class="hilera h5c"></div><div class="hilera h6c"></div><div class="hilera h7c"></div>
+    </div>
+    <p class="weaveLbl" id="weaveLbl" aria-live="polite"></p>
+  </div>
+</header>
+<div class="cinta" aria-hidden="true">
+  <div class="banda t"><div class="in" id="cinta2"></div></div>
+  <div class="banda f"><div class="in" id="cinta1"></div></div>
+</div>
+
+<div class="layout">
+<main>
+
+<!-- 0 · Bienvenida -->
+<section class="step" data-id="inicio">
+  <h2 tabindex="-1">Hagamos tu publicidad <span class="chispa" aria-hidden="true">✨</span></h2>
+  <p class="lead">Vas a preparar el mensaje para que la inteligencia artificial te ayude a crear una publicación atractiva para tus redes, con la foto real de tu producto.</p>
+  <ol class="ruta">
+    <li><div><b>Responde aquí con tu cuadernillo del Taller 2</b><span>Casi todo ya lo tienes escrito. Unos 10 minutos.</span></div></li>
+    <li><div><b>Envía tu constancia y copia tu instrucción</b><span>Se arma sola con tus datos.</span></div></li>
+    <li><div><b>Pégala en tu IA y recibe tus textos</b><span>Luego armas tu pieza en tu plantilla o en Canva.</span></div></li>
+  </ol>
+  <h3>Lo que te va a entregar la IA</h3>
+  <div class="entrega">
+    <span>📰 Un titular corto</span><span>🖼️ Texto para la imagen</span><span>✍️ El texto de la publicación</span>
+    <span>👉 3 llamados a la acción</span><span>🎨 Cómo debe verse</span><span>#️⃣ Hashtags</span><span>🧩 Pasos para armarla</span>
+  </div>
+  <details class="duda">
+    <summary>¿La IA va a crear la foto de mi producto?</summary>
+    <p>No. Tu pieza debe mostrar tu producto real. La IA solo te ayuda con los textos, los colores y cómo ordenar todo.</p>
+  </details>
+  <div class="nota"><span class="ic" aria-hidden="true">🔒</span><div>Lo que escribas se guarda en este celular o computadora mientras avanzas. Al final, cuando toques «Enviar y guardar en PDF», tu constancia se guarda en tu equipo y una copia llega al equipo de Despega 360. No te pedimos tu nombre, teléfono ni carnet.</div></div>
+</section>
+
+<!-- 1 · IA y negocio -->
+<section class="step" data-id="negocio">
+  <h2 tabindex="-1">Tu IA y tu negocio</h2>
+  <p class="lead">Empecemos por lo básico.</p>
+  <span class="lbl2">¿Con qué IA vas a trabajar?</span>
+  <div class="opts">
+    <button class="opt" data-f="ia" data-v="ChatGPT"><span class="em">💬</span><span class="tx"><b>ChatGPT</b><small>Puedes subirle tu foto.</small></span></button>
+    <button class="opt" data-f="ia" data-v="Gemini"><span class="em">✨</span><span class="tx"><b>Gemini</b><small>Puedes subirle tu foto.</small></span></button>
+    <button class="opt" data-f="ia" data-v="Claude"><span class="em">🌀</span><span class="tx"><b>Claude</b><small>Puedes subirle tu foto.</small></span></button>
+    <button class="opt" data-f="ia" data-v="Meta AI"><span class="em">🟢</span><span class="tx"><b>Meta AI</b><small>Dentro de WhatsApp.</small></span></button>
+  </div>
+  <p class="err" id="errIa" role="alert"></p>
+
+  <div class="campo">
+    <label for="nombre">Nombre de tu negocio</label>
+    <p class="hint">El nombre de tu marca, no tu nombre personal. Este dato es necesario: con él guardamos tu constancia.</p>
+    <input type="text" id="nombre" data-f="nombre" maxlength="80" placeholder="Ej.: Delicias del Valle" autocomplete="off">
+    <p class="err" id="errNombre" role="alert"></p>
+  </div>
+
+  <div class="campo">
+    <span class="lbl">Rubro</span>
+    <div class="opts" style="margin-top:8px">
+      <button class="opt" data-f="rubro" data-v="Artesanías"><span class="em">🏺</span><span class="tx"><b>Artesanías</b></span></button>
+      <button class="opt" data-f="rubro" data-v="Alimentos"><span class="em">🍯</span><span class="tx"><b>Alimentos</b></span></button>
+      <button class="opt" data-f="rubro" data-v="Textiles"><span class="em">🧵</span><span class="tx"><b>Textiles</b></span></button>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Producto y cliente -->
+<section class="step" data-id="producto">
+  <h2 tabindex="-1">Tu producto y tu cliente</h2>
+  <p class="lead">Abre tu cuadernillo del Taller 2.</p>
+
+  <div class="campo">
+    <label for="prod">Producto que quieres promocionar</label>
+    <p class="hint"><span class="donde">📗 Taller 2, Paso 3</span> Tu producto prioritario.</p>
+    <input type="text" id="prod" data-f="prod" maxlength="120" autocomplete="off">
+  </div>
+
+  <div class="campo">
+    <label for="cliente">Cliente al que quieres llegar</label>
+    <p class="hint"><span class="donde">📗 Taller 2, Paso 2</span> Tu cliente prioritario. Mientras más claro, mejor: no pongas «todos».</p>
+    <input type="text" id="cliente" data-f="cliente" maxlength="160" autocomplete="off">
+  </div>
+
+  <div class="campo">
+    <label for="benef">Principal beneficio para tu cliente</label>
+    <p class="hint">¿Qué problema le resuelves o qué obtiene al comprarte?</p>
+    <textarea id="benef" data-f="benef" class="corto" maxlength="300"></textarea>
+  </div>
+</section>
+
+<!-- 3 · Diferencia -->
+<section class="step" data-id="diferencia">
+  <h2 tabindex="-1">Por qué te eligen</h2>
+  <p class="lead">Esto es lo que hace especial tu publicidad.</p>
+
+  <div class="campo">
+    <label for="pos">Tu frase de posicionamiento</label>
+    <p class="hint"><span class="donde">📗 Taller 2, Paso 5</span> Cópiala tal como la escribiste.</p>
+    <textarea id="pos" data-f="pos" class="corto" maxlength="400" placeholder="Ayudo a [cliente] a [beneficio] mediante [producto], destacándome por [diferencia]"></textarea>
+  </div>
+
+  <div class="campo">
+    <label for="evid">La evidencia que lo respalda</label>
+    <p class="hint">¿Cómo puedes demostrar tu diferencia? Una foto, un comentario de clientes, una cifra real.</p>
+    <textarea id="evid" data-f="evid" class="corto" maxlength="300"></textarea>
+  </div>
+
+  <div class="campo">
+    <label for="msg">Mensaje comercial que elegiste <small class="opc">opcional</small></label>
+    <p class="hint"><span class="donde">📗 Taller 2, Paso 5</span> Tu mensaje principal.</p>
+    <div class="chips"><button class="chip" data-fill="msg" data-text="ninguno">No tengo</button></div>
+    <textarea id="msg" data-f="msg" class="corto" maxlength="300"></textarea>
+  </div>
+</section>
+
+<!-- 4 · Precio y oferta -->
+<section class="step" data-id="precio">
+  <h2 tabindex="-1">Precio y oferta</h2>
+  <p class="lead">Escribe solo lo que de verdad ofreces. La IA no inventará descuentos.</p>
+
+  <div class="campo">
+    <label for="precio">Precio en Bs</label>
+    <p class="hint"><span class="donde">📗 Taller 2, Paso 3</span> Tu precio de prueba.</p>
+    <div class="precio">
+      <span class="bs">Bs</span>
+      <input type="number" id="precio" data-f="precio" inputmode="decimal" min="0" step="0.5" placeholder="0">
+    </div>
+    <div class="chips"><button class="chip" data-toggle="consultar" aria-pressed="false">Prefiero poner «consultar»</button></div>
+  </div>
+
+  <div class="campo">
+    <label for="promo">Promoción u oferta especial</label>
+    <p class="hint">Toca una idea y ajústala, o escribe la tuya.</p>
+    <div class="chips">
+      <button class="chip" data-fill="promo" data-text="ninguna">Ninguna</button>
+      <button class="chip" data-fill="promo" data-text="2x1">2x1</button>
+      <button class="chip" data-fill="promo" data-text="Descuento de ">Descuento</button>
+      <button class="chip" data-fill="promo" data-text="Envío gratis">Envío gratis</button>
+      <button class="chip" data-fill="promo" data-text="Stock limitado">Stock limitado</button>
+    </div>
+    <input type="text" id="promo" data-f="promo" maxlength="140" autocomplete="off">
+  </div>
+
+  <div class="campo">
+    <label for="sost">Práctica sostenible real <small class="opc">opcional</small></label>
+    <p class="hint"><span class="donde">📘 Taller 1, Paso 6</span> Solo si tu cliente la puede notar.</p>
+    <div class="chips">
+      <button class="chip" data-fill="sost" data-text="ninguna">Ninguna</button>
+      <button class="chip" data-fill="sost" data-text="Empaque reutilizable">Empaque reutilizable</button>
+      <button class="chip" data-fill="sost" data-text="Retazos aprovechados">Retazos aprovechados</button>
+      <button class="chip" data-fill="sost" data-text="Producción bajo pedido">Producción bajo pedido</button>
+    </div>
+    <input type="text" id="sost" data-f="sost" maxlength="160" autocomplete="off">
+  </div>
+</section>
+
+<!-- 5 · Dónde y cómo -->
+<section class="step" data-id="canal">
+  <h2 tabindex="-1">Dónde vas a publicar</h2>
+  <p class="lead">Cada red usa un tamaño distinto. Lo calculamos por ti.</p>
+
+  <span class="lbl2"><span class="donde">📗 Taller 2, Paso 4</span> Tu canal principal</span>
+  <div class="opts una">
+    <button class="opt" data-f="canal" data-v="Estado de WhatsApp"><span class="em">🟢</span><span class="tx"><b>Estado de WhatsApp</b><small>Vertical alto: 1080 × 1920 px</small></span></button>
+    <button class="opt" data-f="canal" data-v="Catálogo de WhatsApp Business"><span class="em">🛍️</span><span class="tx"><b>Catálogo de WhatsApp Business</b><small>Cuadrado: 1080 × 1080 px</small></span></button>
+    <button class="opt" data-f="canal" data-v="Facebook"><span class="em">📘</span><span class="tx"><b>Facebook</b><small>Vertical: 1080 × 1350 px</small></span></button>
+    <button class="opt" data-f="canal" data-v="Instagram"><span class="em">📸</span><span class="tx"><b>Instagram</b><small>Vertical: 1080 × 1350 px</small></span></button>
+    <button class="opt" data-f="canal" data-v="TikTok"><span class="em">🎵</span><span class="tx"><b>TikTok</b><small>Vertical alto: 1080 × 1920 px. Incluye guion de video.</small></span></button>
+  </div>
+
+  <h3>¿Cómo te pueden contactar?</h3>
+  <p class="hint">Solo el medio. Tu número lo pondrás tú directamente en el diseño.</p>
+  <div class="opts">
+    <button class="opt" data-f="contacto" data-v="WhatsApp"><span class="em">📱</span><span class="tx"><b>WhatsApp</b></span></button>
+    <button class="opt" data-f="contacto" data-v="Facebook"><span class="em">📘</span><span class="tx"><b>Facebook</b></span></button>
+    <button class="opt" data-f="contacto" data-v="Instagram"><span class="em">📸</span><span class="tx"><b>Instagram</b></span></button>
+    <button class="opt" data-f="contacto" data-v="TikTok"><span class="em">🎵</span><span class="tx"><b>TikTok</b></span></button>
+  </div>
+
+  <div class="campo">
+    <label for="zona">Ciudad o zona donde vendes</label>
+    <div class="chips">
+      <button class="chip" data-fill="zona" data-text="Cochabamba">Cochabamba</button>
+      <button class="chip" data-fill="zona" data-text="Quillacollo, Cochabamba">Quillacollo</button>
+      <button class="chip" data-fill="zona" data-text="Colcapirhua, Cochabamba">Colcapirhua</button>
+      <button class="chip" id="zonaOtro" type="button">📍 Otro municipio</button>
+    </div>
+    <input type="text" id="zona" data-f="zona" maxlength="120" autocomplete="off" placeholder="Puedes agregar tu barrio o feria">
+  </div>
+
+  <h3>Estilo que quieres transmitir</h3>
+  <p class="hint">Elige uno o combina hasta tres. El primero que elijas pinta tu boceto.</p>
+  <div class="estilos">
+    <button class="est" data-v="cercano">🤗 Cercano</button>
+    <button class="est" data-v="elegante">💎 Elegante</button>
+    <button class="est" data-v="divertido">🎉 Divertido</button>
+    <button class="est" data-v="juvenil">⚡ Juvenil</button>
+    <button class="est" data-v="profesional">💼 Profesional</button>
+    <button class="est" data-v="artesanal">🪡 Artesanal</button>
+    <button class="est" data-v="moderno">🔷 Moderno</button>
+    <button class="est" data-v="emocional">💗 Emocional</button>
+  </div>
+  <p class="err" id="errEst" role="alert"></p>
+</section>
+
+<!-- 6 · Foto -->
+<section class="step" data-id="foto">
+  <h2 tabindex="-1">Tu foto real</h2>
+  <p class="lead">La foto es lo más importante de tu pieza. Revisa que cumpla esto:</p>
+  <div class="opts una">
+    <button class="opt" data-f="tips" data-multi data-v="luz"><span class="em">☀️</span><span class="tx"><b>Luz natural</b><small>Cerca de una ventana, sin flash.</small></span></button>
+    <button class="opt" data-f="tips" data-multi data-v="fondo"><span class="em">⬜</span><span class="tx"><b>Fondo limpio</b><small>Una tela lisa, una mesa o una pared sin objetos.</small></span></button>
+    <button class="opt" data-f="tips" data-multi data-v="angulo"><span class="em">📐</span><span class="tx"><b>Se ve bien el producto</b><small>Completo, enfocado y desde su mejor ángulo.</small></span></button>
+    <button class="opt" data-f="tips" data-multi data-v="real"><span class="em">✅</span><span class="tx"><b>Es mi producto de verdad</b><small>Sin filtros que cambien sus colores.</small></span></button>
+  </div>
+
+  <div class="campo">
+    <label for="foto">Describe la foto que usarás</label>
+    <p class="hint">Qué se ve, el fondo y los colores.</p>
+    <textarea id="foto" data-f="foto" class="corto" maxlength="300"></textarea>
+  </div>
+
+  <span class="lbl2">¿Vas a subir la foto al chat de la IA?</span>
+  <div class="opts">
+    <button class="opt" data-f="subir" data-v="si"><span class="em">📤</span><span class="tx"><b>Sí, la subiré</b><small>Así la IA la ve y te aconseja mejor.</small></span></button>
+    <button class="opt" data-f="subir" data-v="no"><span class="em">📝</span><span class="tx"><b>No, solo la describo</b></span></button>
+  </div>
+</section>
+
+<!-- 7 · Listo -->
+<section class="step" data-id="listo">
+  <div class="weave big" aria-hidden="true">
+    <div class="hilera h1c on"></div><div class="hilera h2c on"></div><div class="hilera h3c on"></div><div class="hilera h4c on"></div>
+    <div class="hilera h5c on"></div><div class="hilera h6c on"></div><div class="hilera h7c on"></div>
+  </div>
+  <h2 tabindex="-1">¡Tu instrucción está lista!</h2>
+  <p class="lead">Así podría ordenarse tu pieza. Es solo un boceto: la IA te dará los textos y tú pondrás tu foto real.</p>
+
+  <figure class="mockwrap">
+    <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Constancia enviada a Despega 360</span></div></div>
+    <figcaption class="tam"></figcaption>
+  </figure>
+
+  <div class="resumen" id="resumen"></div>
+
+  <div class="enviar" id="boxEnviar">
+    <span class="sello" id="sello" hidden>✓ Enviada</span>
+    <h3>Envía tu constancia</h3>
+    <p>Se descarga un PDF en tu equipo y una copia llega al equipo de Despega 360. Incluye tus datos, el boceto y la instrucción completa que usarás con tu IA.</p>
+    <button class="pdfbtn" id="btnPdf" type="button"><span aria-hidden="true" id="icoPdf">📄</span><span id="txtPdf">Enviar y guardar en PDF</span></button>
+    <ol class="progreso" id="progreso" hidden>
+      <li data-p="pdf">Preparando tu PDF</li>
+      <li data-p="local">Guardando la copia en tu equipo</li>
+      <li data-p="nube">Enviando al equipo de Despega 360</li>
+    </ol>
+    <p class="estado" id="estadoPdf" aria-live="polite" style="margin-bottom:0"></p>
+  </div>
+
+  <div class="candado" id="candado"><span class="ic" aria-hidden="true">🔒</span><div>Tu instrucción para copiar aparece aquí apenas envíes tu constancia.</div></div>
+
+  <div id="trasEnvio" hidden>
+    <h3>Copia tu instrucción</h3>
+    <button class="copiar" id="btnCopiar" type="button"><span aria-hidden="true">📋</span><span id="txtCopiar">Copiar mi instrucción</span></button>
+    <p class="estado" id="estado" aria-live="polite"></p>
+
+    <h3>Ahora pégala en tu IA</h3>
+    <ol class="pasos" id="pasos"></ol>
+    <a class="abrir" id="abrir" href="#" target="_blank" rel="noopener">Abrir</a>
+
+    <div class="nota"><span class="ic" aria-hidden="true">💾</span><div>Cuando tengas tu pieza, guarda la versión editable y descárgala en PNG con el nombre <b>06_Pieza_comercial.png</b> en tu carpeta <b>Pieza_digital</b>.</div></div>
+    <div class="nota"><span class="ic" aria-hidden="true">🗣️</span><div>Si la IA escribe algo que no es cierto, como un descuento que no das o «hecho a mano» cuando no lo dijiste, respóndele: «eso no lo dije, quítalo».</div></div>
+
+    <details class="duda ver">
+      <summary>Ver la instrucción completa</summary>
+      <textarea id="preview" readonly aria-label="Instrucción completa"></textarea>
+    </details>
+  </div>
+
+  <button class="reiniciar" id="reiniciar" type="button">Borrar todo y empezar de nuevo</button>
+</section>
+
+<p class="pie"><span class="ver-app" id="verApp">v1.0</span>Programa Despega 360, IFFI – UNIFRANZ/IPEE. Material elaborado con el apoyo financiero de la Unión Europea. Su contenido es responsabilidad exclusiva del IFFI y no refleja necesariamente los puntos de vista de la Unión Europea.</p>
+</main>
+
+<aside class="vitrina" aria-label="Vista previa de tu pieza">
+  <div class="vit-top"><span class="anillo"><span class="pct">0%</span></span><div><b>Tu pieza en vivo</b><small id="vitSub">Se arma mientras respondes</small></div></div>
+  <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Constancia enviada a Despega 360</span></div></div>
+  <p class="tam"></p>
+</aside>
+</div>
+
+<div class="hoja" id="hoja" hidden>
+  <div class="caja2" role="dialog" aria-label="Tu pieza en vivo">
+    <button class="cerrar" id="cerrarHoja" type="button" aria-label="Cerrar">✕</button>
+    <div class="vit-top"><span class="anillo" aria-hidden="true"><span class="pct">0%</span></span><div><b>Tu pieza en vivo</b><small>Se arma mientras respondes</small></div></div>
+    <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div></div>
+    <p class="tam"></p>
+  </div>
+</div>
+
+<nav class="barra" aria-label="Pasos">
+  <div class="nwrap">
+    <button class="nb" id="atras" type="button">Atrás</button>
+    <button class="verPieza" id="btnVer" type="button" aria-label="Ver mi pieza" title="Ver mi pieza" hidden><span class="anillo" aria-hidden="true"><span class="pct">0%</span></span><span class="ojo" aria-hidden="true">👀</span></button>
+    <button class="nb sig" id="sig" type="button">Siguiente</button>
+  </div>
+</nav>
+
+<canvas id="confeti" aria-hidden="true"></canvas>
+<div class="flash" id="flash" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="modal" id="admin" hidden>
+  <div class="caja" role="dialog" aria-label="Panel técnico">
+    <h3>Panel técnico</h3>
+    <div class="fila2">Servidor: <span id="admUrl"></span></div>
+    <div class="fila2">Constancias pendientes de envío en este equipo: <b id="admCola">0</b></div>
+    <div class="bts">
+      <button data-a="ping" type="button">Probar conexión</button>
+      <button data-a="prueba" type="button">Enviar PDF de prueba</button>
+      <button data-a="flush" type="button">Reenviar pendientes</button>
+      <button data-a="close" type="button">Cerrar</button>
+    </div>
+    <pre id="admLog">Listo.</pre>
+  </div>
+</div>
+
+<script type="text/plain" id="restoPrompt">
+Con esta información crea una propuesta de pieza publicitaria para mi emprendimiento.
+
+Antes de empezar, revisa mis datos. Si falta algo importante (producto, beneficio, precio o canal), pregúntame lo que falta, una pregunta a la vez, y espera mi respuesta antes de generar la publicación.
+
+EL RESULTADO DEBE INCLUIR
+- Titular principal: una frase corta (máximo 8 palabras) que llame inmediatamente la atención y se apoye en mi diferencia.
+- Texto para la imagen: máximo 20 palabras, sin contar el titular. Debe incluir el beneficio, el precio o la promoción y el llamado a la acción. No sobrecargar la pieza con demasiado texto.
+- Caption para acompañar la publicación: entre 40 y 80 palabras, con lenguaje sencillo, cercano y persuasivo. Debe mencionar el beneficio, mi diferencia, el precio o la promoción y cómo hacer el pedido. Menciona la práctica sostenible solo si yo la indiqué.
+- Llamados a la acción: crea 3 opciones cortas, de máximo 12 palabras cada una, en estilos distintos, orientadas a motivar una compra, consulta o pedido. Puedes elegir entre estos estilos:
+    · emocional;
+    · divertido;
+    · elegante o premium;
+    · urgencia;
+    · deseo o antojo;
+    · invitación directa a comprar.
+- Propuesta visual para la pieza: describe brevemente cómo debería verse, indicando:
+    · foto real principal y cómo tomarla (luz natural, fondo limpio, ángulo que muestre el producto);
+    · ubicación del nombre del producto;
+    · dónde destacar el precio;
+    · dónde colocar el llamado a la acción;
+    · dónde poner mi logo o nombre del negocio y el contacto;
+    · colores o estilo visual sugerido, de acuerdo con mi rubro y mi estilo.
+- Hashtags: sugiere entre 5 y 8 hashtags relacionados con el producto, el público y la ciudad.
+- Versión recomendada lista para copiar: elige la mejor opción de cada parte y júntalas en un solo bloque: titular, texto para la imagen, llamado a la acción, caption y hashtags.
+- Cómo armar la pieza: explícame en pasos cortos cómo llevar este texto a la plantilla de mi rubro (o a Canva, si no tengo la plantilla), con el tamaño según mi canal:
+    · 1080 × 1350 px para publicaciones de Facebook o Instagram;
+    · 1080 × 1920 px para estados de WhatsApp, historias o TikTok;
+    · 1080 × 1080 px para el catálogo de WhatsApp Business;
+    · al final, recuérdame guardar la versión editable y descargar la pieza en PNG con el nombre 06_Pieza_comercial.png, en mi carpeta Pieza_digital.
+- Solo si mi canal es TikTok: agrega un guion de video de 15 a 30 segundos en 3 escenas: un inicio que llame la atención, el producto en uso y el llamado a la acción.
+
+REGLAS
+- Usa un lenguaje natural y fácil de entender. Evita palabras demasiado técnicas.
+- No inventes características, descuentos, precios, beneficios ni condiciones que no estén en la información proporcionada.
+- No uses palabras como "ecológico", "sostenible", "100% natural", "orgánico" o "hecho a mano" si no están en mi información.
+- Si mi rubro es alimentos, no hagas afirmaciones de salud (por ejemplo: "cura", "adelgaza", "saludable", "sin químicos") ni menciones registros sanitarios que yo no indiqué.
+- No generes imágenes de mi producto con inteligencia artificial: la pieza debe mostrar mi producto real. Puedes sugerir fondos, colores o íconos.
+- Escribe los precios en bolivianos (Bs).
+- Donde vaya mi número de contacto, escribe [mi WhatsApp]; yo lo agregaré directamente en el diseño.
+- Si falta información importante, indícalo antes de generar la publicación.
+</script>
+
+<script>
+(function(){
+  /* ---------- Envío a Drive ----------
+     URL de la aplicación web de Apps Script (termina en /exec). Sin URL la app funciona en
+     modo de prueba: descarga el PDF pero no lo envía. ?api=<url> prueba otra URL sin guardarla. */
+  var VERSION = '1.0';
+  var API_URL_DEFECTO = 'PEGA_AQUI_LA_URL_EXEC';
+  var QS = new URLSearchParams(location.search);
+  var API_URL = (QS.get('api') || API_URL_DEFECTO).trim();
+  var API_OK = /^https:\/\/script\.google(usercontent)?\.com\/.+\/exec$/.test(API_URL);
+  var KEY = 'despega360-pieza-v1';          // misma clave que el HTML original: no se pierden avances
+  var LS_COLA = 'despega360-pieza-cola1';
+  var FINALES = ['cerrada', 'invalido'];
+  var REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var STEPS = [
+    {id:'inicio', t:'Bienvenida'},
+    {id:'negocio', t:'Tu IA y tu negocio'},
+    {id:'producto', t:'Tu producto y tu cliente'},
+    {id:'diferencia', t:'Por qué te eligen'},
+    {id:'precio', t:'Precio y oferta'},
+    {id:'canal', t:'Dónde vas a publicar'},
+    {id:'foto', t:'Tu foto real'},
+    {id:'listo', t:'Tu instrucción'}
+  ];
+  var LAST = STEPS.length - 1, ROWS = 7;
+
+  var TAM = {
+    'Estado de WhatsApp': {px:'1080 × 1920 px', ar:'9 / 16', forma:'vertical alto'},
+    'Catálogo de WhatsApp Business': {px:'1080 × 1080 px', ar:'1 / 1', forma:'cuadrado'},
+    'Facebook': {px:'1080 × 1350 px', ar:'4 / 5', forma:'vertical'},
+    'Instagram': {px:'1080 × 1350 px', ar:'4 / 5', forma:'vertical'},
+    'TikTok': {px:'1080 × 1920 px', ar:'9 / 16', forma:'vertical alto'}
+  };
+  var PAL = {
+    cercano:{bg:'#FFE7CF', fg:'#4A1D00', ac:'#E2581A'},
+    elegante:{bg:'#2A1338', fg:'#F8EBD2', ac:'#D9A94A'},
+    divertido:{bg:'#FFD84D', fg:'#3A0B2A', ac:'#C81E63'},
+    juvenil:{bg:'#14B8C4', fg:'#FFFFFF', ac:'#FF3D8B'},
+    profesional:{bg:'#F3F5F9', fg:'#14233C', ac:'#1F4FA3'},
+    artesanal:{bg:'#EADCC4', fg:'#3B2414', ac:'#8A4B1F'},
+    moderno:{bg:'#111827', fg:'#FFFFFF', ac:'#22D3A6'},
+    emocional:{bg:'#FBD3DF', fg:'#4B0F2A', ac:'#B5174F'}
+  };
+  var EM_RUBRO = {'Artesanías':'🏺', 'Alimentos':'🍯', 'Textiles':'🧵'};
+  var PH = {
+    prod:{'Artesanías':'Ej.: aretes de plata con diseño andino', 'Alimentos':'Ej.: mermelada de durazno de 250 g', 'Textiles':'Ej.: chompa de alpaca para niños', '':'Ej.: el producto que más quieres vender'},
+    cliente:{'Artesanías':'Ej.: turistas que buscan un recuerdo de Cochabamba', 'Alimentos':'Ej.: oficinas que piden refrigerios', 'Textiles':'Ej.: mamás que buscan ropa abrigada para sus hijos', '':'Ej.: madres de familia, estudiantes, oficinas, turistas'},
+    benef:{'Artesanías':'Ej.: un regalo único que no encuentran en otro lado', 'Alimentos':'Ej.: un refrigerio rico y listo para llevar', 'Textiles':'Ej.: abrigo que no pica y dura varias temporadas', '':'Ej.: qué gana tu cliente al comprarte'}
+  };
+  var IA = {
+    'ChatGPT': {url:'https://chatgpt.com/', abrir:'Abrir ChatGPT', app:'la app de ChatGPT', nota:''},
+    'Gemini': {url:'https://gemini.google.com/app', abrir:'Abrir Gemini', app:'la app de Gemini', nota:''},
+    'Claude': {url:'https://claude.ai/new', abrir:'Abrir Claude', app:'la app de Claude', nota:''},
+    'Meta AI': {url:'https://www.meta.ai/', abrir:'Abrir Meta AI', app:'WhatsApp, en el chat de Meta AI (el círculo de colores)',
+      nota:'Estoy usando Meta AI dentro de WhatsApp: responde con mensajes cortos y sin tablas.'}
+  };
+
+  var DEF = {step:0, ia:'', nombre:'', rubro:'', prod:'', cliente:'', benef:'', pos:'', evid:'', msg:'', precio:'', consultar:false, promo:'', sost:'', canal:'', contacto:'', zona:'', estilo:[], tips:[], foto:'', subir:'', enviado:'', envio:''};
+  var S = load();
+  function load(){
+    try { var raw = localStorage.getItem(KEY); if (raw) return Object.assign({}, DEF, JSON.parse(raw)); } catch(e){}
+    return JSON.parse(JSON.stringify(DEF));
+  }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+  function lsGet(k, d){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } }
+  function lsSet(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch(e){ return false; } }
+  var $ = function(s){ return document.querySelector(s); };
+  var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var sleep = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+  function val(x, alt){ return (x !== undefined && x !== null && String(x).trim() !== '') ? String(x).trim() : alt; }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function pop(el){ el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+
+  /* ---------- Interacciones ---------- */
+  document.addEventListener('click', function(ev){
+    var b = ev.target.closest('.opt');
+    if (b){
+      var f = b.getAttribute('data-f'), v = b.getAttribute('data-v');
+      if (b.hasAttribute('data-multi')){
+        var arr = S[f] || []; var i = arr.indexOf(v);
+        if (i >= 0) arr.splice(i,1); else arr.push(v);
+        S[f] = arr;
+      } else { S[f] = v; if (f === 'ia') $('#errIa').textContent = ''; }
+      pop(b); save(); sync(); return;
+    }
+    var e = ev.target.closest('.est');
+    if (e){
+      var v2 = e.getAttribute('data-v'), j = S.estilo.indexOf(v2);
+      if (j >= 0) S.estilo.splice(j,1);
+      else if (S.estilo.length >= 3) { $('#errEst').textContent = 'Puedes combinar hasta tres estilos. Quita uno para elegir otro.'; return; }
+      else S.estilo.push(v2);
+      $('#errEst').textContent = '';
+      pop(e); save(); sync(); return;
+    }
+    var c = ev.target.closest('.chip[data-fill]');
+    if (c){
+      var fld = c.getAttribute('data-fill'), el = document.getElementById(fld);
+      S[fld] = c.getAttribute('data-text'); el.value = S[fld];
+      el.focus(); try { el.setSelectionRange(el.value.length, el.value.length); } catch(_){}
+      save(); sync(); return;
+    }
+    if (ev.target.closest('#zonaOtro')){
+      S.zona = ''; var z = $('#zona'); z.value = ''; z.placeholder = 'Escribe tu municipio y, si quieres, tu barrio o feria'; z.focus();
+      save(); sync(); return;
+    }
+    var t = ev.target.closest('.chip[data-toggle]');
+    if (t){ S.consultar = !S.consultar; save(); sync(); return; }
+    var g = ev.target.closest('[data-goto]');
+    if (g){ go(Number(g.getAttribute('data-goto'))); }
+  });
+  document.addEventListener('animationend', function(ev){
+    if (ev.animationName === 'pop' && ev.target.classList) ev.target.classList.remove('pop');
+  });
+
+  $$('input[data-f], textarea[data-f]').forEach(function(el){
+    el.addEventListener('input', function(){
+      S[el.getAttribute('data-f')] = el.value; save(); checkPrivacy();
+      if (el.id === 'nombre' && el.value.trim()) $('#errNombre').textContent = '';
+      vivo();
+    });
+  });
+
+  function checkPrivacy(){
+    $$('input[data-f][type=text], textarea[data-f]').forEach(function(el){
+      var id = 'priv-' + el.id, msg = document.getElementById(id);
+      var bad = /\d{7,}/.test((el.value || '').replace(/[\s.\-]/g,''));
+      if (bad && !msg){ msg = document.createElement('p'); msg.className = 'err'; msg.id = id; msg.textContent = 'Parece un número de teléfono o carnet. Bórralo de aquí: tu número lo pondrás tú en el diseño.'; el.insertAdjacentElement('afterend', msg); }
+      if (!bad && msg) msg.remove();
+    });
+  }
+
+  /* ---------- Textos derivados ---------- */
+  function precioTxt(){ return S.consultar ? 'consultar' : (val(S.precio,'') ? 'Bs ' + String(S.precio).replace('.', ',') : ''); }
+  function difTxt(){
+    var p = val(S.pos,''), e = val(S.evid,'');
+    if (!p && !e) return '';
+    return (p ? punto(p) : '[sin frase de posicionamiento].') + (e ? ' Evidencia: ' + punto(e) : '');
+  }
+  var FALTA = '[No lo escribí: pregúntamelo]';
+  function punto(t){ t = String(t).trim(); return /[.!?…]$/.test(t) ? t : t + '.'; }
+
+  function buildPrompt(){
+    var fotoDesc = val(S.foto, '');
+    var foto = fotoDesc ? fotoDesc : (S.subir === 'si' ? 'La subiré a este chat.' : FALTA);
+    if (fotoDesc && S.subir === 'si') foto = punto(foto) + ' La subiré a este chat junto con este mensaje.';
+    var L = [];
+    L.push('Actúa como especialista en marketing, publicidad y creación de contenido para redes sociales, especialmente para pequeños emprendimientos de artesanías, alimentos y textiles en Bolivia.');
+    L.push('');
+    L.push('Quiero crear una pieza publicitaria atractiva, clara y fácil de entender para promocionar mi producto o servicio, usando una foto real de mi producto.');
+    L.push('');
+    L.push('INFORMACIÓN DE MI EMPRENDIMIENTO');
+    L.push('- Nombre del negocio: ' + val(S.nombre, FALTA));
+    L.push('- Rubro: ' + val(S.rubro, FALTA));
+    L.push('- Producto o servicio que quiero promocionar: ' + val(S.prod, FALTA));
+    L.push('- Cliente al que quiero llegar: ' + val(S.cliente, FALTA));
+    L.push('- Principal beneficio para el cliente: ' + val(S.benef, FALTA));
+    L.push('- Por qué me eligen (mi diferencia comprobable): ' + val(difTxt(), FALTA));
+    L.push('- Mensaje comercial que elegí: ' + val(S.msg, 'ninguno'));
+    L.push('- Precio en Bs: ' + (S.consultar ? 'consultar' : val(String(S.precio).replace('.', ','), FALTA)));
+    L.push('- Promoción u oferta especial: ' + val(S.promo, 'ninguna'));
+    L.push('- Práctica sostenible real de mi emprendimiento: ' + val(S.sost, 'ninguna'));
+    L.push('- Ciudad o zona donde vendo: ' + val(S.zona, FALTA));
+    L.push('- Medio de contacto: ' + val(S.contacto, FALTA));
+    L.push('- Canal donde publicaré: ' + val(S.canal, FALTA) + (TAM[S.canal] ? ' (tamaño ' + TAM[S.canal].px + ')' : ''));
+    L.push('- Estilo que quiero transmitir: ' + (S.estilo.length ? S.estilo.join(', ') : FALTA));
+    L.push('- Foto real que usaré: ' + foto);
+    L.push('');
+    L.push(document.getElementById('restoPrompt').textContent.trim());
+    if (IA[S.ia] && IA[S.ia].nota){ L.push(''); L.push(IA[S.ia].nota); }
+    return L.join('\n');
+  }
+
+  /* ---------- La pieza en vivo (boceto en el celular) ---------- */
+  function renderMock(){
+    var p = PAL[S.estilo[0]] || {bg:'#F1E6FA', fg:'#2A1338', ac:'#5B2A86'};
+    var t = TAM[S.canal] || TAM['Facebook'];
+    var pr = precioTxt();
+    var promo = val(S.promo,'') && S.promo.toLowerCase() !== 'ninguna' ? S.promo : '';
+    var html =
+      '<div class="m-tit">Tu titular aquí</div>' +
+      '<div class="m-foto"><span>' + (EM_RUBRO[S.rubro] || '📷') + '</span>Tu foto real:<br>' + esc(val(S.prod, 'tu producto')) + '</div>' +
+      (promo ? '<div class="m-promo">' + esc(promo) + '</div>' : '') +
+      (pr ? '<div class="m-precio">' + (pr === 'consultar' ? 'Consulta<br>precio' : esc(pr)) + '</div>' : '') +
+      '<div class="m-cta">Pide por ' + esc(val(S.contacto, 'WhatsApp')) + '</div>' +
+      '<div class="m-pie"><b>' + esc(val(S.nombre, 'Tu negocio')) + '</b><span>[mi ' + esc(val(S.contacto, 'WhatsApp')) + ']</span></div>';
+    $$('.screen').forEach(function(scr){
+      scr.style.setProperty('--bg', p.bg); scr.style.setProperty('--fg', p.fg); scr.style.setProperty('--ac', p.ac);
+      scr.style.aspectRatio = t.ar;
+      if (scr._h !== html){ scr.innerHTML = html; scr._h = html; }
+    });
+    var tam = S.canal ? '<b>' + esc(S.canal) + ':</b> ' + t.px + ', formato ' + t.forma + '.' : 'Elige tu canal para ver el tamaño correcto.';
+    $$('.tam').forEach(function(x){ x.innerHTML = tam; });
+  }
+
+  // Cuánto de la pieza ya tiene datos (anillo de avance)
+  function avance(){
+    var k = [S.ia, S.nombre, S.rubro, S.prod, S.cliente, S.benef, S.pos, S.evid, S.consultar || val(S.precio, ''),
+      S.canal, S.contacto, S.zona, S.estilo.length, val(S.foto, '') || S.subir];
+    var n = k.filter(function(x){ return typeof x === 'string' ? !!x.trim() : !!x; }).length;
+    return Math.round(n / k.length * 100);
+  }
+  var ultPct = -1;
+  function medidor(){
+    var p = avance();
+    $$('.anillo').forEach(function(a){ a.style.setProperty('--p', p); });
+    $$('.pct').forEach(function(x){ x.textContent = p + '%'; });
+    if (ultPct >= 0 && p > ultPct) reaccion(p === 100 ? 6 : 2);
+    ultPct = p;
+  }
+
+  // Cintas publicitarias con el nombre y el producto de cada emprendedora
+  var ultCinta = '';
+  function cintas(){
+    var w = ['Estreno', 'Nuevo', 'Pide ya', 'Tu marca en redes', 'Despega 360'];
+    var n = val(S.nombre, ''), pr = val(S.prod, ''), pc = precioTxt();
+    if (n) w.splice(1, 0, n);
+    if (pr) w.splice(3, 0, pr);
+    if (pc && pc !== 'consultar') w.splice(4, 0, pc);
+    var h = w.map(function(x){ return '<span>' + esc(x) + '</span>'; }).join('');
+    if (h === ultCinta) return; ultCinta = h;
+    $('#cinta1').innerHTML = h + h + h + h + h + h;
+  }
+  (function(){
+    var h = ['Artesanías', 'Alimentos', 'Textiles', 'Hecho en Bolivia', 'Cochabamba', 'Quillacollo', 'Colcapirhua']
+      .map(function(x){ return '<span>' + x + '</span>'; }).join('');
+    $('#cinta2').innerHTML = h + h + h + h;
+  })();
+
+  function vivo(){ renderMock(); cintas(); medidor(); }
+
+  /* ---------- Pantalla final ---------- */
+  function fila(k, v, goto){
+    return '<div class="fila"><div><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'+
+      '<button class="cambiar" data-goto="'+goto+'">Cambiar</button></div>';
+  }
+  function renderListo(){
+    var pend = '<span class="pend">Falta</span>';
+    var h = fila('Negocio', esc(val(S.nombre,'')) || pend, 1);
+    h += fila('Producto', esc(val(S.prod,'')) || pend, 2);
+    h += fila('Cliente', esc(val(S.cliente,'')) || pend, 2);
+    h += fila('Tu diferencia', esc(val(S.pos,'')) || pend, 3);
+    h += fila('Precio', esc(val(precioTxt(),'')) || pend, 4);
+    h += fila('Canal y estilo', esc([val(S.canal,''), S.estilo.join(', ')].filter(Boolean).join(', ')) || pend, 5);
+    h += fila('Foto', S.subir === 'si' ? 'La subirás al chat' : (val(S.foto,'') ? 'Descrita' : pend), 6);
+    $('#resumen').innerHTML = h;
+
+    var ia = IA[S.ia] || IA['Gemini'];
+    $('#abrir').href = ia.url; $('#abrir').textContent = ia.abrir;
+    $('#pasos').innerHTML =
+      '<li>Toca «Copiar mi instrucción» aquí arriba.</li>' +
+      '<li>Abre ' + ia.app + ' y empieza un chat nuevo.</li>' +
+      (S.subir === 'si' ? '<li>Toca el clip o el botón «+» y elige la foto de tu producto.</li>' : '') +
+      '<li>Mantén el dedo sobre el cuadro de escribir y toca «Pegar». En computadora: Ctrl + V.</li>' +
+      '<li>Envía. Si la IA te pregunta algo que falta, respóndele con calma.</li>';
+    $('#preview').value = buildPrompt();
+    $('#txtCopiar').textContent = 'Copiar mi instrucción';
+    $('#btnCopiar').classList.remove('ok');
+    $('#estado').textContent = '';
+    pintarEnvio();
+  }
+
+  // Huella de lo que va en el PDF: si cambia algo después de enviar, hay que volver a enviar.
+  function huella(){
+    var o = {};
+    Object.keys(DEF).forEach(function(k){ if (k !== 'step' && k !== 'enviado' && k !== 'envio') o[k] = S[k]; });
+    var t = JSON.stringify([buildPrompt(), o]);
+    var h = 5381; for (var i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0;
+    return (h >>> 0).toString(36);
+  }
+  function yaEnviado(){ return !!S.enviado && S.enviado === huella(); }
+
+  function pintarEnvio(){
+    var ok = yaEnviado(), btn = $('#btnPdf');
+    if (btn.disabled) return;   // hay un envío en curso
+    $('#trasEnvio').hidden = !ok;
+    $('#candado').hidden = ok;
+    $('#sello').hidden = !ok;
+    btn.classList.toggle('ok', ok);
+    $('#icoPdf').textContent = ok ? '✅' : '📄';
+    $('#txtPdf').textContent = ok ? 'Descargar otra copia del PDF' : 'Enviar y guardar en PDF';
+    if (!ok){ $('#progreso').hidden = true; $('#estadoPdf').textContent = S.enviado ? 'Cambiaste algo después de enviar. Vuelve a tocar el botón para enviar tu constancia actualizada.' : ''; }
+  }
+
+  /* ---------- Copiar ---------- */
+  function fallback(text){
+    var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly','');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+    var ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta); return ok;
+  }
+  $('#btnCopiar').addEventListener('click', function(){
+    var text = buildPrompt(); $('#preview').value = text;
+    function ok(){ $('#btnCopiar').classList.add('ok'); $('#txtCopiar').textContent = '¡Copiada!'; $('#estado').textContent = 'Listo. Ahora pégala en ' + (S.ia || 'tu IA') + '.'; reaccion(3); }
+    function manual(){
+      document.querySelector('details.ver').open = true; var p = $('#preview'); p.focus(); p.select();
+      $('#estado').textContent = 'Tu equipo no dejó copiar solo. En el cuadro de abajo, mantén el dedo sobre el texto, toca «Seleccionar todo» y luego «Copiar».';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, function(){ fallback(text) ? ok() : manual(); });
+    else fallback(text) ? ok() : manual();
+  });
+
+  /* ---------- Constancia en PDF ---------- */
+  function latin(s){ return String(s).replace(/…/g,'...').replace(/[–—]/g,'-').replace(/[“”]/g,'"').replace(/×/g,'x').replace(/ /g,' ').replace(/[^\x00-\xFF]/g,''); }
+  function slug(s){ return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,''); }
+
+  // jsPDF viene de cdnjs; si no cargó, se intenta una vez desde jsDelivr.
+  function asegurarJsPdf(){
+    if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve(true);
+    return new Promise(function(res){
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
+      s.onload = function(){ res(!!(window.jspdf && window.jspdf.jsPDF)); };
+      s.onerror = function(){ res(false); };
+      document.head.appendChild(s);
+      setTimeout(function(){ res(!!(window.jspdf && window.jspdf.jsPDF)); }, 15000);
+    });
+  }
+
+  function crearPdf(envioId){
+    var doc = new window.jspdf.jsPDF({unit:'mm', format:'a4'});
+    var W = 210, M = 18, y;
+    var cols = [['#C81E63','#F2B000'],['#E2581A','#5B2A86'],['#138A63','#F2B000'],['#0E7F96','#F7D7E6'],['#F2B000','#C81E63'],['#5B2A86','#E2581A'],['#C81E63','#0E7F96']];
+    var h = 3;
+    cols.forEach(function(c, i){
+      var yy = i * h, cy = yy + h/2;
+      doc.setFillColor(c[0]); doc.rect(0, yy, W, h, 'F'); doc.setFillColor(c[1]);
+      for (var x = h/2; x < W; x += h * 1.6){
+        doc.triangle(x - h*0.42, cy, x + h*0.42, cy, x, yy + 0.25, 'F');
+        doc.triangle(x - h*0.42, cy, x + h*0.42, cy, x, yy + h - 0.25, 'F');
+      }
+    });
+    y = 34;
+    doc.setTextColor('#34104F'); doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.text('Despega 360', M, y);
+    y += 8; doc.setFontSize(14); doc.setTextColor('#5B2A86'); doc.text(latin('Constancia: instrucción para mi pieza publicitaria'), M, y);
+    y += 6; doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor('#5E4A6E');
+    var fecha = new Date().toLocaleString('es-BO', {day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit'});
+    doc.text(latin('Generada el ' + fecha + ' con el Constructor de pieza publicitaria Despega 360.'), M, y);
+    y += 4.5; doc.setFontSize(8.5); doc.setTextColor('#8A7899');
+    doc.text(latin('Código de envío: ' + envioId), M, y);
+    y += 2;
+    function salto(n){ if (y + n > 272){ doc.addPage(); y = 20; } }
+    function sec(t){ y += 3.5; salto(14); doc.setFillColor('#F1E6FA'); doc.roundedRect(M, y, W - 2*M, 8, 1.5, 1.5, 'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor('#5B2A86'); doc.text(latin(t), M + 3, y + 5.5); y += 12; }
+    function row(k, v){
+      var lines = doc.splitTextToSize(latin(v), W - 2*M - 52); salto(lines.length * 4.6 + 2);
+      doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor('#5E4A6E'); doc.text(latin(k), M, y);
+      doc.setFont('helvetica','normal'); doc.setFontSize(10.5); doc.setTextColor('#2A1338'); doc.text(lines, M + 50, y);
+      y += lines.length * 4.6 + 1.9;
+    }
+    var P = '[Pendiente]';
+    sec('1. Mi negocio y mi producto');
+    row('Negocio', val(S.nombre, P)); row('Rubro', val(S.rubro, P)); row('Producto', val(S.prod, P));
+    row('Cliente', val(S.cliente, P)); row('Beneficio', val(S.benef, P));
+    sec('2. Mi diferencia');
+    row('Posicionamiento', val(S.pos, P)); row('Evidencia', val(S.evid, P)); row('Mensaje comercial', val(S.msg, 'ninguno'));
+    sec('3. Precio y oferta');
+    row('Precio', val(precioTxt(), P)); row('Promoción', val(S.promo, 'ninguna')); row('Práctica sostenible', val(S.sost, 'ninguna'));
+    sec('4. Publicación');
+    row('Canal', val(S.canal, P) + (TAM[S.canal] ? ' (' + TAM[S.canal].px + ')' : ''));
+    row('Contacto', val(S.contacto, P)); row('Zona', val(S.zona, P));
+    row('Estilo', S.estilo.length ? S.estilo.join(', ') : P);
+    row('Foto', val(S.foto, S.subir === 'si' ? 'La sube al chat' : P) + (val(S.foto,'') && S.subir === 'si' ? ' (también la sube al chat)' : ''));
+    var TIPS = {luz:'luz natural', fondo:'fondo limpio', angulo:'producto bien visible', real:'producto real, sin filtros'};
+    row('Revisó en su foto', S.tips.length ? S.tips.map(function(t){ return TIPS[t]; }).join(', ') : 'Nada marcado');
+    row('Herramienta de IA', val(S.ia, P));
+
+    // 5. Boceto con los colores de su estilo y el formato de su canal
+    var pal = PAL[S.estilo[0]] || {bg:'#F1E6FA', fg:'#2A1338', ac:'#5B2A86'};
+    var tm = TAM[S.canal] || TAM['Facebook'];
+    var ar = tm.ar.split('/').map(Number), bw = 46, bh = bw * ar[1] / ar[0];
+    salto(bh + 26);   // el título y el boceto van juntos
+    sec('5. Boceto de la pieza');
+    var bx = M + 3, by = y;
+    doc.setFillColor('#1A0529'); doc.roundedRect(bx - 2.5, by - 2.5, bw + 5, bh + 5, 5, 5, 'F');
+    doc.setFillColor(pal.bg); doc.roundedRect(bx, by, bw, bh, 3.5, 3.5, 'F');
+    doc.setTextColor(pal.fg); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text(latin('Tu titular aquí'), bx + 3, by + 7);
+    var fotoAlto = bh - 32;
+    doc.setDrawColor(pal.fg); doc.setLineWidth(0.3); doc.setLineDashPattern([1.2, 1], 0);
+    doc.roundedRect(bx + 3, by + 11, bw - 6, fotoAlto, 2, 2, 'S'); doc.setLineDashPattern([], 0);
+    doc.setFont('helvetica','normal'); doc.setFontSize(6.5);
+    doc.text(doc.splitTextToSize(latin('Tu foto real: ' + val(S.prod, 'tu producto')), bw - 12), bx + bw/2, by + 11 + fotoAlto/2, {align:'center'});
+    var prt = precioTxt(), prm = val(S.promo,'') && S.promo.toLowerCase() !== 'ninguna' ? S.promo : '';
+    if (prt){ doc.setFillColor(pal.ac); doc.circle(bx + bw - 7, by + 7, 5.6, 'F'); doc.setTextColor('#FFFFFF'); doc.setFont('helvetica','bold'); doc.setFontSize(prt === 'consultar' ? 4.6 : 6);
+      doc.text(latin(prt === 'consultar' ? 'Consulta' : prt), bx + bw - 7, by + 7.8, {align:'center'}); }
+    if (prm){ doc.setFillColor(pal.fg); doc.setFont('helvetica','bold'); doc.setFontSize(5.5); var pw = Math.min(bw - 6, doc.getTextWidth(latin(prm)) + 4);
+      doc.roundedRect(bx + 3, by + 13 + fotoAlto, pw, 4.5, 1, 1, 'F'); doc.setTextColor(pal.bg); doc.text(doc.splitTextToSize(latin(prm), bw - 10)[0], bx + 5, by + 16.2 + fotoAlto); }
+    doc.setFillColor(pal.ac); doc.roundedRect(bx + 3, by + bh - 15, bw - 6, 6, 3, 3, 'F');
+    doc.setTextColor('#FFFFFF'); doc.setFont('helvetica','bold'); doc.setFontSize(7);
+    doc.text(latin('Pide por ' + val(S.contacto, 'WhatsApp')), bx + bw/2, by + bh - 10.9, {align:'center'});
+    doc.setTextColor(pal.fg); doc.setFontSize(5.5); doc.text(doc.splitTextToSize(latin(val(S.nombre, 'Tu negocio')), bw/2)[0], bx + 3, by + bh - 4);
+    doc.setFont('helvetica','normal'); doc.text(latin('[mi ' + val(S.contacto, 'WhatsApp') + ']'), bx + bw - 3, by + bh - 4, {align:'right'});
+    doc.setFont('helvetica','normal'); doc.setFontSize(10);
+    var nota = doc.splitTextToSize(latin('Formato: ' + (S.canal ? S.canal + ', ' + tm.px + ' (' + tm.forma + ')' : 'sin canal elegido') +
+      '. Colores del estilo ' + (S.estilo[0] || 'sin elegir') + '. Es solo un boceto: la IA da los textos y la pieza lleva la foto real del producto.'), W - 2*M - bw - 16);
+    doc.setTextColor('#2A1338'); doc.text(nota, bx + bw + 10, by + 6);
+    y = by + Math.max(bh, nota.length * 4.6) + 6;
+
+    sec('6. Siguiente paso');
+    doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
+    var sig = doc.splitTextToSize(latin('Pegar la instrucción en ' + (S.ia || 'su IA') + ', revisar los textos que proponga, armar la pieza con la foto real del producto y guardarla en PNG como 06_Pieza_comercial.png en su carpeta Pieza_digital.'), W - 2*M);
+    salto(sig.length * 5 + 2); doc.setFont('helvetica','normal'); doc.setFontSize(10.5); doc.setTextColor('#2A1338');
+    doc.text(sig, M, y); y += sig.length * 5;
+
+    doc.addPage(); y = 20;
+    doc.setFillColor('#5B2A86'); doc.roundedRect(M, y, W - 2*M, 10, 1.5, 1.5, 'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor('#FFFFFF');
+    doc.text(latin('Anexo: instrucción completa usada en ' + (S.ia || 'la IA')), M + 3, y + 6.8);
+    y += 16;
+    var LH = 3.9;
+    buildPrompt().split('\n').forEach(function(ln){
+      if (ln.trim() === ''){ y += 1.8; return; }
+      var tit = /^[A-ZÁÉÍÓÚÑ ]{8,}$/.test(ln.trim()) || /^El resultado debe incluir/.test(ln) || /^Reglas$/.test(ln.trim());
+      if (tit){ y += 1.5; doc.setFont('helvetica','bold'); doc.setFontSize(9.5); doc.setTextColor('#5B2A86'); }
+      else { doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor('#2A1338'); }
+      var sang = /^\s+/.test(ln) ? 5 : 0;
+      doc.splitTextToSize(latin(ln.trim()), W - 2*M - sang).forEach(function(p){
+        if (y + LH > 274){ doc.addPage(); y = 20; }
+        doc.text(p, M + sang, y); y += LH;
+      });
+      if (tit) y += 0.8;
+    });
+
+    var pie = doc.splitTextToSize(latin('Programa Despega 360, IFFI - UNIFRANZ/IPEE. Material elaborado con el apoyo financiero de la Unión Europea. Su contenido es responsabilidad exclusiva del IFFI y no refleja necesariamente los puntos de vista de la Unión Europea.'), W - 2*M);
+    var np = doc.getNumberOfPages();
+    for (var p = 1; p <= np; p++){
+      doc.setPage(p);
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor('#8A7899');
+      doc.text(latin('Página ' + p + ' de ' + np), W - M, 277, {align:'right'});
+      doc.setDrawColor('#E3D5EF'); doc.setLineWidth(0.2); doc.line(M, 280, W - M, 280);
+      doc.setFontSize(7.5); doc.text(pie, M, 284);
+    }
+    var name = ['Despega360', 'Pieza', slug(S.rubro || ''), slug(S.nombre || '')].filter(Boolean).join('_') + '.pdf';
+    return {doc: doc, name: name};
+  }
+
+  /* ---------- Comunicación con Apps Script ----------
+     1) POST text/plain (sin preflight)  2) POST no-cors + verificación por JSONP
+     3) si todo falla, el envío queda en cola en este equipo y se reintenta solo. */
+  function fetchTO(url, opt, ms){
+    var ac = new AbortController(), t = setTimeout(function(){ ac.abort(); }, ms);
+    opt.signal = ac.signal;
+    return fetch(url, opt).finally(function(){ clearTimeout(t); });
+  }
+  function jsonp(params, ms){
+    return new Promise(function(res, rej){
+      var cb = '__jp' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      var s = document.createElement('script'), done = false, t;
+      function clean(){ done = true; window[cb] = function(){}; s.remove(); clearTimeout(t); }
+      window[cb] = function(d){ if (done) return; clean(); res(d); };
+      var u = new URL(API_URL);
+      Object.keys(params).forEach(function(k){ u.searchParams.set(k, params[k]); });
+      u.searchParams.set('callback', cb); u.searchParams.set('_', Date.now());
+      s.src = u.toString(); s.async = true;
+      s.onerror = function(){ if (!done){ clean(); rej(new Error('jsonp')); } };
+      t = setTimeout(function(){ if (!done){ clean(); rej(new Error('timeout')); } }, ms || 15000);
+      document.head.appendChild(s);
+    });
+  }
+  function verificar(id){ return jsonp({action:'verificar', id:id}, 12000).then(function(j){ return !!(j && j.ok && j.existe); }, function(){ return false; }); }
+  function finalErr(j){ var e = new Error(j.codigo); e.final = true; return e; }
+
+  async function subir(p, log){
+    log = log || function(){};
+    if (!API_OK) throw new Error('sin-url');
+    var body = JSON.stringify({action:'subir', data:p});
+    try {
+      var r = await fetchTO(API_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:body, redirect:'follow'}, 45000);
+      var j = await r.json(); log('POST: ' + JSON.stringify(j));
+      if (j && j.ok) return j;
+      if (j && j.ok === false && FINALES.indexOf(j.codigo) >= 0) throw finalErr(j);
+    } catch(e){ if (e.final) throw e; log('POST cors falló: ' + e.message); }
+    try { await fetchTO(API_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:body}, 45000); log('POST no-cors enviado'); }
+    catch(e){ log('POST no-cors falló: ' + e.message); }
+    var esperas = [1500, 3000, 5000];
+    for (var i = 0; i < esperas.length; i++){ await sleep(esperas[i]); if (await verificar(p.id)){ log('Verificado en Drive'); return {ok:true, id:p.id, via:'verificar'}; } }
+    throw new Error('no-enviado');
+  }
+
+  function cola(){ return lsGet(LS_COLA, []); }
+  function encolar(p){ var c = cola().filter(function(x){ return x.id !== p.id; }); c.push(p); return lsSet(LS_COLA, c); }
+  function sacar(id){ lsSet(LS_COLA, cola().filter(function(x){ return x.id !== id; })); }
+  var flushing = false;
+  async function flushCola(log){
+    if (flushing || !API_OK) return 0;
+    flushing = true; var ok = 0;
+    try {
+      var c = cola();
+      for (var i = 0; i < c.length; i++){
+        try { await subir(c[i], log); sacar(c[i].id); ok++; }
+        catch(e){ if (e.final){ sacar(c[i].id); if (log) log('Descartado ' + c[i].id + ': ' + e.message); } else if (log) log('Pendiente ' + c[i].id + ' sigue sin enviarse'); }
+      }
+    } finally { flushing = false; }
+    return ok;
+  }
+
+  function paso(k, estado){
+    var li = document.querySelector('#progreso [data-p="' + k + '"]');
+    li.classList.remove('on','ok','av'); if (estado) li.classList.add(estado);
+  }
+  function nuevoId(pref){ return (pref || 'D360P') + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7); }
+
+  $('#btnPdf').addEventListener('click', async function(){
+    var est = $('#estadoPdf'), btn = $('#btnPdf');
+    if (btn.disabled) return;
+    if (!val(S.nombre, '')){ est.textContent = 'Falta el nombre de tu negocio. Toca «Cambiar» en «Negocio».'; return; }
+
+    // Ya enviada y sin cambios: solo otra copia local
+    if (yaEnviado()){
+      if (!(await asegurarJsPdf())){ est.textContent = 'No se pudo preparar el PDF. Revisa tu conexión a internet y vuelve a tocar el botón.'; return; }
+      var c = crearPdf(S.envio);
+      try { c.doc.save(c.name); est.textContent = 'Descargamos otra copia: ' + c.name + '. Tu constancia ya estaba enviada.'; }
+      catch(e){ est.textContent = 'No se pudo guardar el PDF en este equipo. Prueba abriendo la página en Chrome.'; }
+      return;
+    }
+
+    btn.disabled = true; $('#txtPdf').textContent = 'Un momento…';
+    $('#progreso').hidden = false; ['pdf','local','nube'].forEach(function(k){ paso(k, ''); });
+    est.textContent = '';
+    paso('pdf', 'on');
+    if (!(await asegurarJsPdf())){
+      paso('pdf', 'av'); btn.disabled = false; pintarEnvio(); $('#progreso').hidden = false;
+      est.textContent = 'No se pudo preparar el PDF. Revisa tu conexión a internet y vuelve a tocar el botón.';
+      return;
+    }
+    var id = nuevoId(), ahora = new Date();
+    var pdf = crearPdf(id);
+    var b64 = pdf.doc.output('datauristring').split(',')[1];
+    var payload = {id:id, nombre:val(S.nombre,''), rubro:S.rubro, producto:val(S.prod,''), canal:S.canal, municipio:val(S.zona,''), ia:S.ia,
+      ts:ahora.getTime(), fecha_local:ahora.toLocaleString('es-BO'), version:VERSION, pdf:b64};
+    await sleep(350); paso('pdf', 'ok');
+
+    // Primero queda en cola (si la página se cierra a medio camino, se reenvía al volver a abrirla)
+    if (API_OK) encolar(payload);
+    paso('local', 'on'); await sleep(250);
+    var local = true;
+    try { pdf.doc.save(pdf.name); } catch(e){ local = false; }
+    paso('local', local ? 'ok' : 'av');
+
+    paso('nube', 'on');
+    var res = 'ok';
+    if (!API_OK){ await sleep(900); res = 'prueba'; }
+    else {
+      try { await subir(payload); sacar(id); }
+      catch(e){ if (e.final){ sacar(id); res = e.message; } else res = 'cola'; }
+    }
+    paso('nube', res === 'ok' || res === 'prueba' ? 'ok' : 'av');
+
+    S.enviado = huella(); S.envio = id; save();
+    btn.disabled = false; pintarEnvio();
+    $('#progreso').hidden = false;
+    var msgLocal = local ? 'Tu PDF se guardó como ' + pdf.name + ' (en tus Descargas). ' : 'No se pudo descargar el PDF en este equipo; prueba luego con «Descargar otra copia». ';
+    var msgNube = {
+      ok: '¡Y tu constancia ya llegó al equipo de Despega 360!',
+      prueba: '(Modo de prueba: la copia no se envió a Drive.)',
+      cola: 'No pudimos enviar la copia por la conexión: se enviará sola la próxima vez que abras esta página con internet.',
+      cerrada: 'La recepción de constancias está cerrada, así que la copia no se envió. Igual puedes seguir con tu IA.',
+      invalido: 'La copia no pudo enviarse. Avísale a tu mentora y guarda tu PDF.'
+    }[res] || '';
+    est.textContent = msgLocal + msgNube;
+    $('#trasEnvio').classList.remove('abre'); void $('#trasEnvio').offsetWidth; $('#trasEnvio').classList.add('abre');
+    if (res === 'ok' || res === 'prueba') celebrar(); else confeti(60);
+  });
+
+  $('#reiniciar').addEventListener('click', function(){
+    if (!confirm('¿Borrar todo lo que escribiste y empezar de nuevo?')) return;
+    S = JSON.parse(JSON.stringify(DEF));
+    try { localStorage.removeItem(KEY); } catch(e){}
+    $$('input[data-f], textarea[data-f]').forEach(function(el){ el.value = ''; });
+    ultPct = -1;
+    go(0);
+  });
+
+  /* ---------- Efectos ---------- */
+  var cv = $('#confeti'), cx = cv.getContext('2d'), piezas = [], anim = 0;
+  var TONOS = ['#FF3D8B','#FF7A2E','#FFC21A','#1FBF8A','#22C3DD','#9B5BE0','#FFE29A'];
+  function confeti(n){
+    if (REDUCE) return;
+    var dpr = window.devicePixelRatio || 1;
+    cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    for (var i = 0; i < n; i++){
+      piezas.push({x: innerWidth/2 + (Math.random()-.5)*innerWidth*.4, y: innerHeight*.35, vx:(Math.random()-.5)*13, vy: -Math.random()*13 - 4,
+        s: 6 + Math.random()*8, r: Math.random()*6.28, vr:(Math.random()-.5)*.35, c: TONOS[i % TONOS.length], f: Math.random() < .55, v: 1});
+    }
+    if (!anim) anim = requestAnimationFrame(cuadro);
+  }
+  function cuadro(){
+    cx.clearRect(0, 0, innerWidth, innerHeight);
+    piezas = piezas.filter(function(p){ return p.y < innerHeight + 30 && p.v > 0; });
+    piezas.forEach(function(p){
+      p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr; if (p.vy > 0) p.v -= .004;
+      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.globalAlpha = Math.max(0, Math.min(1, p.v * 1.4)); cx.fillStyle = p.c;
+      if (p.f){ cx.beginPath(); cx.moveTo(0, -p.s/2); cx.lineTo(p.s/2.4, 0); cx.lineTo(0, p.s/2); cx.lineTo(-p.s/2.4, 0); cx.closePath(); cx.fill(); }   // rombo de aguayo
+      else cx.fillRect(-p.s/2, -p.s/5, p.s, p.s/2.5);
+      cx.restore();
+    });
+    anim = piezas.length ? requestAnimationFrame(cuadro) : 0;
+    if (!anim) cx.clearRect(0, 0, innerWidth, innerHeight);
+  }
+
+  // Reacciones que salen de la pieza cuando se completa algo
+  var REAC = ['❤️','👍','😍','🔥','⭐','🛍️','👏'], ultReac = 0;
+  function reaccion(n){
+    if (REDUCE) return;
+    var ahora = Date.now(); if (ahora - ultReac < 250) return; ultReac = ahora;
+    var host = innerWidth >= 1100 ? $('.vitrina .mock') : (!$('#hoja').hidden ? $('#hoja .mock') : (!$('#btnVer').hidden ? $('#btnVer') : (S.step === LAST ? $('.mockwrap .mock') : null)));
+    if (!host) return;
+    for (var i = 0; i < (n || 2); i++) (function(i){
+      setTimeout(function(){
+        var s = document.createElement('span'); s.className = 'reac'; s.setAttribute('aria-hidden', 'true');
+        s.textContent = REAC[Math.floor(Math.random() * REAC.length)];
+        s.style.setProperty('--dx', ((Math.random() - .5) * 140).toFixed(0) + 'px');
+        s.style.setProperty('--rot', ((Math.random() - .5) * 50).toFixed(0) + 'deg');
+        s.addEventListener('animationend', function(){ s.remove(); });
+        host.appendChild(s);
+      }, i * 150);
+    })(i);
+    if (host.id === 'btnVer'){ host.classList.remove('late'); void host.offsetWidth; host.classList.add('late'); }
+  }
+  function celebrar(){
+    if (!REDUCE){ var f = $('#flash'); f.classList.remove('va'); void f.offsetWidth; f.classList.add('va'); }
+    var s = $('#sello'); s.classList.remove('golpe'); void s.offsetWidth; s.classList.add('golpe');
+    $$('.notif').forEach(function(n){ n.classList.add('ve'); setTimeout(function(){ n.classList.remove('ve'); }, 4500); });
+    confeti(170); setTimeout(function(){ reaccion(7); }, 300);
+  }
+  function tejerFinal(){
+    var rows = $$('.weave.big .hilera');
+    rows.forEach(function(r){ r.classList.remove('on'); });
+    rows.forEach(function(r, i){ setTimeout(function(){ r.classList.add('on'); }, 250 + i * 170); });
+    setTimeout(function(){ confeti(90); }, 250 + rows.length * 170);
+  }
+  var tt;
+  function toast(m){ var t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(function(){ t.classList.remove('on'); }, 4200); }
+
+  // Hoja con la pieza (celulares)
+  $('#btnVer').addEventListener('click', function(){ $('#hoja').hidden = false; renderMock(); });
+  function cerrarHoja(){ $('#hoja').hidden = true; }
+  $('#cerrarHoja').addEventListener('click', cerrarHoja);
+  $('#hoja').addEventListener('click', function(e){ if (e.target.id === 'hoja') cerrarHoja(); });
+
+  /* ---------- Escenario: destellos, rombos de aguayo y reacciones flotando ---------- */
+  (function(){
+    var c = $('#escena'), g = c.getContext('2d'), W = 0, H = 0, chis = [], romb = [], burb = [];
+    var px = 0, py = 0, tx = 0, ty = 0, activo = !document.hidden, corriendo = false, ult = 0;
+    var COL = ['#FF3D8B','#FF7A2E','#FFC21A','#1FBF8A','#22C3DD','#9B5BE0'];
+    var EMO = ['❤️','👍','⭐','🛍️','💬','✨','😍'];
+    function nuevoR(ini){
+      var z = .35 + Math.random() * .65;
+      return {x: Math.random() * W, y: ini ? Math.random() * H : H + 30, s: (6 + Math.random() * 13) * z, z: z,
+        vy: (.15 + Math.random() * .35) * z, a: Math.random() * 6.28, va: (Math.random() - .5) * .012,
+        c: COL[Math.floor(Math.random() * COL.length)], o: .2 + Math.random() * .4 * z, w: Math.random() * 6.28};
+    }
+    function nuevaB(ini){
+      var z = .55 + Math.random() * .45, lado = Math.random() < .5;
+      return {x: (lado ? Math.random() * .2 : .8 + Math.random() * .2) * W, y: ini ? Math.random() * H : H + 40, z: z,
+        vy: (.3 + Math.random() * .5) * z, s: Math.round((16 + Math.random() * 14) * z), e: EMO[Math.floor(Math.random() * EMO.length)],
+        o: .16 + Math.random() * .22, w: Math.random() * 6.28};
+    }
+    function medir(){
+      var dpr = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+      c.width = W * dpr; c.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var movil = W < 760, i;
+      chis = []; for (i = 0; i < (movil ? 45 : 110); i++) chis.push({x: Math.random() * W, y: Math.random() * H * .8, r: Math.random() * 1.6 + .3, f: Math.random() * 6.28, v: .6 + Math.random() * 1.8, z: .3 + Math.random() * .7});
+      romb = []; for (i = 0; i < (movil ? 12 : 26); i++) romb.push(nuevoR(true));
+      burb = []; for (i = 0; i < (movil ? 5 : 10); i++) burb.push(nuevaB(true));
+    }
+    function rombo(x, y, s, a){
+      g.save(); g.translate(x, y); g.rotate(a);
+      g.beginPath(); g.moveTo(0, -s); g.lineTo(s * .7, 0); g.lineTo(0, s); g.lineTo(-s * .7, 0); g.closePath(); g.fill();
+      g.globalAlpha *= .9; g.strokeStyle = 'rgba(255,255,255,.55)'; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(0, -s * .45); g.lineTo(s * .32, 0); g.lineTo(0, s * .45); g.lineTo(-s * .32, 0); g.closePath(); g.stroke();
+      g.restore();
+    }
+    function destello(x, y, r){
+      g.beginPath(); g.moveTo(x, y - r * 3); g.quadraticCurveTo(x, y, x + r * 3, y); g.quadraticCurveTo(x, y, x, y + r * 3);
+      g.quadraticCurveTo(x, y, x - r * 3, y); g.quadraticCurveTo(x, y, x, y - r * 3); g.fill();
+    }
+    function pintar(t){
+      var sc = window.scrollY || 0, i;
+      px += (tx - px) * .05; py += (ty - py) * .05;
+      g.clearRect(0, 0, W, H);
+      g.fillStyle = '#FFFFFF';
+      for (i = 0; i < chis.length; i++){
+        var e = chis[i], y = ((e.y - sc * e.z * .04 + py * e.z * 10) % H + H) % H, k = Math.abs(Math.sin(t / 1000 * e.v + e.f));
+        g.globalAlpha = (.2 + .8 * k) * e.z;
+        if (e.r > 1.5 && k > .75) destello(e.x + px * e.z * 10, y, e.r * k);
+        else { g.beginPath(); g.arc(e.x + px * e.z * 10, y, e.r, 0, 6.283); g.fill(); }
+      }
+      for (i = 0; i < romb.length; i++){
+        var r = romb[i];
+        if (!REDUCE){ r.y -= r.vy; r.a += r.va; r.w += .008; }
+        if (r.y < -40){ romb[i] = nuevoR(false); continue; }
+        var ry = ((r.y - sc * r.z * .12) % (H + 80) + H + 80) % (H + 80) - 40;
+        g.globalAlpha = r.o; g.fillStyle = r.c;
+        rombo(r.x + Math.sin(r.w) * 14 * r.z + px * r.z * 26, ry + py * r.z * 16, r.s, r.a);
+      }
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      for (i = 0; i < burb.length; i++){
+        var b = burb[i];
+        if (!REDUCE){ b.y -= b.vy; b.w += .02; }
+        if (b.y < -40){ burb[i] = nuevaB(false); continue; }
+        var fade = Math.min(1, b.y / (H * .35));
+        g.globalAlpha = b.o * fade;
+        g.font = b.s + 'px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+        g.fillText(b.e, b.x + Math.sin(b.w) * 12 + px * b.z * 20, b.y + py * b.z * 12);
+      }
+      g.globalAlpha = 1;
+    }
+    function bucle(t){
+      if (!activo){ corriendo = false; return; }
+      requestAnimationFrame(bucle);
+      if (t - ult < 32) return;   // ~30 cuadros por segundo: fluido y cuida la batería
+      ult = t; pintar(t);
+    }
+    function arrancar(){ if (REDUCE){ pintar(0); return; } if (!corriendo && activo){ corriendo = true; requestAnimationFrame(bucle); } }
+    medir(); arrancar();
+    var rt; addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ medir(); if (REDUCE) pintar(0); }, 200); });
+    document.addEventListener('visibilitychange', function(){ activo = !document.hidden; arrancar(); });
+    if (REDUCE) addEventListener('scroll', function(){ pintar(0); }, {passive:true});
+
+    // Con mouse: el escenario se mueve en capas, luz que sigue al cursor y tarjetas que se inclinan
+    var fondo = $('#fondo'), inclinada = null;
+    addEventListener('pointermove', function(e){
+      if (e.pointerType !== 'mouse' || REDUCE) return;
+      tx = e.clientX / W - .5; ty = e.clientY / H - .5;
+      fondo.style.setProperty('--mx', e.clientX + 'px'); fondo.style.setProperty('--my', e.clientY + 'px');
+      var o = e.target.closest ? e.target.closest('.opt') : null;
+      if (inclinada && inclinada !== o){ inclinada.style.setProperty('--rx', '0deg'); inclinada.style.setProperty('--ry', '0deg'); }
+      inclinada = o; if (!o) return;
+      var bx = o.getBoundingClientRect(), x = (e.clientX - bx.left) / bx.width - .5, y = (e.clientY - bx.top) / bx.height - .5, k2 = Math.min(10, 1600 / bx.width);
+      o.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg'); o.style.setProperty('--ry', (x * k2).toFixed(2) + 'deg');
+    }, {passive:true});
+  })();
+
+  // Paletas de los estilos y formato de cada canal, dibujados en sus botones
+  $$('.est').forEach(function(b){
+    var p = PAL[b.getAttribute('data-v')]; if (!p) return;
+    var sw = document.createElement('span'); sw.className = 'sw'; sw.setAttribute('aria-hidden', 'true');
+    sw.innerHTML = '<i style="background:' + p.bg + '"></i><i style="background:' + p.fg + '"></i><i style="background:' + p.ac + '"></i>';
+    b.insertBefore(sw, b.firstChild);
+  });
+  $$('.opt[data-f="canal"]').forEach(function(b){
+    var t = TAM[b.getAttribute('data-v')]; if (!t) return;
+    var r = document.createElement('span'); r.className = 'ratio'; r.setAttribute('aria-hidden', 'true'); r.style.aspectRatio = t.ar;
+    b.appendChild(r);
+  });
+
+  // Índices para la entrada escalonada
+  $$('.step').forEach(function(sec){
+    Array.prototype.forEach.call(sec.children, function(ch, i){ ch.style.setProperty('--i', Math.min(i, 10)); });
+    Array.prototype.forEach.call(sec.querySelectorAll('.opts, .estilos, .entrega'), function(o){ Array.prototype.forEach.call(o.children, function(b, j){ b.style.setProperty('--j', j); }); });
+  });
+
+  /* ---------- Navegación ---------- */
+  function validar(){
+    if (STEPS[S.step].id !== 'negocio') return true;
+    var ok = true;
+    if (!S.ia){ $('#errIa').textContent = 'Elige tu IA para seguir. Así te damos los pasos correctos.'; ok = false; }
+    if (!val(S.nombre, '')){ $('#errNombre').textContent = 'Escribe el nombre de tu negocio para seguir.'; if (ok) $('#nombre').focus(); ok = false; }
+    return ok;
+  }
+  function next(){
+    if (!validar()) return;
+    go(Math.min(LAST, S.step + 1));
+  }
+  function go(i){
+    var antes = S.step;
+    S.step = i; save(); cerrarHoja(); sync(); window.scrollTo(0,0);
+    var sec = document.querySelector('.step.active');
+    if (sec && !REDUCE){ sec.classList.remove('entra'); void sec.offsetWidth; sec.classList.add('entra'); setTimeout(function(){ sec.classList.remove('entra'); }, 1400); }
+    var hh = document.querySelector('.step.active h2'); if (hh) hh.focus({preventScroll:true});
+    if (i === LAST && antes !== LAST) tejerFinal();
+  }
+  $('#sig').addEventListener('click', next);
+  $('#atras').addEventListener('click', function(){ go(Math.max(0, S.step - 1)); });
+
+  /* ---------- Sincronizar la vista ---------- */
+  function sync(){
+    $$('.step').forEach(function(sec, i){ sec.classList.toggle('active', i === S.step); });
+    $$('.opt').forEach(function(b){
+      var f = b.getAttribute('data-f'), v = b.getAttribute('data-v');
+      var on = b.hasAttribute('data-multi') ? (S[f] || []).indexOf(v) >= 0 : S[f] === v;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    $$('.est').forEach(function(b){
+      var j = S.estilo.indexOf(b.getAttribute('data-v'));
+      b.setAttribute('aria-pressed', j >= 0 ? 'true' : 'false');
+      b.setAttribute('data-n', j >= 0 ? String(j + 1) : '');
+    });
+    $$('.chip[data-fill]').forEach(function(c){
+      var on = (S[c.getAttribute('data-fill')] || '').trim() === c.getAttribute('data-text').trim();
+      c.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    $('.chip[data-toggle]').setAttribute('aria-pressed', S.consultar ? 'true' : 'false');
+    $('#precio').disabled = !!S.consultar;
+    $('.precio').classList.toggle('off', !!S.consultar);
+    $$('input[data-f], textarea[data-f]').forEach(function(el){
+      var v = S[el.getAttribute('data-f')];
+      if (document.activeElement !== el && el.value !== (v || '')) el.value = v || '';
+    });
+    ['prod','cliente','benef'].forEach(function(k){ document.getElementById(k).placeholder = PH[k][S.rubro || ''] || PH[k]['']; });
+
+    var n = S.step >= LAST ? ROWS : Math.max(0, S.step - 1);
+    $$('#weave .hilera').forEach(function(r, i){ r.classList.toggle('on', i < n); });
+    $('#weaveLbl').innerHTML = S.step === 0 ? 'Cada paso que completes teje una hilera de tu aguayo.'
+      : (S.step === LAST ? '<b>Aguayo completo.</b> Tu instrucción está lista.' : '<b>Paso ' + S.step + ' de ' + ROWS + ':</b> ' + STEPS[S.step].t);
+    $('#vitSub').textContent = S.step === 0 ? 'Se arma mientras respondes' : (S.step === LAST ? 'Así podría verse tu publicación' : 'Paso ' + S.step + ' de ' + ROWS + ' · ' + STEPS[S.step].t);
+    $('#atras').hidden = S.step === 0;
+    $('#sig').hidden = S.step === LAST;
+    $('#sig').textContent = S.step === 0 ? 'Empezar' : (S.step === LAST - 1 ? 'Armar mi instrucción' : 'Siguiente');
+    $('#btnVer').hidden = S.step === 0 || S.step === LAST;
+    $('.precio').classList.toggle('lleno', !S.consultar && !!val(S.precio, ''));
+    vivo();
+    if (S.step === LAST) renderListo();
+    checkPrivacy();
+  }
+
+  /* ---------- Panel técnico (?admin=1 o tres toques en «v1.0») ---------- */
+  function admLog(m){ var l = $('#admLog'); l.textContent = (l.textContent === 'Listo.' ? '' : l.textContent + '\n') + m; l.scrollTop = 1e9; }
+  function abrirAdmin(){
+    $('#admUrl').textContent = API_OK ? API_URL + (QS.get('api') ? '  (de ?api=)' : '  (del archivo)') : 'SIN CONFIGURAR (modo de prueba): falta la URL /exec en API_URL_DEFECTO';
+    $('#admCola').textContent = cola().length; $('#admLog').textContent = 'Listo.'; $('#admin').hidden = false;
+  }
+  var toques = [];
+  $('#verApp').addEventListener('click', function(){
+    var t = Date.now(); toques = toques.filter(function(x){ return t - x < 900; }); toques.push(t);
+    if (toques.length >= 3){ toques = []; abrirAdmin(); }
+  });
+  $('#admin').addEventListener('click', async function(e){
+    if (e.target.id === 'admin') { $('#admin').hidden = true; return; }
+    var a = e.target.getAttribute('data-a'); if (!a) return;
+    if (a === 'close'){ $('#admin').hidden = true; return; }
+    if (!API_OK){ admLog('Sin URL del servidor: no hay nada que probar.'); return; }
+    if (a === 'ping'){
+      admLog('Probando…');
+      try { admLog(JSON.stringify(await jsonp({action:'ping'}))); }
+      catch(er){ admLog('Sin respuesta (' + er.message + '). Revisa que la implementación tenga acceso «Cualquier persona».'); }
+    }
+    if (a === 'prueba'){
+      if (!(await asegurarJsPdf())){ admLog('No cargó jsPDF.'); return; }
+      var id = nuevoId('PRUEBA'), d = new window.jspdf.jsPDF();
+      d.text('Prueba de conexion Despega 360 (pieza) - ' + new Date().toLocaleString('es-BO'), 15, 20);
+      admLog('Enviando ' + id + '…');
+      try { await subir({id:id, nombre:'Prueba de conexión', ts:Date.now(), fecha_local:new Date().toLocaleString('es-BO'), version:VERSION, pdf:d.output('datauristring').split(',')[1]}, admLog); admLog('OK: revisa la carpeta de Drive (archivo que empieza con PRUEBA).'); }
+      catch(er){ admLog('No se envió: ' + er.message); }
+    }
+    if (a === 'flush'){ admLog('Reenviando…'); var k = await flushCola(admLog); admLog(k + ' enviada(s).'); $('#admCola').textContent = cola().length; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ $('#admin').hidden = true; cerrarHoja(); } });
+
+  sync();
+  if (QS.get('admin') === '1') setTimeout(abrirAdmin, 500);
+
+  // Constancias que quedaron pendientes en este equipo
+  function intentarCola(){
+    if (!cola().length) return;
+    flushCola().then(function(k){ if (k) toast(k === 1 ? 'Tu constancia pendiente ya llegó al equipo de Despega 360. ✅' : k + ' constancias pendientes ya llegaron al equipo de Despega 360. ✅'); });
+  }
+  setTimeout(intentarCola, 1500);
+  window.addEventListener('online', intentarCola);
+})();
+</script>
+</body>
+</html>

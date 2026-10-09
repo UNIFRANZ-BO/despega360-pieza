@@ -60,10 +60,9 @@ suben las emprendedoras va a una carpeta de Drive, con una subcarpeta por negoci
 - [x] App, script y pruebas locales en verde.
 - [x] Repo `UNIFRANZ-BO/despega360-pieza` + GitHub Pages (publicado el 09-oct-2026 con confirmación de Rafael).
 - [x] Script «Despega 360 · Piezas» implementado en la cuenta dedicada (09-oct-2026): `AKfycbwNm7JM…0whICJXGWRv/exec`.
-      Ping anónimo OK; URL incrustada en `API_URL_DEFECTO`. **Enlace vigente: https://unifranz-bo.github.io/despega360-pieza/?v=2**
-- [x] v2.0 (subida de la pieza) escrita y probada en local; commit hecho, **sin publicar**.
-- [ ] Rafael actualiza el script a v2.0 (Administrar implementaciones → ✏️ → **Nueva versión**) → `ping` debe decir
-      `version_app: "2.0"` → recién entonces push de la app y repartir **`?v=3`** (orden: script → app).
+      Ping anónimo OK; URL incrustada en `API_URL_DEFECTO`.
+- [x] v2.0 publicada (09-oct-2026): script «Nueva versión» (`ping` → `version_app: "2.0"`), app en línea, PDF `PRUEBA-` subido OK.
+      **Enlace vigente: https://unifranz-bo.github.io/despega360-pieza/?v=3**
 - [ ] Prueba real desde el celular; luego `borrarPruebas` y borrar a mano subcarpetas de prueba.
 
 ## Comandos

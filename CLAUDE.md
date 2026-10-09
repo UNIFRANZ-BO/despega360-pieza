@@ -51,9 +51,9 @@ se descarga y una copia que va a una carpeta de Drive). Resumen de esa receta: `
 
 ## Estado (09-oct-2026)
 - [x] App, script y pruebas locales en verde.
-- [x] Repo `UNIFRANZ-BO/despega360-pieza` + GitHub Pages → https://unifranz-bo.github.io/despega360-pieza/?v=1
-      (por ahora en **modo de prueba**: `API_URL_DEFECTO = 'PEGA_AQUI_LA_URL_EXEC'`).
-- [ ] Rafael crea el script en la cuenta dedicada y pasa la URL `/exec` → verificar ping, incrustar, publicar `?v=2`.
+- [x] Repo `UNIFRANZ-BO/despega360-pieza` + GitHub Pages (publicado el 09-oct-2026 con confirmación de Rafael).
+- [x] Script «Despega 360 · Piezas» implementado en la cuenta dedicada (09-oct-2026): `AKfycbwNm7JM…0whICJXGWRv/exec`.
+      Ping anónimo OK; URL incrustada en `API_URL_DEFECTO`. **Enlace vigente: https://unifranz-bo.github.io/despega360-pieza/?v=2**
 - [ ] Prueba real desde el celular; luego `borrarPruebas`.
 
 ## Comandos

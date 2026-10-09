@@ -848,7 +848,7 @@ REGLAS
      URL de la aplicación web de Apps Script (termina en /exec). Sin URL la app funciona en
      modo de prueba: descarga el PDF pero no lo envía. ?api=<url> prueba otra URL sin guardarla. */
   var VERSION = '1.0';
-  var API_URL_DEFECTO = 'PEGA_AQUI_LA_URL_EXEC';
+  var API_URL_DEFECTO = 'https://script.google.com/macros/s/AKfycbwNm7JM49fuQlkEdzz9uhjLU1TGo-jmRDw285m4YQCuklWA78M_7zZRQ0whICJXGWRv/exec';
   var QS = new URLSearchParams(location.search);
   var API_URL = (QS.get('api') || API_URL_DEFECTO).trim();
   var API_OK = /^https:\/\/script\.google(usercontent)?\.com\/.+\/exec$/.test(API_URL);

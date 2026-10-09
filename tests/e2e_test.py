@@ -55,13 +55,15 @@ async def recorrido(pg, ancho):
     await sig(pg)
     # IA y nombre obligatorios
     await sig(pg, 300)
-    assert 'Elige tu IA' in await pg.inner_text('#errIa')
-    assert 'nombre de tu negocio' in await pg.inner_text('#errNombre')
+    e = await pg.inner_text('.step.active [data-err]')
+    assert 'tu IA' in e and 'nombre de tu negocio' in e and 'rubro' in e, e
     await pg.click('.opt[data-v="Gemini"]'); await pg.fill('#nombre', 'Delicias del Valle')
-    assert await pg.inner_text('#errNombre') == ''
     assert 'Delicias del Valle' in await pg.text_content('#cinta1'), 'la cinta no muestra el negocio'
-    await pg.click('.opt[data-v="Alimentos"]')
+    await pg.click('.opt[data-v="Alimentos"]'); await pg.wait_for_timeout(100)
+    assert await pg.inner_text('.step.active [data-err]') == ''
     await sig(pg)
+    await sig(pg, 300)
+    assert 'el producto' in await pg.inner_text('.step.active [data-err]'), 'el producto es obligatorio'
     await pg.fill('#prod', 'Mermelada de durazno de 250 g'); await pg.fill('#cliente', 'Oficinas que piden refrigerios')
     await pg.fill('#benef', 'Un refrigerio rico y listo para llevar')
     await pg.fill('#cliente', 'Llamar al 71234567'); await pg.wait_for_timeout(100)
@@ -72,9 +74,14 @@ async def recorrido(pg, ancho):
     await pg.fill('#evid', 'Comentarios de clientes en WhatsApp')
     await pg.click('.chip[data-fill="msg"]')
     await sig(pg)
+    await sig(pg, 300)
+    assert 'el precio' in await pg.inner_text('.step.active [data-err]')
     await pg.fill('#precio', '25'); await pg.click('.chip[data-text="2x1"]'); await pg.click('.chip[data-fill="sost"][data-text="ninguna"]')
     await sig(pg)
-    await pg.click('.opt[data-f="canal"][data-v="Instagram"]'); await pg.click('.opt[data-f="contacto"][data-v="WhatsApp"]')
+    await pg.click('.opt[data-f="canal"][data-v="Instagram"]')
+    await pg.fill('#wa', '7123 456'); await sig(pg, 300)
+    assert 'WhatsApp de 8 dígitos' in await pg.inner_text('.step.active [data-err]')
+    await pg.fill('#wa', '7123 4567'); await pg.click('.chip[data-fill="red"]')
     await pg.click('.chip[data-text="Quillacollo, Cochabamba"]')
     for e in ['divertido', 'cercano', 'elegante']: await pg.click(f'.est[data-v="{e}"]')
     await pg.click('.est[data-v="juvenil"]')
@@ -90,6 +97,9 @@ async def recorrido(pg, ancho):
     await sig(pg)
     for t in ['luz', 'fondo']: await pg.click(f'.opt[data-v="{t}"]')
     await pg.fill('#foto', 'Frasco sobre mantel blanco junto a duraznos')
+    await sig(pg, 300)
+    assert 'logo' in await pg.inner_text('.step.active [data-err]')
+    await pg.click('.opt[data-f="logo"][data-v="no"]')
     assert await pg.inner_text('#sig') == 'Armar mi instrucción'
     await sig(pg, 2200)
     assert await paso_actual(pg) == 'listo'
@@ -116,12 +126,13 @@ async def main():
             # Copiar: la instrucción pide 2 piezas terminadas, sin guías
             await pg.click('#btnCopiar'); await pg.wait_for_timeout(300)
             clip = await pg.evaluate('navigator.clipboard.readText()')
-            assert clip.startswith('Actúa como diseñadora gráfica publicitaria') and 'ENTREGARME 2 IMÁGENES' in clip, clip[:400]
-            assert 'Delicias del Valle' in clip and 'Quillacollo' in clip and '- Precio: Bs 25' in clip and '«Bs 25»' in clip
-            assert 'Pieza 1, para una publicación de Instagram: formato vertical 4:5 (1080 × 1350 px)' in clip, clip
-            assert 'Pieza 2, para estados de WhatsApp e historias: formato vertical alto 9:16 (1080 × 1920 px)' in clip
-            assert '- Promoción: «2x1».' in clip and 'Escribe 2 y te entrego tu segunda pieza' in clip and 'Estoy usando Gemini' in clip
-            assert 'Mensaje comercial: (no lo indiqué)' in clip and 'pregúntamelo' not in clip
+            assert clip.startswith('Actúa como especialista en marketing, publicidad y diseño de contenido'), clip[:300]
+            assert 'Delicias del Valle' in clip and 'Quillacollo' in clip and '- Precio: Bs 25' in clip and '- Promoción u oferta especial: 2x1' in clip
+            assert '- Número de WhatsApp para pedidos: 71234567 (irá impreso en la pieza)' in clip and '- Logo: no tengo' in clip
+            assert 'Pieza 1, para una publicación de Instagram: 1080 × 1350 px (formato vertical 4:5)' in clip, clip
+            assert 'Pieza 2, para estados de WhatsApp e historias: 1080 × 1920 px (formato vertical alto 9:16)' in clip
+            assert 'Revisa la ortografía de mis datos' in clip and '4. Correcciones' in clip and '¿Los uso así o quieres cambiar algo?' in clip
+            assert 'Estoy usando Gemini' in clip and 'Mensaje comercial' not in clip and '(no lo indiqué)' not in clip
 
             # Constancia local: se descarga y NO se envía
             async with pg.expect_download() as dl:
@@ -226,9 +237,9 @@ async def main():
         await pg.reload(); await pg.wait_for_timeout(1200)
         txt = await pg.input_value('#preview')
         assert 'Estoy usando' not in txt, 'la IA vieja (Claude) debía limpiarse'
-        assert 'Pieza 1, para un estado de WhatsApp: formato vertical alto 9:16 (1080 × 1920 px)' in txt, txt
-        assert 'Pieza 2, para una publicación de Facebook o Instagram: formato vertical 4:5' in txt
-        assert '- Precio: no lo indiqué, así que no pongas precio.' in txt and 'Promoción: «' not in txt
+        assert 'Pieza 1, para un estado de WhatsApp: 1080 × 1920 px (formato vertical alto 9:16)' in txt, txt
+        assert 'Pieza 2, para una publicación de Facebook o Instagram: 1080 × 1350 px' in txt
+        assert '- Precio: (no lo indiqué)' in txt
         assert 'Abrir Gemini' in await pg.inner_text('#abrir')
         print('OK datos antiguos y canal vertical')
 

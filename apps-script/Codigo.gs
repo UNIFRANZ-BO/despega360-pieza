@@ -1,12 +1,17 @@
 /**
- * DESPEGA 360 · PIEZAS PUBLICITARIAS · CONSTANCIAS EN PDF  (v1.0)
- * Recibe el PDF que arma la app «Arma tu pieza publicitaria» y lo guarda en una carpeta de Google Drive.
+ * DESPEGA 360 · PIEZAS PUBLICITARIAS DE LAS EMPRENDEDORAS  (v2.0)
+ * Recibe la pieza terminada que cada emprendedora sube desde la app «Arma tu pieza publicitaria»
+ * (imagen PNG o JPG, PDF, PowerPoint…) y la guarda en una carpeta de Google Drive.
  * Es un proyecto aparte del de «Arma tu guía IA»: tiene su propia carpeta y su propia URL.
  * No usa hojas de cálculo ni base de datos: la carpeta es el registro.
- * Cada archivo se llama «AAAA-MM-DD HH.MM – Nombre del negocio.pdf» (hora de Bolivia).
+ * Cada negocio tiene su SUBCARPETA (se crea sola la primera vez que sube algo). Mayúsculas, tildes
+ * y espacios de más no crean carpetas distintas: «delicias del valle» y «Delicias  del Valle» van juntas.
+ * Dentro, cada archivo se llama «AAAA-MM-DD HH.MM – Nombre del negocio.ext» (hora de Bolivia);
+ * si sube varios a la vez: «… (1 de 3).jpg». Los archivos de PRUEBA quedan sueltos en la carpeta principal.
+ * Revisa que cada archivo sea de verdad lo que dice ser (no acepta programas ni archivos raros).
  *
  * ── PRIMERA VEZ ─────────────────────────────────────────────────────────────
- *   1. Con la sesión abierta en la cuenta de Google donde quieres los PDF:
+ *   1. Con la sesión abierta en la cuenta de Google donde quieres los archivos:
  *      script.google.com → Nuevo proyecto → ponle de nombre «Despega 360 · Piezas» → pega este código → Guardar.
  *   2. Elige «configuracionInicial» en la lista de funciones → Ejecutar → autoriza.
  *      Crea la carpeta en tu Drive y escribe su enlace en el registro de ejecución.
@@ -23,14 +28,25 @@
  *   (elige la función en la lista de arriba y toca «Ejecutar»; el resultado sale abajo).
  */
 
-const VERSION_APP = '1.0';
+const VERSION_APP = '2.0';
 const ZONA = 'America/La_Paz';
 // Opcional: ID de una carpeta que ya exista en esta cuenta (lo que va después de /folders/ en su enlace).
 // Vacío = el script crea su propia carpeta la primera vez.
 const CARPETA_ID = '';
-const NOMBRE_CARPETA = 'Despega 360 · Piezas publicitarias de las emprendedoras';
-const MAX_MB = 5;            // tamaño máximo de un PDF
-const MAX_POR_HORA = 150;    // tope de envíos por hora (frena abusos; con 80 emprendedoras sobra)
+const NOMBRE_CARPETA = 'Despega 360 · Piezas publicitarias de las emprendedoras';   // solo se usa si el script crea la carpeta
+const MAX_MB = 15;           // tamaño máximo de cada archivo
+const MAX_POR_HORA = 300;    // tope de archivos por hora (frena abusos; con 80 emprendedoras sobra)
+// Formatos aceptados: extensión → [familia según sus primeros bytes, tipo MIME]
+const FORMATOS = {
+  pdf: ['pdf', 'application/pdf'], jpg: ['jpg', 'image/jpeg'], jpeg: ['jpg', 'image/jpeg'], png: ['png', 'image/png'],
+  webp: ['webp', 'image/webp'], gif: ['gif', 'image/gif'], heic: ['heic', 'image/heic'], heif: ['heic', 'image/heif'],
+  docx: ['zip', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+  xlsx: ['zip', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  pptx: ['zip', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
+  odt: ['zip', 'application/vnd.oasis.opendocument.text'], ods: ['zip', 'application/vnd.oasis.opendocument.spreadsheet'],
+  odp: ['zip', 'application/vnd.oasis.opendocument.presentation'],
+  doc: ['ole', 'application/msword'], xls: ['ole', 'application/vnd.ms-excel'], ppt: ['ole', 'application/vnd.ms-powerpoint']
+};
 const ID_RE = /^(D360P|PRUEBA)-[a-z0-9]{6,12}-[a-z0-9]{3,8}$/;
 
 /* ═════════════════════════ WEB APP ═════════════════════════ */
@@ -67,20 +83,24 @@ function subir_(d) {
   const lock = LockService.getScriptLock();
   lock.waitLock(25000);
   try {
-    if (idGuardado_(id)) return {ok: true, id: id, repetido: true};   // reenvío del mismo PDF: no se duplica
-    const b64 = String(d.pdf || '');
-    if (!b64 || b64.length > MAX_MB * 1.4e6) return {ok: false, codigo: 'invalido'};
+    if (idGuardado_(id)) return {ok: true, id: id, repetido: true};   // reenvío del mismo archivo: no se duplica
+    const b64 = String(d.archivo || d.pdf || '');   // «pdf»: apps de la versión 1
+    if (!b64 || b64.length > MAX_MB * 1.37e6) return {ok: false, codigo: 'invalido'};
     const bytes = Utilities.base64Decode(b64);
-    if (!(bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44 && bytes[3] === 0x46)) return {ok: false, codigo: 'invalido'};   // «%PDF»
+    const ext = tipoArchivo_(bytes, d.nombre_original || (d.pdf ? 'constancia.pdf' : ''));
+    if (!ext) return {ok: false, codigo: 'invalido'};
     if (!cupo_()) return {ok: false, codigo: 'limite'};
     const cuando = fechaEnvio_(d.ts);
+    const total = Math.min(Math.max(parseInt(d.total, 10) || 1, 1), 20), parte = Math.min(Math.max(parseInt(d.parte, 10) || 1, 1), total);
     const nombre = (id.indexOf('PRUEBA') === 0 ? 'PRUEBA · ' : '') +
-      Utilities.formatDate(cuando, ZONA, 'yyyy-MM-dd HH.mm') + ' – ' + limpio_(d.nombre, 80) + '.pdf';
-    const f = carpeta_().createFile(Utilities.newBlob(bytes, 'application/pdf', nombre));
+      Utilities.formatDate(cuando, ZONA, 'yyyy-MM-dd HH.mm') + ' – ' + limpio_(d.nombre, 80) +
+      (total > 1 ? ' (' + parte + ' de ' + total + ')' : '') + '.' + ext;
+    const destino = id.indexOf('PRUEBA') === 0 ? carpeta_() : subcarpeta_(d.nombre);
+    const f = destino.createFile(Utilities.newBlob(bytes, FORMATOS[ext][1], nombre));
     f.setDescription([
       'Rubro: ' + limpio_(d.rubro, 40), 'Producto: ' + limpio_(d.producto, 120), 'Canal: ' + limpio_(d.canal, 40),
       'Zona: ' + limpio_(d.municipio, 120), 'IA: ' + limpio_(d.ia, 30),
-      'Hora en su equipo: ' + limpio_(d.fecha_local, 40), 'Código de envío: ' + id
+      'Archivo original: ' + limpio_(d.nombre_original, 120), 'Hora en su equipo: ' + limpio_(d.fecha_local, 40), 'Código de envío: ' + id
     ].join('\n'));
     PropertiesService.getScriptProperties().setProperty('id_' + id, f.getId());
     return {ok: true, id: id};
@@ -88,6 +108,28 @@ function subir_(d) {
 }
 
 /* ═════════════════════════ AYUDANTES ═════════════════════════ */
+// Devuelve la extensión con la que se guarda el archivo, o '' si no es un formato aceptado.
+// Mandan sus primeros bytes, no solo el nombre (un programa renombrado a .pdf no pasa).
+function tipoArchivo_(bytes, nombreOriginal) {
+  const b = i => bytes[i] & 0xFF;
+  const txt = (i, n) => { let t = ''; for (let k = i; k < i + n && k < bytes.length; k++) t += String.fromCharCode(b(k)); return t; };
+  let fam = '';
+  if (txt(0, 4) === '%PDF') fam = 'pdf';
+  else if (b(0) === 0xFF && b(1) === 0xD8 && b(2) === 0xFF) fam = 'jpg';
+  else if (b(0) === 0x89 && txt(1, 3) === 'PNG') fam = 'png';
+  else if (txt(0, 4) === 'RIFF' && txt(8, 4) === 'WEBP') fam = 'webp';
+  else if (txt(0, 4) === 'GIF8') fam = 'gif';
+  else if (txt(4, 4) === 'ftyp' && /^(heic|heix|hevc|hevx|heim|heis|mif1|msf1)$/.test(txt(8, 4))) fam = 'heic';
+  else if (b(0) === 0x50 && b(1) === 0x4B && b(2) === 0x03 && b(3) === 0x04) fam = 'zip';
+  else if (b(0) === 0xD0 && b(1) === 0xCF && b(2) === 0x11 && b(3) === 0xE0) fam = 'ole';
+  if (!fam) return '';
+  const m = /\.([a-z0-9]{2,5})$/i.exec(String(nombreOriginal || '').trim());
+  const ext = m ? m[1].toLowerCase() : '';
+  if (FORMATOS[ext] && FORMATOS[ext][0] === fam) return ext === 'jpeg' ? 'jpg' : ext === 'heif' ? 'heic' : ext;
+  if (fam === 'zip' || fam === 'ole') return '';   // un ZIP u OLE sin extensión de Office no se acepta
+  return fam;   // imagen o PDF con un nombre raro: se guarda con su extensión real
+}
+
 function abierta_() { return PropertiesService.getScriptProperties().getProperty('ACTIVA') !== 'NO'; }
 function idGuardado_(id) { return PropertiesService.getScriptProperties().getProperty('id_' + id); }
 
@@ -110,6 +152,20 @@ function cupo_() {
   return true;
 }
 
+// Subcarpeta del negocio dentro de la carpeta principal (la crea si no existe).
+// Se recuerda por su ID: si Rafael la renombra o la mueve, los archivos siguen llegando a ella.
+function subcarpeta_(nombre) {
+  const visible = limpio_(nombre, 80), clave = 'sub_' + clave_(visible), props = PropertiesService.getScriptProperties();
+  const id = props.getProperty(clave);
+  if (id) { try { const f = DriveApp.getFolderById(id); if (!f.isTrashed()) return f; } catch (e) {} }
+  const raiz = carpeta_(), it = raiz.getFolders();
+  while (it.hasNext()) { const f = it.next(); if (clave_(f.getName()) === clave_(visible)) { props.setProperty(clave, f.getId()); return f; } }
+  const f = raiz.createFolder(visible);
+  props.setProperty(clave, f.getId());
+  return f;
+}
+function clave_(s) { return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+
 function carpeta_() {
   const props = PropertiesService.getScriptProperties();
   const id = CARPETA_ID || props.getProperty('CARPETA_ID');
@@ -124,21 +180,24 @@ function configuracionInicial() {
   const props = PropertiesService.getScriptProperties();
   if (!props.getProperty('ACTIVA')) props.setProperty('ACTIVA', 'SI');
   const c = carpeta_();
-  console.log('Listo. Los PDF se guardarán en: ' + c.getName() + '\n' + c.getUrl() +
+  console.log('Listo. Los archivos se guardarán en: ' + c.getName() + '\n' + c.getUrl() +
     '\nAhora: Implementar → Nueva implementación → Aplicación web (Ejecutar como: Yo · Acceso: Cualquier persona).');
 }
 
 function estado() {
   const c = carpeta_();
-  let n = 0, pruebas = 0;
+  let sueltos = 0, pruebas = 0, emp = 0, arch = 0;
   const it = c.getFiles();
-  while (it.hasNext()) { const f = it.next(); n++; if (f.getName().indexOf('PRUEBA') === 0) pruebas++; }
-  console.log('Recepción: ' + (abierta_() ? 'ABIERTA' : 'CERRADA') + '\nCarpeta: ' + c.getUrl() +
-    '\nPDF en la carpeta: ' + n + (pruebas ? ' (' + pruebas + ' de prueba)' : ''));
+  while (it.hasNext()) { const f = it.next(); if (f.getName().indexOf('PRUEBA') === 0) pruebas++; else sueltos++; }
+  const sub = c.getFolders();
+  while (sub.hasNext()) { const fs = sub.next().getFiles(); emp++; while (fs.hasNext()) { fs.next(); arch++; } }
+  console.log('Recepción: ' + (abierta_() ? 'ABIERTA' : 'CERRADA') + '\nCarpeta: ' + c.getName() + '\n' + c.getUrl() +
+    '\nNegocios con archivos (subcarpetas): ' + emp + '\nArchivos en sus subcarpetas: ' + arch +
+    (sueltos ? '\nArchivos sueltos en la carpeta principal: ' + sueltos : '') + (pruebas ? '\nArchivos de prueba: ' + pruebas : ''));
 }
 
-function abrir() { PropertiesService.getScriptProperties().setProperty('ACTIVA', 'SI'); console.log('Recepción ABIERTA: la app vuelve a enviar PDF a la carpeta.'); }
-function cerrar() { PropertiesService.getScriptProperties().setProperty('ACTIVA', 'NO'); console.log('Recepción CERRADA: las emprendedoras igual descargan su PDF, pero ya no llega a la carpeta.'); }
+function abrir() { PropertiesService.getScriptProperties().setProperty('ACTIVA', 'SI'); console.log('Recepción ABIERTA: las emprendedoras pueden subir sus piezas.'); }
+function cerrar() { PropertiesService.getScriptProperties().setProperty('ACTIVA', 'NO'); console.log('Recepción CERRADA: la app sigue funcionando, pero ya no se pueden subir piezas a la carpeta.'); }
 
 // Manda a la papelera de Drive (recuperable 30 días) los archivos que empiezan con «PRUEBA».
 function borrarPruebas() {

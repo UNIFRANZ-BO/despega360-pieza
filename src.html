@@ -153,7 +153,7 @@ main{max-width:660px;margin:0 auto;padding:12px 20px 170px;position:relative;ove
 
 /* El desenfoque de vidrio solo en computadoras: en celulares sencillos cuesta batería y fluidez */
 @media (hover:hover) and (min-width:760px){
-  .ruta,details.duda,.opt,.est,.resumen,.campo input[type=text],.campo input[type=number],textarea,.candado,.chip{
+  .ruta,details.duda,.opt,.est,.resumen,.campo input[type=text],.campo input[type=number],textarea,.chip,.arch{
     -webkit-backdrop-filter:blur(12px) saturate(140%);backdrop-filter:blur(12px) saturate(140%)}
   nav.barra{background:linear-gradient(180deg,rgba(14,4,24,.35),rgba(14,4,24,.82));-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%)}
 }
@@ -376,25 +376,68 @@ textarea.corto{min-height:100px}
 .enviar::after{content:"";position:absolute;inset:4px;z-index:-2;border-radius:30px;background:var(--aguayo);filter:blur(30px);opacity:.28;animation:giraBorde 5s linear infinite}
 .enviar h3{margin:0 0 4px;color:#FFE29A}
 .enviar p{margin:0 0 18px;color:var(--ink2);font-size:16px}
-.sello{position:absolute;top:-16px;right:10px;z-index:2;padding:6px 12px;border:3px solid #1FBF8A;border-radius:10px;color:#6BF0BE;background:rgba(10,40,30,.85);
-  font:800 17px/1 "Baloo 2",sans-serif;letter-spacing:.08em;text-transform:uppercase;transform:rotate(8deg);box-shadow:0 0 22px -4px rgba(31,191,138,.8)}
-.sello[hidden]{display:none}
-.sello.golpe{animation:golpe .5s cubic-bezier(.5,0,.4,1.4)}
-@keyframes golpe{0%{transform:rotate(-20deg) scale(3);opacity:0}70%{transform:rotate(10deg) scale(.92);opacity:1}100%{transform:rotate(8deg) scale(1)}}
-.progreso{list-style:none;margin:16px 0 0;padding:0}
-.progreso li{display:flex;align-items:center;gap:12px;padding:7px 0;font-size:16px;color:var(--ink2);transition:color .2s}
-.progreso li::before{content:"";flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);
-  display:grid;place-items:center;font:700 13px/1 system-ui;color:#fff}
-.progreso li.on{color:var(--ink);font-weight:700}
-.progreso li.on::before{border-color:var(--maiz);border-top-color:transparent;animation:gira .8s linear infinite}
-.progreso li.ok::before{content:"✓";background:var(--verde);border-color:var(--verde);box-shadow:0 0 12px rgba(31,191,138,.7)}
-.progreso li.av::before{content:"!";background:var(--maiz);border-color:var(--maiz);color:#3A2600}
-.progreso li.ok,.progreso li.av{color:var(--ink)}
-@keyframes gira{to{transform:rotate(360deg)}}
-.candado{display:flex;gap:14px;align-items:center;margin:18px 0;padding:18px;border:1.5px dashed rgba(255,255,255,.22);border-radius:18px;color:var(--ink2);font-size:16px;background:rgba(255,255,255,.03)}
-.candado[hidden]{display:none}
-.candado .ic{font-size:30px;animation:flota2 2.6s ease-in-out infinite}
-#trasEnvio.abre{animation:entra .7s cubic-bezier(.2,.7,.2,1) both}
+/* Paso «Sube tu pieza» (v2) */
+.ruta li:nth-child(4)::before{background:radial-gradient(circle at 30% 30%,#7FE3F2,#0E7F96);box-shadow:0 0 0 4px rgba(34,195,221,.18),0 0 26px rgba(34,195,221,.55);animation-delay:1.5s}
+.atajo{display:flex;align-items:center;gap:12px;width:100%;margin:6px 0 18px;padding:14px 18px;border-radius:16px;cursor:pointer;text-align:left;
+  background:linear-gradient(100deg,rgba(34,195,221,.18),rgba(255,61,139,.14));border:1.5px solid rgba(34,195,221,.5);font-size:17px;color:var(--ink);
+  transition:transform .15s,box-shadow .2s}
+.atajo b{color:#7FE3F2}
+.atajo .ic{font-size:26px;animation:flota2 2.8s ease-in-out infinite}
+@media (hover:hover){.atajo:hover{transform:translateY(-2px);box-shadow:0 12px 30px -14px rgba(34,195,221,.9)}}
+.soltar{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;cursor:pointer;
+  margin:20px 0 8px;padding:30px 18px;border-radius:22px;border:2px dashed rgba(255,201,77,.6);overflow:hidden;
+  background:radial-gradient(120% 120% at 50% 0%,rgba(255,61,139,.16),rgba(255,255,255,.03));transition:background .2s,border-color .2s,transform .2s}
+.soltar::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 40%,rgba(255,255,255,.12) 50%,transparent 60%);transform:translateX(-100%);animation:brillo 4s ease-in-out infinite}
+.soltar input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.soltar .zic{font-size:46px;line-height:1;animation:flota2 2.6s ease-in-out infinite;filter:drop-shadow(0 6px 18px rgba(255,194,26,.55))}
+.soltar b{font:800 21px/1.2 "Baloo 2",sans-serif;color:#FFE29A}
+.soltar small{color:var(--ink2);font-size:15px}
+.soltar.sobre{background:radial-gradient(120% 120% at 50% 0%,rgba(255,201,77,.3),rgba(255,61,139,.14));border-color:var(--maiz);transform:scale(1.01)}
+.soltar.con{padding:18px}
+.soltar.con .zic{font-size:30px}
+.soltar:focus-within{outline:3px solid var(--maiz);outline-offset:3px}
+.archivos{list-style:none;margin:10px 0;padding:0;display:grid;gap:10px}
+.arch{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;
+  background:var(--card);border:1px solid var(--line);animation:sube .35s ease-out both}
+.arch .ai{font-size:28px;text-align:center}
+.arch .ai img{width:44px;height:44px;border-radius:10px;object-fit:cover;display:block;box-shadow:0 4px 14px -4px rgba(0,0,0,.6)}
+.arch .an{min-width:0}
+.arch .an b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arch .an small{display:block;color:var(--ink2);font-size:14px}
+.arch .av{display:block;height:5px;border-radius:9px;background:rgba(255,255,255,.1);margin-top:7px;overflow:hidden;position:relative}
+.arch .av i{position:absolute;inset:0 auto 0 0;width:0;border-radius:inherit;background:linear-gradient(90deg,#FF3D8B,#FF7A2E,#FFC21A)}
+.arch.sube .av i{width:40%;animation:carga 1.1s ease-in-out infinite}
+.arch.ok .av i{width:100%;background:var(--verde);box-shadow:0 0 10px rgba(31,191,138,.8)}
+.arch.ok{border-color:rgba(31,191,138,.5)}
+.arch.error{border-color:rgba(255,90,79,.6)}
+.arch.error .an small{color:#FF8A80}
+@keyframes carga{from{left:-40%}to{left:100%}}
+.quitar{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.06);cursor:pointer;font-size:16px;color:var(--ink2)}
+.pdfbtn[disabled]{opacity:.75}
+.pdfbtn[hidden]{display:none}
+.exito{margin:22px 0 6px;padding:26px 18px;text-align:center;border-radius:24px;position:relative;isolation:isolate;
+  background:radial-gradient(120% 100% at 50% 0%,rgba(31,191,138,.28),rgba(20,6,34,.9));animation:entra .7s cubic-bezier(.2,.7,.2,1) both}
+.exito::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;z-index:-1;background:var(--aguayo);animation:giraBorde 5s linear infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.exito[hidden]{display:none}
+.exito .okic{font-size:58px;line-height:1;animation:late 2.4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(31,191,138,.8))}
+.exito h3{margin:10px 0 6px;font-size:30px;color:#B8F5DF}
+.exito p{margin:0 0 6px;color:var(--ink2)}
+.exito ul{list-style:none;padding:0;margin:10px 0;font-size:15px;color:var(--ink)}
+.tips{margin:0 0 14px;padding-left:20px;color:var(--ink2);font-size:16px}
+.tips li{margin:6px 0}
+.tips li b{color:var(--ink)}
+.pdfbox{margin:24px 0 10px;padding:16px 18px;border:1.5px dashed rgba(255,255,255,.22);border-radius:18px;background:rgba(255,255,255,.03)}
+.pdfbox h3{margin:0 0 4px;font-size:19px}
+.pdfbox p{margin:0 0 12px;color:var(--ink2);font-size:15px}
+.secbtn{width:100%;border-radius:999px;border:1.5px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);cursor:pointer;
+  font:700 18px/1 "Baloo 2",sans-serif;padding:14px 18px;display:flex;align-items:center;justify-content:center;gap:8px}
+@media (hover:hover){.secbtn:hover{background:rgba(255,255,255,.1)}}
+.m-real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:revela .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes revela{from{opacity:0;transform:scale(1.08);filter:blur(8px)}}
+.m-sello{position:absolute;left:10px;bottom:10px;z-index:2;background:rgba(10,40,30,.85);color:#6BF0BE;border:2px solid #1FBF8A;border-radius:8px;
+  font:800 11px/1 "Baloo 2",sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;transform:rotate(-4deg)}
 .flash{position:fixed;inset:0;z-index:24;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.95),rgba(255,226,154,.4) 35%,transparent 70%)}
 .flash.va{animation:flash .8s ease-out}
 @keyframes flash{0%{opacity:.9}100%{opacity:0}}
@@ -493,9 +536,11 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
   <p class="lead">Vas a preparar el mensaje para que la inteligencia artificial te ayude a crear una publicación atractiva para tus redes, con la foto real de tu producto.</p>
   <ol class="ruta">
     <li><div><b>Responde aquí con tu cuadernillo del Taller 2</b><span>Casi todo ya lo tienes escrito. Unos 10 minutos.</span></div></li>
-    <li><div><b>Envía tu constancia y copia tu instrucción</b><span>Se arma sola con tus datos.</span></div></li>
+    <li><div><b>Copia tu instrucción con un botón</b><span>Se arma sola con tus datos.</span></div></li>
     <li><div><b>Pégala en tu IA y recibe tus textos</b><span>Luego armas tu pieza en tu plantilla o en Canva.</span></div></li>
+    <li><div><b>Vuelve aquí y sube tu pieza terminada</b><span>En PNG, JPG o PDF. Así llega al equipo de Despega 360.</span></div></li>
   </ol>
+  <button class="atajo" type="button" data-ir="subir"><span class="ic" aria-hidden="true">📤</span><span>¿Ya terminaste tu pieza? <b>Súbela aquí</b></span></button>
   <h3>Lo que te va a entregar la IA</h3>
   <div class="entrega">
     <span>📰 Un titular corto</span><span>🖼️ Texto para la imagen</span><span>✍️ El texto de la publicación</span>
@@ -505,7 +550,7 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
     <summary>¿La IA va a crear la foto de mi producto?</summary>
     <p>No. Tu pieza debe mostrar tu producto real. La IA solo te ayuda con los textos, los colores y cómo ordenar todo.</p>
   </details>
-  <div class="nota"><span class="ic" aria-hidden="true">🔒</span><div>Lo que escribas se guarda en este celular o computadora mientras avanzas. Al final, cuando toques «Enviar y guardar en PDF», tu constancia se guarda en tu equipo y una copia llega al equipo de Despega 360. No te pedimos tu nombre, teléfono ni carnet.</div></div>
+  <div class="nota"><span class="ic" aria-hidden="true">🔒</span><div>Lo que escribas se guarda solo en este celular o computadora mientras avanzas. Lo único que llega al equipo de Despega 360 es la pieza terminada que tú subas al final. No te pedimos tu nombre, teléfono ni carnet.</div></div>
 </section>
 
 <!-- 1 · IA y negocio -->
@@ -711,54 +756,89 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
   <p class="lead">Así podría ordenarse tu pieza. Es solo un boceto: la IA te dará los textos y tú pondrás tu foto real.</p>
 
   <figure class="mockwrap">
-    <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Constancia enviada a Despega 360</span></div></div>
+    <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Tu pieza llegó a Despega 360</span></div></div>
     <figcaption class="tam"></figcaption>
   </figure>
 
   <div class="resumen" id="resumen"></div>
 
-  <div class="enviar" id="boxEnviar">
-    <span class="sello" id="sello" hidden>✓ Enviada</span>
-    <h3>Envía tu constancia</h3>
-    <p>Se descarga un PDF en tu equipo y una copia llega al equipo de Despega 360. Incluye tus datos, el boceto y la instrucción completa que usarás con tu IA.</p>
-    <button class="pdfbtn" id="btnPdf" type="button"><span aria-hidden="true" id="icoPdf">📄</span><span id="txtPdf">Enviar y guardar en PDF</span></button>
-    <ol class="progreso" id="progreso" hidden>
-      <li data-p="pdf">Preparando tu PDF</li>
-      <li data-p="local">Guardando la copia en tu equipo</li>
-      <li data-p="nube">Enviando al equipo de Despega 360</li>
-    </ol>
+  <h3>Copia tu instrucción</h3>
+  <button class="copiar" id="btnCopiar" type="button"><span aria-hidden="true">📋</span><span id="txtCopiar">Copiar mi instrucción</span></button>
+  <p class="estado" id="estado" aria-live="polite"></p>
+
+  <h3>Ahora pégala en tu IA</h3>
+  <ol class="pasos" id="pasos"></ol>
+  <a class="abrir" id="abrir" href="#" target="_blank" rel="noopener">Abrir</a>
+
+  <div class="nota"><span class="ic" aria-hidden="true">💾</span><div>Cuando tengas tu pieza, guarda la versión editable y descárgala en PNG con el nombre <b>06_Pieza_comercial.png</b> en tu carpeta <b>Pieza_digital</b>.</div></div>
+  <div class="nota"><span class="ic" aria-hidden="true">🗣️</span><div>Si la IA escribe algo que no es cierto, como un descuento que no das o «hecho a mano» cuando no lo dijiste, respóndele: «eso no lo dije, quítalo».</div></div>
+
+  <div class="enviar">
+    <h3>Cuando tengas tu pieza lista…</h3>
+    <p>Vuelve a esta página y súbela: así llega al equipo de Despega 360. Esta página recuerda dónde te quedaste.</p>
+    <button class="pdfbtn" type="button" data-ir="subir"><span aria-hidden="true">📤</span><span>Ya terminé: subir mi pieza</span></button>
+  </div>
+
+  <div class="pdfbox">
+    <h3>Guarda tu evidencia (opcional)</h3>
+    <p>Descarga en tu equipo un PDF con tus datos, el boceto y la instrucción completa. No se envía a nadie.</p>
+    <button class="secbtn" id="btnPdf" type="button"><span aria-hidden="true">📄</span>Guardar en PDF</button>
     <p class="estado" id="estadoPdf" aria-live="polite" style="margin-bottom:0"></p>
   </div>
 
-  <div class="candado" id="candado"><span class="ic" aria-hidden="true">🔒</span><div>Tu instrucción para copiar aparece aquí apenas envíes tu constancia.</div></div>
-
-  <div id="trasEnvio" hidden>
-    <h3>Copia tu instrucción</h3>
-    <button class="copiar" id="btnCopiar" type="button"><span aria-hidden="true">📋</span><span id="txtCopiar">Copiar mi instrucción</span></button>
-    <p class="estado" id="estado" aria-live="polite"></p>
-
-    <h3>Ahora pégala en tu IA</h3>
-    <ol class="pasos" id="pasos"></ol>
-    <a class="abrir" id="abrir" href="#" target="_blank" rel="noopener">Abrir</a>
-
-    <div class="nota"><span class="ic" aria-hidden="true">💾</span><div>Cuando tengas tu pieza, guarda la versión editable y descárgala en PNG con el nombre <b>06_Pieza_comercial.png</b> en tu carpeta <b>Pieza_digital</b>.</div></div>
-    <div class="nota"><span class="ic" aria-hidden="true">🗣️</span><div>Si la IA escribe algo que no es cierto, como un descuento que no das o «hecho a mano» cuando no lo dijiste, respóndele: «eso no lo dije, quítalo».</div></div>
-
-    <details class="duda ver">
-      <summary>Ver la instrucción completa</summary>
-      <textarea id="preview" readonly aria-label="Instrucción completa"></textarea>
-    </details>
-  </div>
+  <details class="duda ver">
+    <summary>Ver la instrucción completa</summary>
+    <textarea id="preview" readonly aria-label="Instrucción completa"></textarea>
+  </details>
 
   <button class="reiniciar" id="reiniciar" type="button">Borrar todo y empezar de nuevo</button>
 </section>
 
-<p class="pie"><span class="ver-app" id="verApp">v1.0</span>Programa Despega 360, IFFI – UNIFRANZ/IPEE. Material elaborado con el apoyo financiero de la Unión Europea. Su contenido es responsabilidad exclusiva del IFFI y no refleja necesariamente los puntos de vista de la Unión Europea.</p>
+<!-- 8 · Subir la pieza terminada -->
+<section class="step" data-id="subir">
+  <h2 tabindex="-1">Sube tu pieza terminada <span class="chispa" aria-hidden="true">🎬</span></h2>
+  <p class="lead">Cuando tengas tu pieza lista, súbela aquí. Llegará al equipo de Despega 360.</p>
+
+  <div class="campo">
+    <label for="nombre3">Nombre de tu negocio</label>
+    <p class="hint">Con este nombre guardamos tu archivo.</p>
+    <input type="text" id="nombre3" data-f="nombre" maxlength="80" placeholder="Ej.: Delicias del Valle" autocomplete="off">
+    <p class="err" id="errNombre3" role="alert"></p>
+  </div>
+
+  <details class="duda" id="comoSacar">
+    <summary>¿Cómo guardo mi pieza para subirla?</summary>
+    <ul class="tips" id="tips"></ul>
+  </details>
+
+  <label class="soltar" id="soltar">
+    <input type="file" id="archivos" multiple
+      accept=".png,.jpg,.jpeg,.webp,.gif,.heic,.heif,.pdf,.ppt,.pptx,.odp,.doc,.docx,.odt,image/*,application/pdf">
+    <span class="zic" aria-hidden="true">📤</span>
+    <b id="soltarTxt">Toca aquí para elegir tu pieza</b>
+    <small>Tu imagen en PNG o JPG (también PDF o PowerPoint). Hasta 5 archivos de 15 MB cada uno.</small>
+  </label>
+  <ul class="archivos" id="lista" aria-live="polite"></ul>
+  <p class="err" id="errArch" role="alert"></p>
+
+  <button class="pdfbtn" id="btnSubir" type="button"><span aria-hidden="true">🚀</span><span id="txtSubir">Enviar mi pieza</span></button>
+  <p class="estado" id="estadoSubir" aria-live="polite"></p>
+
+  <div class="exito" id="exito" hidden>
+    <div class="okic" aria-hidden="true">✅</div>
+    <h3>¡Tu pieza llegó!</h3>
+    <p>Ya la recibió el equipo de Despega 360. ¡Felicidades por tu publicidad!</p>
+    <ul id="exitoLista"></ul>
+    <button class="cambiar" id="otraVez" type="button">Subir otro archivo</button>
+  </div>
+</section>
+
+<p class="pie"><span class="ver-app" id="verApp">v2.0</span>Programa Despega 360, IFFI – UNIFRANZ/IPEE. Material elaborado con el apoyo financiero de la Unión Europea. Su contenido es responsabilidad exclusiva del IFFI y no refleja necesariamente los puntos de vista de la Unión Europea.</p>
 </main>
 
 <aside class="vitrina" aria-label="Vista previa de tu pieza">
   <div class="vit-top"><span class="anillo"><span class="pct">0%</span></span><div><b>Tu pieza en vivo</b><small id="vitSub">Se arma mientras respondes</small></div></div>
-  <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Constancia enviada a Despega 360</span></div></div>
+  <div class="mock"><div class="notch"></div><div class="screen"></div><div class="glare"></div><div class="notif"><i>✅</i><span>Tu pieza llegó a Despega 360</span></div></div>
   <p class="tam"></p>
 </aside>
 </div>
@@ -788,11 +868,9 @@ nav.barra::before{content:"";position:absolute;left:0;right:0;top:-5px;height:5p
   <div class="caja" role="dialog" aria-label="Panel técnico">
     <h3>Panel técnico</h3>
     <div class="fila2">Servidor: <span id="admUrl"></span></div>
-    <div class="fila2">Constancias pendientes de envío en este equipo: <b id="admCola">0</b></div>
     <div class="bts">
       <button data-a="ping" type="button">Probar conexión</button>
       <button data-a="prueba" type="button">Enviar PDF de prueba</button>
-      <button data-a="flush" type="button">Reenviar pendientes</button>
       <button data-a="close" type="button">Cerrar</button>
     </div>
     <pre id="admLog">Listo.</pre>
@@ -846,14 +924,13 @@ REGLAS
 (function(){
   /* ---------- Envío a Drive ----------
      URL de la aplicación web de Apps Script (termina en /exec). Sin URL la app funciona en
-     modo de prueba: descarga el PDF pero no lo envía. ?api=<url> prueba otra URL sin guardarla. */
-  var VERSION = '1.0';
+     modo de prueba: no envía nada. ?api=<url> prueba otra URL sin guardarla. */
+  var VERSION = '2.0';
   var API_URL_DEFECTO = 'https://script.google.com/macros/s/AKfycbwNm7JM49fuQlkEdzz9uhjLU1TGo-jmRDw285m4YQCuklWA78M_7zZRQ0whICJXGWRv/exec';
   var QS = new URLSearchParams(location.search);
   var API_URL = (QS.get('api') || API_URL_DEFECTO).trim();
   var API_OK = /^https:\/\/script\.google(usercontent)?\.com\/.+\/exec$/.test(API_URL);
   var KEY = 'despega360-pieza-v1';          // misma clave que el HTML original: no se pierden avances
-  var LS_COLA = 'despega360-pieza-cola1';
   var FINALES = ['cerrada', 'invalido'];
   var REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -865,9 +942,10 @@ REGLAS
     {id:'precio', t:'Precio y oferta'},
     {id:'canal', t:'Dónde vas a publicar'},
     {id:'foto', t:'Tu foto real'},
-    {id:'listo', t:'Tu instrucción'}
+    {id:'listo', t:'Tu instrucción'},
+    {id:'subir', t:'Sube tu pieza'}
   ];
-  var LAST = STEPS.length - 1, ROWS = 7;
+  var LAST = STEPS.length - 1, LISTO = LAST - 1, SUBIR = LAST, ROWS = 7;
 
   var TAM = {
     'Estado de WhatsApp': {px:'1080 × 1920 px', ar:'9 / 16', forma:'vertical alto'},
@@ -900,7 +978,7 @@ REGLAS
       nota:'Estoy usando Meta AI dentro de WhatsApp: responde con mensajes cortos y sin tablas.'}
   };
 
-  var DEF = {step:0, ia:'', nombre:'', rubro:'', prod:'', cliente:'', benef:'', pos:'', evid:'', msg:'', precio:'', consultar:false, promo:'', sost:'', canal:'', contacto:'', zona:'', estilo:[], tips:[], foto:'', subir:'', enviado:'', envio:''};
+  var DEF = {step:0, ia:'', nombre:'', rubro:'', prod:'', cliente:'', benef:'', pos:'', evid:'', msg:'', precio:'', consultar:false, promo:'', sost:'', canal:'', contacto:'', zona:'', estilo:[], tips:[], foto:'', subir:'', atajo:false};
   var S = load();
   function load(){
     try { var raw = localStorage.getItem(KEY); if (raw) return Object.assign({}, DEF, JSON.parse(raw)); } catch(e){}
@@ -960,7 +1038,9 @@ REGLAS
   $$('input[data-f], textarea[data-f]').forEach(function(el){
     el.addEventListener('input', function(){
       S[el.getAttribute('data-f')] = el.value; save(); checkPrivacy();
-      if (el.id === 'nombre' && el.value.trim()) $('#errNombre').textContent = '';
+      if (el.getAttribute('data-f') === 'nombre' && el.value.trim()){ $('#errNombre').textContent = ''; $('#errNombre3').textContent = ''; }
+      // el mismo dato puede estar en dos campos (nombre del negocio)
+      $$('[data-f="' + el.getAttribute('data-f') + '"]').forEach(function(o){ if (o !== el && o.value !== el.value) o.value = el.value; });
       vivo();
     });
   });
@@ -1028,12 +1108,14 @@ REGLAS
       (pr ? '<div class="m-precio">' + (pr === 'consultar' ? 'Consulta<br>precio' : esc(pr)) + '</div>' : '') +
       '<div class="m-cta">Pide por ' + esc(val(S.contacto, 'WhatsApp')) + '</div>' +
       '<div class="m-pie"><b>' + esc(val(S.nombre, 'Tu negocio')) + '</b><span>[mi ' + esc(val(S.contacto, 'WhatsApp')) + ']</span></div>';
+    var real = S.step === SUBIR && REAL.url;
+    if (real) html = '<img class="m-real" alt="Tu pieza" src="' + REAL.url + '"><span class="m-sello">Tu pieza real</span>';
     $$('.screen').forEach(function(scr){
       scr.style.setProperty('--bg', p.bg); scr.style.setProperty('--fg', p.fg); scr.style.setProperty('--ac', p.ac);
-      scr.style.aspectRatio = t.ar;
+      scr.style.aspectRatio = real ? REAL.ar : t.ar;
       if (scr._h !== html){ scr.innerHTML = html; scr._h = html; }
     });
-    var tam = S.canal ? '<b>' + esc(S.canal) + ':</b> ' + t.px + ', formato ' + t.forma + '.' : 'Elige tu canal para ver el tamaño correcto.';
+    var tam = real ? '<b>Tu pieza real.</b> Así la verá el equipo de Despega 360.' : S.canal ? '<b>' + esc(S.canal) + ':</b> ' + t.px + ', formato ' + t.forma + '.' : 'Elige tu canal para ver el tamaño correcto.';
     $$('.tam').forEach(function(x){ x.innerHTML = tam; });
   }
 
@@ -1101,29 +1183,6 @@ REGLAS
     $('#txtCopiar').textContent = 'Copiar mi instrucción';
     $('#btnCopiar').classList.remove('ok');
     $('#estado').textContent = '';
-    pintarEnvio();
-  }
-
-  // Huella de lo que va en el PDF: si cambia algo después de enviar, hay que volver a enviar.
-  function huella(){
-    var o = {};
-    Object.keys(DEF).forEach(function(k){ if (k !== 'step' && k !== 'enviado' && k !== 'envio') o[k] = S[k]; });
-    var t = JSON.stringify([buildPrompt(), o]);
-    var h = 5381; for (var i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0;
-    return (h >>> 0).toString(36);
-  }
-  function yaEnviado(){ return !!S.enviado && S.enviado === huella(); }
-
-  function pintarEnvio(){
-    var ok = yaEnviado(), btn = $('#btnPdf');
-    if (btn.disabled) return;   // hay un envío en curso
-    $('#trasEnvio').hidden = !ok;
-    $('#candado').hidden = ok;
-    $('#sello').hidden = !ok;
-    btn.classList.toggle('ok', ok);
-    $('#icoPdf').textContent = ok ? '✅' : '📄';
-    $('#txtPdf').textContent = ok ? 'Descargar otra copia del PDF' : 'Enviar y guardar en PDF';
-    if (!ok){ $('#progreso').hidden = true; $('#estadoPdf').textContent = S.enviado ? 'Cambiaste algo después de enviar. Vuelve a tocar el botón para enviar tu constancia actualizada.' : ''; }
   }
 
   /* ---------- Copiar ---------- */
@@ -1162,7 +1221,7 @@ REGLAS
     });
   }
 
-  function crearPdf(envioId){
+  function crearPdf(){
     var doc = new window.jspdf.jsPDF({unit:'mm', format:'a4'});
     var W = 210, M = 18, y;
     var cols = [['#C81E63','#F2B000'],['#E2581A','#5B2A86'],['#138A63','#F2B000'],['#0E7F96','#F7D7E6'],['#F2B000','#C81E63'],['#5B2A86','#E2581A'],['#C81E63','#0E7F96']];
@@ -1181,8 +1240,6 @@ REGLAS
     y += 6; doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor('#5E4A6E');
     var fecha = new Date().toLocaleString('es-BO', {day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit'});
     doc.text(latin('Generada el ' + fecha + ' con el Constructor de pieza publicitaria Despega 360.'), M, y);
-    y += 4.5; doc.setFontSize(8.5); doc.setTextColor('#8A7899');
-    doc.text(latin('Código de envío: ' + envioId), M, y);
     y += 2;
     function salto(n){ if (y + n > 272){ doc.addPage(); y = 20; } }
     function sec(t){ y += 3.5; salto(14); doc.setFillColor('#F1E6FA'); doc.roundedRect(M, y, W - 2*M, 8, 1.5, 1.5, 'F');
@@ -1243,7 +1300,7 @@ REGLAS
 
     sec('6. Siguiente paso');
     doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
-    var sig = doc.splitTextToSize(latin('Pegar la instrucción en ' + (S.ia || 'su IA') + ', revisar los textos que proponga, armar la pieza con la foto real del producto y guardarla en PNG como 06_Pieza_comercial.png en su carpeta Pieza_digital.'), W - 2*M);
+    var sig = doc.splitTextToSize(latin('Pegar la instrucción en ' + (S.ia || 'su IA') + ', revisar los textos que proponga, armar la pieza con la foto real del producto y guardarla en PNG como 06_Pieza_comercial.png en su carpeta Pieza_digital. Después, subirla en el Constructor Despega 360 para enviarla al equipo del programa.'), W - 2*M);
     salto(sig.length * 5 + 2); doc.setFont('helvetica','normal'); doc.setFontSize(10.5); doc.setTextColor('#2A1338');
     doc.text(sig, M, y); y += sig.length * 5;
 
@@ -1280,8 +1337,8 @@ REGLAS
   }
 
   /* ---------- Comunicación con Apps Script ----------
-     1) POST text/plain (sin preflight)  2) POST no-cors + verificación por JSONP
-     3) si todo falla, el envío queda en cola en este equipo y se reintenta solo. */
+     1) POST text/plain (sin preflight)  2) POST no-cors + verificación por JSONP.
+     Si todo falla, el archivo queda marcado en la lista y se puede reintentar sin duplicarlo (mismo código). */
   function fetchTO(url, opt, ms){
     var ac = new AbortController(), t = setTimeout(function(){ ac.abort(); }, ms);
     opt.signal = ac.signal;
@@ -1310,101 +1367,171 @@ REGLAS
     if (!API_OK) throw new Error('sin-url');
     var body = JSON.stringify({action:'subir', data:p});
     try {
-      var r = await fetchTO(API_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:body, redirect:'follow'}, 45000);
+      var r = await fetchTO(API_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:body, redirect:'follow'}, 240000);
       var j = await r.json(); log('POST: ' + JSON.stringify(j));
       if (j && j.ok) return j;
       if (j && j.ok === false && FINALES.indexOf(j.codigo) >= 0) throw finalErr(j);
     } catch(e){ if (e.final) throw e; log('POST cors falló: ' + e.message); }
-    try { await fetchTO(API_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:body}, 45000); log('POST no-cors enviado'); }
+    try { await fetchTO(API_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:body}, 240000); log('POST no-cors enviado'); }
     catch(e){ log('POST no-cors falló: ' + e.message); }
-    var esperas = [1500, 3000, 5000];
+    var esperas = [2000, 4000, 7000, 12000];
     for (var i = 0; i < esperas.length; i++){ await sleep(esperas[i]); if (await verificar(p.id)){ log('Verificado en Drive'); return {ok:true, id:p.id, via:'verificar'}; } }
     throw new Error('no-enviado');
   }
 
-  function cola(){ return lsGet(LS_COLA, []); }
-  function encolar(p){ var c = cola().filter(function(x){ return x.id !== p.id; }); c.push(p); return lsSet(LS_COLA, c); }
-  function sacar(id){ lsSet(LS_COLA, cola().filter(function(x){ return x.id !== id; })); }
-  var flushing = false;
-  async function flushCola(log){
-    if (flushing || !API_OK) return 0;
-    flushing = true; var ok = 0;
-    try {
-      var c = cola();
-      for (var i = 0; i < c.length; i++){
-        try { await subir(c[i], log); sacar(c[i].id); ok++; }
-        catch(e){ if (e.final){ sacar(c[i].id); if (log) log('Descartado ' + c[i].id + ': ' + e.message); } else if (log) log('Pendiente ' + c[i].id + ' sigue sin enviarse'); }
-      }
-    } finally { flushing = false; }
-    return ok;
-  }
-
-  function paso(k, estado){
-    var li = document.querySelector('#progreso [data-p="' + k + '"]');
-    li.classList.remove('on','ok','av'); if (estado) li.classList.add(estado);
-  }
   function nuevoId(pref){ return (pref || 'D360P') + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7); }
 
+  /* ---------- Constancia local (opcional, no se envía) ---------- */
   $('#btnPdf').addEventListener('click', async function(){
-    var est = $('#estadoPdf'), btn = $('#btnPdf');
-    if (btn.disabled) return;
-    if (!val(S.nombre, '')){ est.textContent = 'Falta el nombre de tu negocio. Toca «Cambiar» en «Negocio».'; return; }
+    var est = $('#estadoPdf');
+    if (!(await asegurarJsPdf())){ est.textContent = 'No se pudo preparar el PDF. Revisa tu conexión a internet y vuelve a tocar el botón.'; return; }
+    var c = crearPdf();
+    try { c.doc.save(c.name); est.textContent = 'Tu PDF se guardó como ' + c.name + '. Lo encuentras en tus Descargas.'; }
+    catch(e){ est.textContent = 'No se pudo guardar el PDF en este equipo. Prueba abriendo la página en Chrome.'; }
+  });
 
-    // Ya enviada y sin cambios: solo otra copia local
-    if (yaEnviado()){
-      if (!(await asegurarJsPdf())){ est.textContent = 'No se pudo preparar el PDF. Revisa tu conexión a internet y vuelve a tocar el botón.'; return; }
-      var c = crearPdf(S.envio);
-      try { c.doc.save(c.name); est.textContent = 'Descargamos otra copia: ' + c.name + '. Tu constancia ya estaba enviada.'; }
-      catch(e){ est.textContent = 'No se pudo guardar el PDF en este equipo. Prueba abriendo la página en Chrome.'; }
-      return;
+  /* ---------- Subir la pieza terminada ---------- */
+  var MAX_ARCH = 5, MAX_MB = 15;
+  var EXT_OK = ['png','jpg','jpeg','webp','gif','heic','heif','pdf','ppt','pptx','odp','doc','docx','odt'];
+  var ARCH = [], subiendo = false;   // {f, orig, nombre, tam, estado:''|'sube'|'ok'|'error', id, ts, parte, total, mini}
+  var REAL = {f:null, url:'', ar:''};   // la imagen que sube, mostrada en el celular
+  var COMO = [
+    ['Canva', 'toca «Compartir» → «Descargar» → elige <b>PNG</b> → «Descargar». Sube ese archivo.'],
+    ['Plantilla en PowerPoint', 'Archivo → Exportar → cambia el tipo a <b>PNG</b> → «Solo esta diapositiva». También puedes subir el archivo editable (.pptx).'],
+    ['Google Presentaciones', 'Archivo → Descargar → <b>Imagen PNG</b>.'],
+    ['En el celular', 'guarda la imagen en tu galería y elígela aquí.']
+  ];
+  function pintarTips(){
+    $('#tips').innerHTML = COMO.map(function(c){ return '<li><b>' + c[0] + '</b>: ' + c[1] + '</li>'; }).join('') +
+      '<li>¿No logras descargarla? Toma una captura de pantalla de tu pieza y súbela.</li>';
+  }
+  function extDe(n){ var m = /\.([a-z0-9]{2,5})$/i.exec(n || ''); return m ? m[1].toLowerCase() : ''; }
+  function icono(n){
+    var e = extDe(n);
+    return e === 'pdf' ? '📕' : /^(jpe?g|png|webp|gif|heic|heif)$/.test(e) ? '🖼️' : /^(docx?|odt)$/.test(e) ? '📘' : /^(pptx?|odp)$/.test(e) ? '📙' : '📄';
+  }
+  function tamTxt(b){ return b < 1048576 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1).replace('.', ',') + ' MB'; }
+  function sePuedeVer(f){ return /^image\/(jpeg|png|webp|gif)$/.test(f.type); }
+
+  // Las fotos grandes se achican (máx. 2400 px, JPEG) para que suban rápido con datos móviles.
+  // Un PNG solo se toca si pesa más de 4 MB: la pieza diseñada se respeta tal cual.
+  async function achicar(f){
+    if (!/^image\/(jpeg|png|webp)$/.test(f.type) || !window.createImageBitmap) return f;
+    if (f.size < (f.type === 'image/png' ? 4e6 : 1.2e6)) return f;
+    try {
+      var bmp = await createImageBitmap(f);
+      var k = Math.min(1, 2400 / Math.max(bmp.width, bmp.height));
+      var cv = document.createElement('canvas'); cv.width = Math.round(bmp.width * k); cv.height = Math.round(bmp.height * k);
+      var g = cv.getContext('2d'); g.fillStyle = '#FFFFFF'; g.fillRect(0, 0, cv.width, cv.height); g.drawImage(bmp, 0, 0, cv.width, cv.height);
+      var bl = await new Promise(function(r){ cv.toBlob(r, 'image/jpeg', .85); });
+      if (bl && bl.size < f.size) return new File([bl], f.name.replace(/\.[^.]+$/, '') + '.jpg', {type:'image/jpeg'});
+    } catch(e){}
+    return f;
+  }
+  async function agregar(lista){
+    $('#errArch').textContent = ''; $('#estadoSubir').textContent = '';
+    if ($('#exito').hidden === false){ ARCH = []; $('#exito').hidden = true; }
+    var malos = [];
+    for (var i = 0; i < lista.length; i++){
+      var f = lista[i], ext = extDe(f.name);
+      if (ARCH.length >= MAX_ARCH){ malos.push('puedes subir hasta ' + MAX_ARCH + ' archivos a la vez'); break; }
+      if (EXT_OK.indexOf(ext) < 0 && !/^image\//.test(f.type)){ malos.push('«' + f.name + '» no es una imagen, PDF ni PowerPoint'); continue; }
+      if (ARCH.some(function(a){ return a.orig === f.name && a.tam0 === f.size; })) continue;
+      var g = await achicar(f);
+      if (g.size > MAX_MB * 1048576){ malos.push('«' + f.name + '» pesa más de ' + MAX_MB + ' MB'); continue; }
+      ARCH.push({f:g, orig:f.name, nombre:g.name || f.name, tam0:f.size, tam:g.size, estado:'', id:'', mini: sePuedeVer(g) ? URL.createObjectURL(g) : ''});
     }
+    if (malos.length) $('#errArch').textContent = 'No se agregó: ' + malos.join('; ') + '.';
+    pintarLista();
+  }
+  function pintarLista(){
+    var EST = {'':'Lista para enviar', sube:'Subiendo…', ok:'✓ Llegó', error:'No se pudo subir'};
+    $('#lista').innerHTML = ARCH.map(function(a, i){
+      return '<li class="arch ' + a.estado + '"><span class="ai" aria-hidden="true">' + (a.mini ? '<img alt="" src="' + a.mini + '">' : icono(a.nombre)) + '</span>' +
+        '<div class="an"><b>' + esc(a.orig) + '</b><small>' + tamTxt(a.tam) + ' · ' + EST[a.estado] + '</small><span class="av"><i></i></span></div>' +
+        (a.estado === 'sube' || a.estado === 'ok' ? '<span></span>' : '<button class="quitar" type="button" data-q="' + i + '" aria-label="Quitar ' + esc(a.orig) + '">✕</button>') + '</li>';
+    }).join('');
+    var pend = ARCH.filter(function(a){ return a.estado !== 'ok'; }).length;
+    $('#btnSubir').disabled = subiendo;
+    $('#btnSubir').hidden = ARCH.length > 0 && pend === 0;
+    $('#txtSubir').textContent = subiendo ? 'Enviando… no cierres esta página' :
+      ARCH.some(function(a){ return a.estado === 'error'; }) ? 'Reintentar el envío' : (pend > 1 ? 'Enviar mis ' + pend + ' archivos' : 'Enviar mi pieza');
+    $('#soltar').classList.toggle('con', ARCH.length > 0);
+    $('#soltarTxt').textContent = ARCH.length ? 'Agregar otro archivo' : 'Toca aquí para elegir tu pieza';
+    piezaReal();
+  }
+  // La primera imagen que elige se muestra en el celular, en lugar del boceto.
+  function piezaReal(){
+    var a = ARCH.filter(function(x){ return x.mini; })[0], f = a ? a.f : null;
+    if (f === REAL.f) return;
+    REAL = {f:f, url:'', ar:''};
+    if (!f){ renderMock(); return; }
+    var im = new Image();
+    im.onload = function(){ if (REAL.f !== f) return; REAL.url = a.mini; REAL.ar = im.naturalWidth + ' / ' + im.naturalHeight; renderMock(); reaccion(4); };
+    im.src = a.mini;
+  }
+  function leerB64(f){
+    return new Promise(function(res, rej){
+      var r = new FileReader();
+      r.onload = function(){ res(String(r.result).split(',')[1] || ''); };
+      r.onerror = function(){ rej(new Error('lectura')); };
+      r.readAsDataURL(f);
+    });
+  }
+  $('#archivos').addEventListener('change', function(e){ agregar(Array.prototype.slice.call(e.target.files || [])); e.target.value = ''; });
+  ['dragenter','dragover'].forEach(function(t){ $('#soltar').addEventListener(t, function(e){ e.preventDefault(); $('#soltar').classList.add('sobre'); }); });
+  ['dragleave','drop'].forEach(function(t){ $('#soltar').addEventListener(t, function(e){ e.preventDefault(); $('#soltar').classList.remove('sobre'); }); });
+  $('#soltar').addEventListener('drop', function(e){ agregar(Array.prototype.slice.call((e.dataTransfer && e.dataTransfer.files) || [])); });
+  $('#lista').addEventListener('click', function(e){
+    var q = e.target.closest('[data-q]'); if (!q || subiendo) return;
+    ARCH.splice(Number(q.getAttribute('data-q')), 1); $('#errArch').textContent = ''; pintarLista();
+  });
+  $('#otraVez').addEventListener('click', function(){ ARCH = []; $('#exito').hidden = true; $('#estadoSubir').textContent = ''; pintarLista(); $('#archivos').click(); });
 
-    btn.disabled = true; $('#txtPdf').textContent = 'Un momento…';
-    $('#progreso').hidden = false; ['pdf','local','nube'].forEach(function(k){ paso(k, ''); });
-    est.textContent = '';
-    paso('pdf', 'on');
-    if (!(await asegurarJsPdf())){
-      paso('pdf', 'av'); btn.disabled = false; pintarEnvio(); $('#progreso').hidden = false;
-      est.textContent = 'No se pudo preparar el PDF. Revisa tu conexión a internet y vuelve a tocar el botón.';
-      return;
+  $('#btnSubir').addEventListener('click', async function(){
+    if (subiendo) return;
+    var est = $('#estadoSubir'); est.textContent = '';
+    if (!val(S.nombre, '')){ $('#errNombre3').textContent = 'Escribe el nombre de tu negocio.'; $('#nombre3').focus(); return; }
+    var pend = ARCH.filter(function(a){ return a.estado !== 'ok'; });
+    if (!pend.length){ $('#errArch').textContent = 'Primero elige el archivo de tu pieza.'; return; }
+    subiendo = true;
+    // Los archivos de un mismo envío comparten hora y numeración «(1 de 3)»; al reintentar se conservan.
+    var nuevos = pend.filter(function(a){ return !a.id; });
+    if (nuevos.length){
+      var ts = Date.now();
+      nuevos.forEach(function(a, i){ a.id = nuevoId(); a.ts = ts; a.parte = i + 1; a.total = nuevos.length; });
     }
-    var id = nuevoId(), ahora = new Date();
-    var pdf = crearPdf(id);
-    var b64 = pdf.doc.output('datauristring').split(',')[1];
-    var payload = {id:id, nombre:val(S.nombre,''), rubro:S.rubro, producto:val(S.prod,''), canal:S.canal, municipio:val(S.zona,''), ia:S.ia,
-      ts:ahora.getTime(), fecha_local:ahora.toLocaleString('es-BO'), version:VERSION, pdf:b64};
-    await sleep(350); paso('pdf', 'ok');
-
-    // Primero queda en cola (si la página se cierra a medio camino, se reenvía al volver a abrirla)
-    if (API_OK) encolar(payload);
-    paso('local', 'on'); await sleep(250);
-    var local = true;
-    try { pdf.doc.save(pdf.name); } catch(e){ local = false; }
-    paso('local', local ? 'ok' : 'av');
-
-    paso('nube', 'on');
-    var res = 'ok';
-    if (!API_OK){ await sleep(900); res = 'prueba'; }
-    else {
-      try { await subir(payload); sacar(id); }
-      catch(e){ if (e.final){ sacar(id); res = e.message; } else res = 'cola'; }
+    var fallos = [], codigo = '';
+    for (var i = 0; i < pend.length; i++){
+      var a = pend[i]; a.estado = 'sube'; pintarLista();
+      try {
+        if (!API_OK) await sleep(900);
+        else await subir({id:a.id, nombre:val(S.nombre,''), rubro:S.rubro, producto:val(S.prod,''), canal:S.canal, municipio:val(S.zona,''), ia:S.ia,
+          ts:a.ts, fecha_local:new Date(a.ts).toLocaleString('es-BO'), version:VERSION, parte:a.parte, total:a.total,
+          nombre_original:a.nombre, archivo:await leerB64(a.f)});
+        a.estado = 'ok';
+      } catch(e){ a.estado = 'error'; fallos.push(a.orig); if (e.final) codigo = e.message; }
+      pintarLista();
     }
-    paso('nube', res === 'ok' || res === 'prueba' ? 'ok' : 'av');
+    subiendo = false; pintarLista();
+    if (!fallos.length){
+      $('#exitoLista').innerHTML = ARCH.map(function(a){ return '<li>' + icono(a.nombre) + ' ' + esc(a.orig) + '</li>'; }).join('') +
+        (API_OK ? '' : '<li><small>(Modo de prueba: no se envió a Drive.)</small></li>');
+      $('#exito').hidden = false; $('#exito').scrollIntoView({behavior: REDUCE ? 'auto' : 'smooth', block:'center'});
+      celebrar();
+      S.subidos = (S.subidos || 0) + pend.length; save();
+    } else if (codigo === 'cerrada'){
+      est.textContent = 'La recepción de piezas está cerrada en este momento. Consulta con el equipo de Despega 360.';
+    } else if (codigo === 'invalido'){
+      est.textContent = 'No se aceptó: ' + fallos.join(', ') + '. Quítalo y sube tu pieza en PNG, JPG o PDF.';
+    } else {
+      est.textContent = 'No se pudo subir ' + (fallos.length === 1 ? 'un archivo' : fallos.length + ' archivos') + ', quizá por la conexión. Revisa tu internet y toca «Reintentar el envío».';
+    }
+  });
 
-    S.enviado = huella(); S.envio = id; save();
-    btn.disabled = false; pintarEnvio();
-    $('#progreso').hidden = false;
-    var msgLocal = local ? 'Tu PDF se guardó como ' + pdf.name + ' (en tus Descargas). ' : 'No se pudo descargar el PDF en este equipo; prueba luego con «Descargar otra copia». ';
-    var msgNube = {
-      ok: '¡Y tu constancia ya llegó al equipo de Despega 360!',
-      prueba: '(Modo de prueba: la copia no se envió a Drive.)',
-      cola: 'No pudimos enviar la copia por la conexión: se enviará sola la próxima vez que abras esta página con internet.',
-      cerrada: 'La recepción de constancias está cerrada, así que la copia no se envió. Igual puedes seguir con tu IA.',
-      invalido: 'La copia no pudo enviarse. Avísale a tu mentora y guarda tu PDF.'
-    }[res] || '';
-    est.textContent = msgLocal + msgNube;
-    $('#trasEnvio').classList.remove('abre'); void $('#trasEnvio').offsetWidth; $('#trasEnvio').classList.add('abre');
-    if (res === 'ok' || res === 'prueba') celebrar(); else confeti(60);
+  document.addEventListener('click', function(ev){
+    var b = ev.target.closest('[data-ir="subir"]'); if (!b) return;
+    S.atajo = S.step === 0; go(SUBIR);
   });
 
   $('#reiniciar').addEventListener('click', function(){
@@ -1448,7 +1575,7 @@ REGLAS
   function reaccion(n){
     if (REDUCE) return;
     var ahora = Date.now(); if (ahora - ultReac < 250) return; ultReac = ahora;
-    var host = innerWidth >= 1100 ? $('.vitrina .mock') : (!$('#hoja').hidden ? $('#hoja .mock') : (!$('#btnVer').hidden ? $('#btnVer') : (S.step === LAST ? $('.mockwrap .mock') : null)));
+    var host = innerWidth >= 1100 ? $('.vitrina .mock') : (!$('#hoja').hidden ? $('#hoja .mock') : (!$('#btnVer').hidden ? $('#btnVer') : (S.step === LISTO ? $('.mockwrap .mock') : null)));
     if (!host) return;
     for (var i = 0; i < (n || 2); i++) (function(i){
       setTimeout(function(){
@@ -1464,7 +1591,6 @@ REGLAS
   }
   function celebrar(){
     if (!REDUCE){ var f = $('#flash'); f.classList.remove('va'); void f.offsetWidth; f.classList.add('va'); }
-    var s = $('#sello'); s.classList.remove('golpe'); void s.offsetWidth; s.classList.add('golpe');
     $$('.notif').forEach(function(n){ n.classList.add('ve'); setTimeout(function(){ n.classList.remove('ve'); }, 4500); });
     confeti(170); setTimeout(function(){ reaccion(7); }, 300);
   }
@@ -1614,10 +1740,15 @@ REGLAS
     var sec = document.querySelector('.step.active');
     if (sec && !REDUCE){ sec.classList.remove('entra'); void sec.offsetWidth; sec.classList.add('entra'); setTimeout(function(){ sec.classList.remove('entra'); }, 1400); }
     var hh = document.querySelector('.step.active h2'); if (hh) hh.focus({preventScroll:true});
-    if (i === LAST && antes !== LAST) tejerFinal();
+    if (i === LISTO && antes !== LISTO) tejerFinal();
+    if (i !== SUBIR) S.atajo = false;
   }
   $('#sig').addEventListener('click', next);
-  $('#atras').addEventListener('click', function(){ go(Math.max(0, S.step - 1)); });
+  function back(){
+    if (S.step === SUBIR && S.atajo) return go(0);
+    go(Math.max(0, S.step - 1));
+  }
+  $('#atras').addEventListener('click', back);
 
   /* ---------- Sincronizar la vista ---------- */
   function sync(){
@@ -1645,26 +1776,30 @@ REGLAS
     });
     ['prod','cliente','benef'].forEach(function(k){ document.getElementById(k).placeholder = PH[k][S.rubro || ''] || PH[k]['']; });
 
-    var n = S.step >= LAST ? ROWS : Math.max(0, S.step - 1);
+    var n = S.step >= LISTO ? ROWS : Math.max(0, S.step - 1);
     $$('#weave .hilera').forEach(function(r, i){ r.classList.toggle('on', i < n); });
     $('#weaveLbl').innerHTML = S.step === 0 ? 'Cada paso que completes teje una hilera de tu aguayo.'
-      : (S.step === LAST ? '<b>Aguayo completo.</b> Tu instrucción está lista.' : '<b>Paso ' + S.step + ' de ' + ROWS + ':</b> ' + STEPS[S.step].t);
-    $('#vitSub').textContent = S.step === 0 ? 'Se arma mientras respondes' : (S.step === LAST ? 'Así podría verse tu publicación' : 'Paso ' + S.step + ' de ' + ROWS + ' · ' + STEPS[S.step].t);
+      : S.step === LISTO ? '<b>Aguayo completo.</b> Tu instrucción está lista.'
+      : S.step === SUBIR ? '<b>Último paso:</b> sube tu pieza terminada.'
+      : '<b>Paso ' + S.step + ' de ' + ROWS + ':</b> ' + STEPS[S.step].t;
+    $('#vitSub').textContent = S.step === 0 ? 'Se arma mientras respondes' : S.step === LISTO ? 'Así podría verse tu publicación'
+      : S.step === SUBIR ? 'Aquí aparece la pieza que subas' : 'Paso ' + S.step + ' de ' + ROWS + ' · ' + STEPS[S.step].t;
     $('#atras').hidden = S.step === 0;
-    $('#sig').hidden = S.step === LAST;
-    $('#sig').textContent = S.step === 0 ? 'Empezar' : (S.step === LAST - 1 ? 'Armar mi instrucción' : 'Siguiente');
-    $('#btnVer').hidden = S.step === 0 || S.step === LAST;
+    $('#sig').hidden = S.step === SUBIR;
+    $('#sig').textContent = S.step === 0 ? 'Empezar' : S.step === LISTO ? 'Ya terminé: subir mi pieza' : (S.step === LISTO - 1 ? 'Armar mi instrucción' : 'Siguiente');
+    $('#btnVer').hidden = S.step === 0 || S.step === LISTO;
     $('.precio').classList.toggle('lleno', !S.consultar && !!val(S.precio, ''));
     vivo();
-    if (S.step === LAST) renderListo();
+    if (S.step === LISTO) renderListo();
+    if (S.step === SUBIR){ pintarTips(); pintarLista(); }
     checkPrivacy();
   }
 
-  /* ---------- Panel técnico (?admin=1 o tres toques en «v1.0») ---------- */
+  /* ---------- Panel técnico (?admin=1 o tres toques en «v2.0») ---------- */
   function admLog(m){ var l = $('#admLog'); l.textContent = (l.textContent === 'Listo.' ? '' : l.textContent + '\n') + m; l.scrollTop = 1e9; }
   function abrirAdmin(){
     $('#admUrl').textContent = API_OK ? API_URL + (QS.get('api') ? '  (de ?api=)' : '  (del archivo)') : 'SIN CONFIGURAR (modo de prueba): falta la URL /exec en API_URL_DEFECTO';
-    $('#admCola').textContent = cola().length; $('#admLog').textContent = 'Listo.'; $('#admin').hidden = false;
+    $('#admLog').textContent = 'Listo.'; $('#admin').hidden = false;
   }
   var toques = [];
   $('#verApp').addEventListener('click', function(){
@@ -1686,23 +1821,15 @@ REGLAS
       var id = nuevoId('PRUEBA'), d = new window.jspdf.jsPDF();
       d.text('Prueba de conexion Despega 360 (pieza) - ' + new Date().toLocaleString('es-BO'), 15, 20);
       admLog('Enviando ' + id + '…');
-      try { await subir({id:id, nombre:'Prueba de conexión', ts:Date.now(), fecha_local:new Date().toLocaleString('es-BO'), version:VERSION, pdf:d.output('datauristring').split(',')[1]}, admLog); admLog('OK: revisa la carpeta de Drive (archivo que empieza con PRUEBA).'); }
+      try { await subir({id:id, nombre:'Prueba de conexión', ts:Date.now(), fecha_local:new Date().toLocaleString('es-BO'), version:VERSION, nombre_original:'prueba.pdf', archivo:d.output('datauristring').split(',')[1]}, admLog); admLog('OK: revisa la carpeta de Drive (archivo que empieza con PRUEBA).'); }
       catch(er){ admLog('No se envió: ' + er.message); }
     }
-    if (a === 'flush'){ admLog('Reenviando…'); var k = await flushCola(admLog); admLog(k + ' enviada(s).'); $('#admCola').textContent = cola().length; }
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ $('#admin').hidden = true; cerrarHoja(); } });
 
   sync();
   if (QS.get('admin') === '1') setTimeout(abrirAdmin, 500);
 
-  // Constancias que quedaron pendientes en este equipo
-  function intentarCola(){
-    if (!cola().length) return;
-    flushCola().then(function(k){ if (k) toast(k === 1 ? 'Tu constancia pendiente ya llegó al equipo de Despega 360. ✅' : k + ' constancias pendientes ya llegaron al equipo de Despega 360. ✅'); });
-  }
-  setTimeout(intentarCola, 1500);
-  window.addEventListener('online', intentarCola);
 })();
 </script>
 </body>
